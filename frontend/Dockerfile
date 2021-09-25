@@ -4,9 +4,9 @@ LABEL Side="frontend"
 
 RUN apk add --update nodejs npm curl
 
-COPY . /code
+COPY . /front_side
 
-WORKDIR /code
+WORKDIR /front_side
 
 RUN npm install && npm cache clean --force
 
