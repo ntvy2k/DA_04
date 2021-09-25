@@ -1,0 +1,16 @@
+*.pyc
+*~
+.idea
+__pycache__
+venv
+
+node_modules
+migrations
+
+frontend
+
+# ----
+Dockerfile
+.git
+.gitignore
+.dockerignore
