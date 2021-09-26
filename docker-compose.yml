@@ -37,6 +37,7 @@ services:
       - db
     networks:
       - backnet
+      - dbnet
   db:
     image: postgres
     container_name: dA04_PG
@@ -47,7 +48,7 @@ services:
     volumes:
       - da04_db:/var/lib/postgresql/data
     networks:
-      - backnet
+      - dbnet
     restart: on-failure
 
 volumes:
@@ -57,3 +58,4 @@ volumes:
 networks:
   frontnet:
   backnet:
+  dbnet:
