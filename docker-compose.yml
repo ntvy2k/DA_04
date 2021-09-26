@@ -1,6 +1,21 @@
 version: "3.8"
 
 services:
+  nginx:
+    build:
+      context: ./docker-nginx/
+      dockerfile: Dockerfile
+    container_name: nginx
+    depends_on:
+      - frontend
+      - backend_api
+    volumes:
+      - ./docker-nginx/:/etc/nginx/
+    ports:
+      - "80:80"
+    networks:
+      - frontnet
+      - backnet
   frontend:
     build:
       context: frontend/
@@ -9,9 +24,8 @@ services:
     depends_on:
       - backend_api
     volumes:
-      - frontend_code:/front_side
-    ports:
-      - "3000:3000"
+      - ./frontend/pages/:/front_side/pages/
+      # - frontend_code:/front_side
     networks:
       - frontnet
   backend_api:
@@ -22,7 +36,6 @@ services:
     depends_on:
       - db
     networks:
-      - frontnet
       - backnet
   db:
     image: postgres
@@ -36,26 +49,10 @@ services:
     networks:
       - backnet
     restart: on-failure
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   container_name: pgadmin4
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: "root@ttcscn.net"
-  #     PGADMIN_DEFAULT_PASSWORD: "root"
-  #   depends_on:
-  #     - db
-  #   volumes:
-  #     - pgadmin_cache:/var/lib/pgadmin
-  #   ports:
-  #     - "7000:80"
-  #   networks:
-  #     - backnet
-  #   restart: on-failure
 
 volumes:
-  frontend_code:
+  # frontend_code:
   da04_db:
-  # pgadmin_cache:
 
 networks:
   frontnet:
