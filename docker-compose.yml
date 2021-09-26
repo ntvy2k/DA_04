@@ -25,6 +25,7 @@ services:
       - backend_api
     volumes:
       - ./frontend/pages/:/front_side/pages/
+      - ./frontend/styles/:/front_side/styles/
       # - frontend_code:/front_side
     networks:
       - frontnet
