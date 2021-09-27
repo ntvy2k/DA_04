@@ -39,10 +39,8 @@ services:
     networks:
       - backnet
       - dbnet
-    # command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-    command: ["gunicorn", "--bind", ":8000", "dA_04.wsgi:application"]
   db:
-    image: postgres
+    image: postgres:alpine
     container_name: dA04_PG
     environment:
       - POSTGRES_USER=da04
