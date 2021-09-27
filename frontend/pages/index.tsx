@@ -33,6 +33,9 @@ const Home: NextPage = () => {
         <Link href="/about">
           <a>About Us</a>
         </Link>
+        <Link href="/textEdittor">
+          <p>Component Text Edit</p>
+        </Link>
       </div>
     </div>
   );
