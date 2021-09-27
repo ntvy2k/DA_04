@@ -7,4 +7,5 @@ python manage.py migrate
 echo 'migrate: OK'
 
 echo "Run server"
-python manage.py runserver 0.0.0.0:8000
+# python manage.py runserver 0.0.0.0:8000
+gunicorn --bind :8000 dA_04.wsgi:application
