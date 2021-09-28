@@ -1,4 +1,3 @@
-#!/bin/sh
 # Ensure connect to postgres
 python manage.py shell < docker-django/connect_check.py
 
@@ -14,4 +13,3 @@ echo "Run server"
 python manage.py runserver 0.0.0.0:8000
 # prod
 # gunicorn --bind :8000 dA_04.wsgi:application
-exec "$@"
