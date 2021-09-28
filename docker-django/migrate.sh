@@ -1,3 +1,4 @@
+#!/bin/sh
 # Ensure connect to postgres
 python manage.py shell < docker-django/connect_check.py
 
