@@ -39,6 +39,7 @@ services:
     networks:
       - backnet
       - dbnet
+    entrypoint: ["./docker-django/migrate.sh"]
   db:
     image: postgres:alpine
     container_name: dA04_PG
