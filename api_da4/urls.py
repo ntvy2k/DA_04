@@ -1,7 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested.routers import NestedDefaultRouter
-from .views import index, CourseViewSet, ChapterViewSet, LessonViewSet
+from .views import (CourseViewSet, 
+                    ChapterViewSet, 
+                    LessonViewSet, 
+                    UserRegisterView, 
+                    UserLoginView, 
+                    UserLogoutView)
 
 
 course_router = DefaultRouter();
@@ -17,6 +22,8 @@ urlpatterns = [
     path('', include(course_router.urls)),
     path('', include(chapter_router.urls)),
     path('', include(lesson_router.urls)),
-    path('index/', index, name="index")
+    path('register/', UserRegisterView.as_view(), name="register"),
+    path('get-token/', UserLoginView.as_view(), name="get-token"),
+    path('destroy-token/', UserLogoutView.as_view(), name="destroy-token"),
 ]
 
