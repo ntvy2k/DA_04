@@ -30,9 +30,9 @@ class UserLoginView(APIView):
             if user.check_password(info['password']):
                 token = Token.objects.get_or_create(user=user)[0]
                 return Response({"token": token.key, "error": False})
-            return Response({"error": True})
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         except:
-            return Response({"error": True})
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 class UserLogoutView(APIView):
