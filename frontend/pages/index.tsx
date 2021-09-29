@@ -1,11 +1,13 @@
-import type { NextPage } from "next";
+// import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import courseApi from "./api/courseApi";
-import HeaderCourse from "../components/HeaderCourse/index";
+import HeaderCourse from "../components/HeaderCourse";
+import type { Course } from "../components/HeaderCourse";
+import { AxiosResponse } from "axios";
 
-const Home = ({ response }: { response: any }) => {
+const Home = ({ response }: { response: Array<Course> }) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -30,7 +32,7 @@ const Home = ({ response }: { response: any }) => {
 };
 
 export async function getServerSideProps() {
-  const response = await courseApi.getAll();
+  const response: AxiosResponse<Array<Course>> = await courseApi.getAll();
 
   return {
     props: { response },
