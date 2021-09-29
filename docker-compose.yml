@@ -26,6 +26,7 @@ services:
     volumes:
       - ./frontend/pages/:/front_side/pages/
       - ./frontend/styles/:/front_side/styles/
+      - ./frontend/components/:/front_side/components/
       # - frontend_code:/front_side
     networks:
       - frontnet
