@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'api_da4.apps.ApiDa4Config',
+    'auth_da4.apps.AuthDa4Config',
 ]
 
 MIDDLEWARE = [
