@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token 
+from rest_framework import status
 
 
 class UserRegisterView(APIView):
@@ -28,10 +29,10 @@ class UserLoginView(APIView):
             user = User.objects.get(username=info['username'])
             if user.check_password(info['password']):
                 token = Token.objects.get_or_create(user=user)[0]
-                return Response({"Token": token.key})
-            return Response({"error": "username or password wrong!!!"})
+                return Response({"token": token.key, "error": False})
+            return Response({"error": True})
         except:
-            return Response({"error": "username or password wrong!!!"})
+            return Response({"error": True})
 
 
 class UserLogoutView(APIView):
@@ -42,3 +43,17 @@ class UserLogoutView(APIView):
             return Response({"user": "logout"})
         except:
             return Response({"user": "logout"})
+
+
+class UserProfileView(APIView):
+    def get(self, request):
+        if request.user.is_authenticated:
+            user = request.user
+            user_data = {"id": user.id,
+                        "first_name": user.first_name, 
+                        "last_name": user.last_name,
+                        "username": user.username,
+                        "email": user.email}
+            return Response(user_data)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
