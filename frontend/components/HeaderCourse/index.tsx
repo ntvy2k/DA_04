@@ -15,6 +15,12 @@ interface Course {
   last_modified: string;
 }
 
+export type { Course };
+
+// Can replace with
+// type CourseList = Array<Course>
+// const HeaderCourse: React.FC<{ data: CourseList }> = ({ data }) => {}
+
 const HeaderCourse: React.FC<{ data: Array<Course> }> = ({ data }) => {
   return (
     <div>
@@ -34,5 +40,3 @@ const HeaderCourse: React.FC<{ data: Array<Course> }> = ({ data }) => {
 };
 
 export default HeaderCourse;
-
-export type { Course };
