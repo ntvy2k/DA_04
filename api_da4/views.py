@@ -1,13 +1,13 @@
-from django.http.response import HttpResponse
-
+from rest_framework.response import Response
 from .models import Course, Chapter, Lesson
 from .serializers import CourseSerializer, ChapterSerializer, LessonSerializer
 
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-# Create your views here.
-def index(request):
-    return HttpResponse("Hello World")
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token 
+
 
 class CourseViewSet(ModelViewSet):
     serializer_class = CourseSerializer
@@ -22,3 +22,23 @@ class ChapterViewSet(ModelViewSet):
 class LessonViewSet(ModelViewSet):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
+
+
+class UserRegisterView(APIView):
+    def post(self, request):
+        pass
+
+
+class UserLoginView(APIView):
+    def post(self, request):
+        pass
+
+
+class UserLogoutView(APIView):
+    def get(self, request):
+        try:
+            token = Token.objects.get(user=request.user)
+            token.delete()
+            return Response({"user": "logout"})
+        except:
+            return Response({"user": "logout"})
