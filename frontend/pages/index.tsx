@@ -1,22 +1,12 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-// import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import axios from "axios";
+import courseApi from "./api/courseApi";
+import HeaderCourse from "../components/HeaderCourse/index";
 
-const my_get = () => {
-  const url = "api/";
-  axios
-    .get(url)
-    .then((data) => {
-      console.log("Data:", data);
-      alert("Test: OK");
-    })
-    .catch(() => console.log("Data: failed"));
-};
+const Home = ({ response }: { response: any }) => {
 
-const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
@@ -24,9 +14,10 @@ const Home: NextPage = () => {
         <meta name="description" content="Adudududu" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <HeaderCourse data={response} />
 
       <div>Hello Django NextJS Nginx</div>
-      <button type="button" onClick={my_get}>
+      <button type="button">
         Django...
       </button>
       <div>
@@ -37,8 +28,16 @@ const Home: NextPage = () => {
           <p>Component Text Edit</p>
         </Link>
       </div>
-    </div>
+    </div >
   );
 };
+
+export async function getServerSideProps() {
+  const response = await courseApi.getAll();
+
+  return {
+    props: { response }
+  }
+}
 
 export default Home;
