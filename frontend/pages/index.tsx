@@ -6,7 +6,6 @@ import courseApi from "./api/courseApi";
 import HeaderCourse from "../components/HeaderCourse/index";
 
 const Home = ({ response }: { response: any }) => {
-
   return (
     <div className={styles.container}>
       <Head>
@@ -17,18 +16,16 @@ const Home = ({ response }: { response: any }) => {
       <HeaderCourse data={response} />
 
       <div>Hello Django NextJS Nginx</div>
-      <button type="button">
-        Django...
-      </button>
+      <button type="button">Django...</button>
       <div>
         <Link href="/about">
           <a>About Us</a>
         </Link>
         <Link href="/textEdittor">
-          <p>Component Text Edit</p>
+          <a>Component Text Edit</a>
         </Link>
       </div>
-    </div >
+    </div>
   );
 };
 
@@ -36,8 +33,8 @@ export async function getServerSideProps() {
   const response = await courseApi.getAll();
 
   return {
-    props: { response }
-  }
+    props: { response },
+  };
 }
 
 export default Home;
