@@ -37,6 +37,8 @@ services:
     container_name: backend-api
     depends_on:
       - db
+    volumes:
+      - ./api_da4/:/code/api_da4/
     networks:
       - backnet
       - dbnet

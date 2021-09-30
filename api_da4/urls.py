@@ -1,9 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested.routers import NestedDefaultRouter
-from .views import (CourseViewSet, 
-                    ChapterViewSet, 
-                    LessonViewSet)
+from .views import CourseViewSet, ChapterViewSet, LessonViewSet
 
 
 course_router = DefaultRouter();
