@@ -16,16 +16,25 @@ axiosClient.interceptors.request.use(async (config) => {
   // Handle token here ...
   return config;
 });
-axiosClient.interceptors.response.use(
-  (response) => {
-    if (response && response.data) {
-      return response.data;
-    }
-    return response;
-  },
-  (error) => {
-    // Handle errors
-    throw error;
-  }
-);
+// axiosClient.interceptors.response.use(
+//   (response) => {
+//     if (response && response.data) {
+//       return response.data;
+//     }
+
+//   },
+//   (error) => {
+//     // Handle errors
+//     throw error;
+//   }
+// );
+axiosClient.interceptors.response.use(function (response) {
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  // Do something with response data
+  return response;
+}, function (error) {
+  // Any status codes that falls outside the range of 2xx cause this function to trigger
+  // Do something with response error
+  return Promise.reject(error);
+});
 export default axiosClient;

@@ -27,6 +27,7 @@ services:
       - ./frontend/pages/:/front_side/pages/
       - ./frontend/styles/:/front_side/styles/
       - ./frontend/components/:/front_side/components/
+      - ./frontend/moduleType/:/front_side/moduleType/
       # - frontend_code:/front_side
     networks:
       - frontnet
