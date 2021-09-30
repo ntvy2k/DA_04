@@ -6,7 +6,7 @@ import courseApi from "./api/courseApi";
 import HeaderCourse from "../components/HeaderCourse";
 import { Course } from "../moduleType/course";
 import { AxiosResponse } from "axios";
-import { useEffect } from "react";
+import { GetServerSideProps } from "next";
 
 const Home = ({ data }: { data: Array<Course> }) => {
   return (
@@ -32,7 +32,7 @@ const Home = ({ data }: { data: Array<Course> }) => {
   );
 };
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps = async () => {
   const response: AxiosResponse<Array<Course>> = await courseApi.getAll();
   const data = response.data
 

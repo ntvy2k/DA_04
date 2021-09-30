@@ -6,7 +6,7 @@ ContentChapter.propTypes = {
 };
 
 ContentChapter.defaultProps = {
-    id: 0
+    id: 1
 }
 
 function ContentChapter(props: any) {

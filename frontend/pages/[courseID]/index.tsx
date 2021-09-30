@@ -6,16 +6,17 @@ import courseApi from '../api/courseApi';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Link from "next/link"
 import ContentChapter from '../../components/ContentChapter';
+import { ParsedUrlQuery } from 'querystring';
 
 // Courses.propTypes = {
 
 // };
 
 
-function Courses({ chapterList }: { chapterList: Array<Chapter> }) {
+function CourseID({ chapterList }: { chapterList: Array<Chapter> }) {
     const router = useRouter()
     const { courseID } = router.query
-    const [chapterID, setChapterID] = useState<number>()
+    const [chapterID, setChapterID] = useState<number>(0)
     console.log(chapterList)
 
     function handleClick(id: number) {
@@ -53,8 +54,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
 }
 
-export const getStaticProps: GetStaticProps = async (params: any) => {
-    const response = await courseApi.getListChapter(Number(params.courseID))
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const response = await courseApi.getListChapter(Number(params?.courseID))
     const chapterList = response.data
     return {
         props: {
@@ -63,4 +64,4 @@ export const getStaticProps: GetStaticProps = async (params: any) => {
     }
 }
 
-export default Courses;
+export default CourseID;
