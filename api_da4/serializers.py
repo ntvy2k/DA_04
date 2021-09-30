@@ -14,13 +14,13 @@ class ChapterFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
         queryset = Course.objects.filter(id=self.context['course'])
         return queryset
 
+
 class ChapterSerializer(ModelSerializer):
     course = ChapterFilteredPrimaryKeyRelatedField()
 
     class Meta:
         model = Chapter
         fields = '__all__'
-
 
 
 class LessonFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
@@ -35,6 +35,3 @@ class LessonSerializer(ModelSerializer):
     class Meta:
         model = Lesson
         fields = ['name', 'content', 'created_at', 'last_modified', 'chapter']
-    
-
-
