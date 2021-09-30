@@ -4,10 +4,11 @@ import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import courseApi from "./api/courseApi";
 import HeaderCourse from "../components/HeaderCourse";
-import type { Course } from "../components/HeaderCourse";
+import { Course } from "../moduleType/course";
 import { AxiosResponse } from "axios";
+import { useEffect } from "react";
 
-const Home = ({ response }: { response: Array<Course> }) => {
+const Home = ({ data }: { data: Array<Course> }) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -15,7 +16,7 @@ const Home = ({ response }: { response: Array<Course> }) => {
         <meta name="description" content="Adudududu" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HeaderCourse data={response} />
+      <HeaderCourse data={data} />
 
       <div>Hello Django NextJS Nginx</div>
       <button type="button">Django...</button>
@@ -33,9 +34,10 @@ const Home = ({ response }: { response: Array<Course> }) => {
 
 export async function getServerSideProps() {
   const response: AxiosResponse<Array<Course>> = await courseApi.getAll();
+  const data = response.data
 
   return {
-    props: { response },
+    props: { data },
   };
 }
 
