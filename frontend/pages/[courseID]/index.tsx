@@ -36,7 +36,8 @@ function CourseID({ chapterList }: { chapterList: Array<Chapter> }) {
                     </li>
                 })}
             </ul>
-            <ContentChapter id={chapterID}></ContentChapter>
+            {Object.keys(chapterList).length != 0 ?
+                <ContentChapter id={chapterID}></ContentChapter> : null}
         </div>
     );
 }
