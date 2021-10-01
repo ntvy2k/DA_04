@@ -1,5 +1,4 @@
-from rest_framework.fields import SerializerMethodField
-from .models import Course, Chapter, Lesson
+from .models import Course, Chapter, Lesson, Content
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 
 
@@ -34,4 +33,17 @@ class LessonSerializer(ModelSerializer):
 
     class Meta:
         model = Lesson
-        fields = ['name', 'content', 'created_at', 'last_modified', 'chapter']
+        fields = '__all__'
+
+
+class ContentFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
+    def get_queryset(self):
+        return Lesson.objects.filter(id=self.context['lesson'])
+
+
+class ContentSerializer(ModelSerializer):
+    lesson = ContentFilteredPrimaryKeyRelatedField()
+
+    class Meta:
+        model = Content
+        fields = "__all__"

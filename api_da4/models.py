@@ -27,7 +27,6 @@ class Chapter(models.Model):
 class Lesson(models.Model):
     name = models.CharField(max_length=50)
     chapter = models.ForeignKey("Chapter", on_delete=models.CASCADE)
-    content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
@@ -36,3 +35,15 @@ class Lesson(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Content(models.Model):
+    title = models.CharField(max_length=24)
+    content = models.JSONField(null=True)
+    lesson = models.ForeignKey("Lesson", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        ordering = ['id']
