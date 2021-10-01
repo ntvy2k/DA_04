@@ -11,6 +11,8 @@ ENV PYTHONUNBUFFERED 1
 
 RUN pip install -r requirements.txt
 
+RUN mkdir static
+
 RUN chmod +x docker-django/migrate.sh
 
 # auto migrations

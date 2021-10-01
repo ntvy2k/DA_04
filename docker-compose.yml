@@ -11,6 +11,7 @@ services:
       - backend_api
     volumes:
       - ./docker-nginx/:/etc/nginx/
+      - backend_static:/srv/
     ports:
       - "80:80"
     networks:
@@ -39,10 +40,11 @@ services:
       - db
     volumes:
       - ./api_da4/:/code/api_da4/
+      - backend_static:/code/static/
     networks:
       - backnet
       - dbnet
-    entrypoint: ["./docker-django/migrate.sh"]
+    command: ["./docker-django/migrate.sh"]
   db:
     image: postgres:alpine
     container_name: dA04_PG
@@ -58,6 +60,7 @@ services:
 
 volumes:
   da04_db:
+  backend_static:
 
 networks:
   frontnet:

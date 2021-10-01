@@ -13,7 +13,8 @@ echo 'Migrations: OK'
 
 echo "Run server"
 # dev
-python manage.py runserver 0.0.0.0:8000
+# python manage.py runserver 0.0.0.0:8000
 # prod
-# gunicorn --bind :8000 dA_04.wsgi:application
+python manage.py collectstatic  --noinput
+gunicorn --bind :8000 dA_04.wsgi:application
 exec "$@"
