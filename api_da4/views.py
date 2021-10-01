@@ -55,14 +55,12 @@ class ContentViewSet(ModelViewSet):
 
 
     def list(self, request, course_pk, chapter_pk, lesson_pk):
-        get_object_or_404(Chapter.objects.filter(course=course_pk, pk=chapter_pk))
-        get_object_or_404(Lesson.objects.filter(chapter=chapter_pk, pk=lesson_pk))
+        get_object_or_404(Lesson.objects.filter(chapter__course=course_pk, chapter=chapter_pk, pk=lesson_pk))
         return super().list(request)
 
     
     def create(self, request, course_pk, chapter_pk, lesson_pk):
-        get_object_or_404(Chapter.objects.filter(course=course_pk, pk=chapter_pk))
-        get_object_or_404(Lesson.objects.filter(chapter=chapter_pk, pk=lesson_pk))
+        get_object_or_404(Lesson.objects.filter(chapter__course=course_pk, chapter=chapter_pk, pk=lesson_pk))
         return super().create(request)
     
 
