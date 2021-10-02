@@ -1,13 +1,11 @@
-from .models import Course, Chapter, Lesson, Content
+from api_da4.models import Course, Chapter, Lesson, Content
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, StringRelatedField
 
 
 class CourseSerializer(ModelSerializer):
-    chapters = StringRelatedField(many=True, read_only=True)
-
     class Meta:
         model = Course
-        fields = '__all__'
+        fields = ['id', 'name', 'author', 'created_at', 'last_modified']
 
 
 class ChapterFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
@@ -22,7 +20,7 @@ class ChapterSerializer(ModelSerializer):
 
     class Meta:
         model = Chapter
-        fields = '__all__'
+        fields = ['id', 'name', 'created_at', 'last_modified', 'course', 'lessons']
 
 
 class LessonFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
@@ -37,7 +35,7 @@ class LessonSerializer(ModelSerializer):
 
     class Meta:
         model = Lesson
-        fields = '__all__'
+        fields = ['id', 'name', 'created_at', 'last_modified', 'chapter', 'contents']
 
 
 class ContentFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
@@ -50,4 +48,4 @@ class ContentSerializer(ModelSerializer):
 
     class Meta:
         model = Content
-        fields = "__all__"
+        fields = ['id', 'lesson', 'title', 'content']

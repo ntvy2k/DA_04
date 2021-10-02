@@ -1,13 +1,20 @@
 from rest_framework.generics import get_object_or_404
-from .models import Course, Chapter, Lesson, Content
-from .serializers import CourseSerializer, ChapterSerializer, LessonSerializer, ContentSerializer
-
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+
+from .models import Course, Chapter, Lesson, Content
+from .serializers.generics import CourseSerializer, ChapterSerializer, LessonSerializer, ContentSerializer
+from .serializers.details import CourseDetailSerializer
 
 
 class CourseViewSet(ModelViewSet):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
+
+    def retrieve(self, request, pk):
+        course = get_object_or_404(self.queryset.filter(), pk=pk)
+        serializer = CourseDetailSerializer(course)
+        return Response(serializer.data)
 
 
 class ChapterViewSet(ModelViewSet):
