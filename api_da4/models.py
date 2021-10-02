@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+
 class Course(models.Model):
     name = models.CharField(max_length=50, unique=True)
     author = models.CharField(max_length=50)
@@ -13,12 +13,13 @@ class Course(models.Model):
 
 class Chapter(models.Model):
     name = models.CharField(max_length=50)
-    course = models.ForeignKey("Course", on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name="chapters", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['id']
+        order_with_respect_to = 'course'
+
 
     def __str__(self):
         return self.name
@@ -26,12 +27,12 @@ class Chapter(models.Model):
 
 class Lesson(models.Model):
     name = models.CharField(max_length=50)
-    chapter = models.ForeignKey("Chapter", on_delete=models.CASCADE)
+    chapter = models.ForeignKey(Chapter, related_name="lessons",on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['id']
+        order_with_respect_to = 'chapter'
 
     def __str__(self):
         return self.name
@@ -40,10 +41,10 @@ class Lesson(models.Model):
 class Content(models.Model):
     title = models.CharField(max_length=24)
     content = models.JSONField(null=True)
-    lesson = models.ForeignKey("Lesson", on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, related_name="contents", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
     
     class Meta:
-        ordering = ['id']
+        order_with_respect_to = 'lesson'

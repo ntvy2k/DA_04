@@ -1,8 +1,10 @@
 from .models import Course, Chapter, Lesson, Content
-from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
+from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, StringRelatedField
 
 
 class CourseSerializer(ModelSerializer):
+    chapters = StringRelatedField(many=True, read_only=True)
+
     class Meta:
         model = Course
         fields = '__all__'
@@ -16,6 +18,7 @@ class ChapterFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
 
 class ChapterSerializer(ModelSerializer):
     course = ChapterFilteredPrimaryKeyRelatedField()
+    lessons = StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Chapter
@@ -30,6 +33,7 @@ class LessonFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
 
 class LessonSerializer(ModelSerializer):
     chapter = LessonFilteredPrimaryKeyRelatedField()
+    contents = StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Lesson
