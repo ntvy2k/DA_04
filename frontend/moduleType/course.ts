@@ -1,15 +1,15 @@
-export interface Course {
-    name: string,
-    author: string,
+export interface Generate {
     id: number,
     created_at: string,
     last_modified: string,
 }
 
-export interface Chapter {
-    id: number,
+export interface Course extends Generate {
     name: string,
-    created_at: string,
-    last_modified: string,
+    author: string,
+}
+
+export interface Chapter extends Generate {
+    name: string,
     course: number
 }

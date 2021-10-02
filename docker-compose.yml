@@ -29,6 +29,8 @@ services:
       - ./frontend/styles/:/front_side/styles/
       - ./frontend/components/:/front_side/components/
       - ./frontend/moduleType/:/front_side/moduleType/
+      - ./frontend/features/:/front_side/features/
+      - ./frontend/app/:/front_side/app/
     networks:
       - frontnet
   backend_api:

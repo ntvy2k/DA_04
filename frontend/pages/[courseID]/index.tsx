@@ -1,23 +1,16 @@
 import Head from "next/head";
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { useRouter } from "next/router";
-import { Chapter, Course } from "../../moduleType/course";
 import courseApi from "../api/courseApi";
 import { GetStaticPaths, GetStaticProps } from "next";
-import Link from "next/link";
 import ContentChapter from "../../components/ContentChapter";
-import { ParsedUrlQuery } from "querystring";
-
-// Courses.propTypes = {
-
-// };
+import { Chapter, Course } from "../../moduleType";
+import { AxiosResponse } from "axios";
 
 function CourseID({ chapterList }: { chapterList: Array<Chapter> }) {
   const router = useRouter();
   const { courseID } = router.query;
-  const [chapterID, setChapterID] = useState<number>(0);
-  console.log(chapterList);
+  const [chapterID, setChapterID] = useState<number>(1);
 
   function handleClick(id: number) {
     setChapterID(id);
@@ -48,8 +41,8 @@ function CourseID({ chapterList }: { chapterList: Array<Chapter> }) {
   );
 }
 export const getStaticPaths: GetStaticPaths = async () => {
-  const responses = await courseApi.getAll();
-  const data = responses.data;
+  const response: AxiosResponse<Array<Course>> = await courseApi.getAll();
+  const data = response.data
   const paths = data.map((course: Course) => ({
     params: {
       courseID: course.id.toString(),
@@ -62,7 +55,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const response = await courseApi.getListChapter(Number(params?.courseID));
+  const response = await courseApi.getListChapter(`${params?.courseID}`);
   const chapterList = response.data;
   return {
     props: {

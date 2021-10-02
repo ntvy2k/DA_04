@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-ContentChapter.propTypes = {
-    id: PropTypes.number.isRequired
-};
-
-ContentChapter.defaultProps = {
-    id: 1
+export interface ContentProps {
+    id: number
 }
 
-function ContentChapter(props: any) {
+function ContentChapter(props: ContentProps) {
     const { id } = props
     return (
         <div>

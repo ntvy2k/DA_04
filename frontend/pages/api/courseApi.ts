@@ -1,13 +1,15 @@
+import { AxiosResponse } from "axios";
+import { Course } from "../../moduleType";
 import axiosClient from "./axiosClient";
 
 // api/productApi.js
 const courseApi = {
-  getAll: () => {
+  getAll(): Promise<AxiosResponse<Array<Course>>> {
     const url = `/course`
     return axiosClient.get(url)
   },
-  getListChapter: (id: number) => {
-    const url = `course/${id}/chapter`
+  getListChapter(id: number | string): Promise<AxiosResponse<Array<Course>>> {
+    const url = `/course/${id}/chapter`
     return axiosClient.get(url)
   }
 };

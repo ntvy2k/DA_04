@@ -4,9 +4,9 @@ import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import courseApi from "./api/courseApi";
 import HeaderCourse from "../components/HeaderCourse";
-import { Course } from "../moduleType/course";
+import { GetStaticProps } from "next";
+import { Course } from "../moduleType";
 import { AxiosResponse } from "axios";
-import { GetServerSideProps } from "next";
 
 const Home = ({ data }: { data: Array<Course> }) => {
   return (
@@ -24,18 +24,16 @@ const Home = ({ data }: { data: Array<Course> }) => {
         <Link href="/about">
           <a>About Us</a>
         </Link>
-        <Link href="/textEdittor">
+        <Link href="/addContent">
           <a>Component Text Edit</a>
         </Link>
       </div>
     </div>
   );
 };
-
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const response: AxiosResponse<Array<Course>> = await courseApi.getAll();
   const data = response.data
-
   return {
     props: { data },
   };

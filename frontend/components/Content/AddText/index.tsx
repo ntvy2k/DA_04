@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import dynamic from "next/dynamic";
-import SunEditor, { buttonList } from "suneditor-react";
-import SunEditorCore from 'suneditor/src/lib/core';
 import 'suneditor/dist/css/suneditor.min.css';
 
-TextEditTor.propTypes = {
+const SunEditor = dynamic(() => import("suneditor-react"), {
+    ssr: false,
+})
 
-};
+interface addText {
+    onSubmit: Function
+    id: number
+}
 
-function TextEditTor() {
+export function AddText(props: addText) {
+    const { id, onSubmit } = props
     const [value, setValue] = useState<string>();
 
     return (
@@ -17,6 +20,7 @@ function TextEditTor() {
             <SunEditor
                 setContents={value}
                 onChange={setValue}
+                onBlur={onSubmit({ id, value })}
                 setOptions={{
                     buttonList: [
                         ["undo", "redo"],
@@ -52,5 +56,3 @@ function TextEditTor() {
         </div>
     );
 }
-
-export default TextEditTor;

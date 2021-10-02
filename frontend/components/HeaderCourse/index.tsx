@@ -2,15 +2,10 @@ import React from "react";
 // import PropTypes from "prop-types";
 import styles from "../../styles/HeaderCourse.module.css";
 import Link from "next/link";
-import { Course } from "../../moduleType/course"
-
-// HeaderCourse.propTypes = {
-//   data: PropTypes.array,
-// };
-
-// Can replace with
-// type CourseList = Array<Course>
-// const HeaderCourse: React.FC<{ data: CourseList }> = ({ data }) => {}
+import { Course } from "../../moduleType";
+import { GetServerSideProps } from "next";
+import { AxiosResponse } from "axios";
+import courseApi from "../../pages/api/courseApi";
 
 function HeaderCourse({ data }: { data: Array<Course> }) {
   return (
@@ -29,5 +24,6 @@ function HeaderCourse({ data }: { data: Array<Course> }) {
     </div>
   );
 };
+
 
 export default HeaderCourse;
