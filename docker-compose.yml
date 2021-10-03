@@ -42,6 +42,7 @@ services:
       - db
     volumes:
       - ./api_da4/:/code/api_da4/
+      - ./auth_da4/:/code/auth_da4/
       - backend_static:/code/static/
     networks:
       - backnet

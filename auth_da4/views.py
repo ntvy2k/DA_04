@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token 
 from rest_framework import status
 
+from .serializers import UserBaseSerializer
+
 
 class UserRegisterView(APIView):
     def post(self, request):
@@ -29,31 +31,28 @@ class UserLoginView(APIView):
             user = User.objects.get(username=info['username'])
             if user.check_password(info['password']):
                 token = Token.objects.get_or_create(user=user)[0]
-                return Response({"token": token.key, "error": False})
+                return Response({"access": token.key})
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 class UserLogoutView(APIView):
-    def get(self, request):
+    def delete(self, request):
         try:
-            token = Token.objects.get(user=request.user)
+            user = User.objects.get(id=request.data['id'])
+            token = Token.objects.get(user=user)
             token.delete()
-            return Response({"user": "logout"})
+            return Response(status.HTTP_202_ACCEPTED)
         except:
-            return Response({"user": "logout"})
+            return Response(status.HTTP_202_ACCEPTED)
 
 
 class UserProfileView(APIView):
     def get(self, request):
         if request.user.is_authenticated:
             user = request.user
-            user_data = {"id": user.id,
-                        "first_name": user.first_name, 
-                        "last_name": user.last_name,
-                        "username": user.username,
-                        "email": user.email}
-            return Response(user_data)
+            serializer = UserBaseSerializer(user)
+            return Response(serializer.data)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
