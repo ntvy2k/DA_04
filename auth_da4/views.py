@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token 
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 from .serializers import UserBaseSerializer
@@ -43,15 +44,14 @@ class UserLogoutView(APIView):
             user = request.user
             token = Token.objects.get(user=user)
             token.delete()
-            return Response(status.HTTP_202_ACCEPTED)
+            return Response(status.HTTP_204_NO_CONTENT)
         return Response(status.HTTP_202_ACCEPTED)
 
 
 class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
-        if request.user.is_authenticated:
-            user = request.user
-            serializer = UserBaseSerializer(user)
-            return Response(serializer.data)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        user = request.user
+        serializer = UserBaseSerializer(user)
+        return Response(serializer.data)

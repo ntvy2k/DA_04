@@ -17,15 +17,12 @@ const Home = ({ data }: { data: Array<Course> }) => {
     (state) => state.auth.is_authenticated
   );
   React.useEffect(() => {
-    const token = localStorage.getItem("key");
-    if (token !== null) {
-      dispatch(fetch_user(token))
-        .unwrap()
-        .then((res) => console.log("res", res))
-        .catch((err) => console.log("err", err));
-    } else {
-      dispatch(set_not_authenticated());
-    }
+    const local_token = localStorage.getItem("key");
+    const token = local_token == null ? "" : local_token;
+    dispatch(fetch_user(token))
+      .unwrap()
+      .then((res) => console.log("res", res))
+      .catch((err) => console.log("err", err));
   }, [dispatch]);
 
   const handleLogout = () => {
