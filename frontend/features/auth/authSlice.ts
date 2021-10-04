@@ -35,12 +35,12 @@ export const login = (
   return axios.post(url, { username: username, password: password });
 };
 
-export const logout = (user_id: number) => {
+export const logout = (token: string) => {
   const url = make_url("token-destroy");
-  const response = axios.delete(url, { data: { id: user_id } });
-  response
-    .then(() => localStorage.removeItem("key"))
-    .catch(() => localStorage.removeItem("key"));
+  const config = {
+    headers: { Authorization: `Token ${token}` },
+  };
+  return axios.delete(url, config);
 };
 
 const initialState: AuthState = {

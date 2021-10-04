@@ -8,19 +8,35 @@ import HeaderCourse from "../components/HeaderCourse";
 import { GetStaticProps } from "next";
 import { Course } from "../moduleType";
 import { AxiosResponse } from "axios";
-import { fetch_user } from "../features/auth";
-import { useAppDispatch } from "../app/hooks";
+import { fetch_user, logout, set_not_authenticated } from "../features/auth";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 const Home = ({ data }: { data: Array<Course> }) => {
   const dispatch = useAppDispatch();
+  const user_is_authenticated = useAppSelector(
+    (state) => state.auth.is_authenticated
+  );
   React.useEffect(() => {
-    const local_token = localStorage.getItem("key");
-    const token = local_token === null ? "" : local_token;
-    dispatch(fetch_user(token))
-      .unwrap()
-      .then((res) => console.log("res", res))
-      .catch((err) => console.log("err", err));
+    const token = localStorage.getItem("key");
+    if (token !== null) {
+      dispatch(fetch_user(token))
+        .unwrap()
+        .then((res) => console.log("res", res))
+        .catch((err) => console.log("err", err));
+    } else {
+      dispatch(set_not_authenticated());
+    }
   }, [dispatch]);
+
+  const handleLogout = () => {
+    const token = localStorage.getItem("key");
+    if (token !== null) {
+      logout(token).then(() => {
+        localStorage.removeItem("key");
+        dispatch(set_not_authenticated());
+      });
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -39,14 +55,24 @@ const Home = ({ data }: { data: Array<Course> }) => {
         <Link href="/addContent">
           <a>Component Text Edit</a>
         </Link>
-        <p></p>
-        <Link href="/login">
-          <a>Login</a>
-        </Link>
-        <p></p>
-        <Link href="/register">
-          <a>Register</a>
-        </Link>
+        {user_is_authenticated ? (
+          <p>
+            <a onClick={() => handleLogout()}>Logout</a>
+          </p>
+        ) : (
+          <>
+            <p>
+              <Link href="/login">
+                <a>Login</a>
+              </Link>
+            </p>
+            <p>
+              <Link href="/register">
+                <a>Register</a>
+              </Link>
+            </p>
+          </>
+        )}
       </div>
     </div>
   );
