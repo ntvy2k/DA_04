@@ -1,40 +1,40 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { login, fetch_user } from "../features/auth";
 
 const Login = () => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
   const is_authenticated = useAppSelector(
     (state) => state.auth.is_authenticated
   );
-  const router = useRouter();
 
   React.useEffect(() => {
-    if (is_authenticated) {
+    if (is_authenticated && localStorage.getItem("key") !== null) {
       router.push("/");
     }
   }, [is_authenticated, router]);
 
+  React.useEffect(() => {
+    const token = localStorage.getItem("key");
+    if (token !== null) {
+      dispatch(fetch_user(token))
+        .unwrap()
+        .then(() => router.push("/"));
+    }
+  }, [dispatch, router]);
+
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
-
-  const dispatch = useAppDispatch();
 
   const handleClick = () => {
     login(username, password)
       .then((response) => {
         localStorage.setItem("key", response.data.access);
-        const local_token = localStorage.getItem("key");
-        if (local_token !== null) {
-          dispatch(fetch_user(local_token))
-            .unwrap()
-            .then((res) => {
-              console.log("res", res);
-              router.push("/");
-            })
-            .catch((err) => console.log("err", err));
-        }
+        router.push("/");
       })
       .catch((e) => console.log(e));
   };
@@ -48,6 +48,7 @@ const Login = () => {
       <div>
         <form>
           <label>
+            Username:
             <input
               type="text"
               name="username"
@@ -56,6 +57,7 @@ const Login = () => {
             />
           </label>
           <label>
+            Password:
             <input
               type="password"
               name="password"

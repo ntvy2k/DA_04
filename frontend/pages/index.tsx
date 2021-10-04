@@ -8,22 +8,20 @@ import HeaderCourse from "../components/HeaderCourse";
 import { GetStaticProps } from "next";
 import { Course } from "../moduleType";
 import { AxiosResponse } from "axios";
-import { fetch_user, set_unauthenticated } from "../features/auth";
+import { fetch_user } from "../features/auth";
 import { useAppDispatch } from "../app/hooks";
 
 const Home = ({ data }: { data: Array<Course> }) => {
   const dispatch = useAppDispatch();
   React.useEffect(() => {
-    const token = localStorage.getItem("key");
-    if (token !== null) {
-      dispatch(fetch_user(token))
-        .unwrap()
-        .then((res) => console.log("res", res))
-        .catch((err) => console.log("err", err));
-    } else {
-      dispatch(set_unauthenticated());
-    }
-  });
+    const local_token = localStorage.getItem("key");
+    const token = local_token === null ? "" : local_token;
+    dispatch(fetch_user(token))
+      .unwrap()
+      .then((res) => console.log("res", res))
+      .catch((err) => console.log("err", err));
+  }, [dispatch]);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -34,7 +32,6 @@ const Home = ({ data }: { data: Array<Course> }) => {
       <HeaderCourse data={data} />
 
       <div>Hello Django NextJS Nginx</div>
-      <button type="button">Django...</button>
       <div>
         <Link href="/about">
           <a>About Us</a>
