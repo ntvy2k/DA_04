@@ -43,6 +43,10 @@ const Home = ({ data }: { data: Array<Course> }) => {
         <Link href="/login">
           <a>Login</a>
         </Link>
+        <p></p>
+        <Link href="/register">
+          <a>Register</a>
+        </Link>
       </div>
     </div>
   );
