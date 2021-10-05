@@ -17,6 +17,8 @@ services:
     networks:
       - frontnet
       - backnet
+      - complier_net
+    restart: on-failure
   frontend:
     build:
       context: frontend/
@@ -61,6 +63,13 @@ services:
     networks:
       - dbnet
     restart: on-failure
+  php_complier:
+    build:
+      context: ./docker-compliers/php/
+      dockerfile: Dockerfile
+    container_name: php-complier
+    networks:
+      - complier_net
 
 volumes:
   da04_db:
@@ -70,3 +79,4 @@ networks:
   frontnet:
   backnet:
   dbnet:
+  complier_net:
