@@ -2,12 +2,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { AxiosResponse } from "axios";
 
-export interface User {
-  id: number;
+interface BaseInfo {
   first_name: string;
   last_name: string;
   username: string;
   email: string;
+}
+
+export interface User extends BaseInfo {
+  id: number;
 }
 
 export interface Token {
@@ -45,13 +48,9 @@ export const logout = (token: string) => {
 
 // Register Zone
 
-export type RegisterForm = {
-  username: string;
+export interface RegisterForm extends BaseInfo {
   password: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-};
+}
 
 /**
  * 0: Successful
