@@ -20,7 +20,7 @@ export interface AuthState {
   user: User | null;
 }
 
-type Enpoint = "token" | "token-destroy" | "profile";
+type Enpoint = "token" | "token-destroy" | "profile" | "register";
 
 const make_url = (enpoint: Enpoint): string => {
   const relative_url = "auth/";
@@ -42,6 +42,34 @@ export const logout = (token: string) => {
   };
   return axios.delete(url, config);
 };
+
+// Register Zone
+
+export type RegisterForm = {
+  username: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+};
+
+/**
+ * 0: Successful
+ * 1: Username already exists
+ * 2: Email already exists
+ */
+export type RegisterStatus = {
+  status: 0 | 1 | 2;
+};
+
+export const register = (
+  user_form: RegisterForm
+): Promise<AxiosResponse<RegisterStatus>> => {
+  const url = make_url("register");
+  return axios.post(url, user_form);
+};
+
+// End Register Zone
 
 const initialState: AuthState = {
   is_loading: false,

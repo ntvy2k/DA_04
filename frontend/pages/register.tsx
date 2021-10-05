@@ -1,26 +1,11 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import { register } from "../features/auth";
+import type { RegisterForm } from "../features/auth";
 
 // Uncomplete... Lam di Phuc
-
-type RegisterForm = {
-  username: string;
-  password: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-};
-
-/**
- * 0: Successful
- * 1: Username already exists
- * 2: Email already exists
- */
-type RegisterStatus = {
-  status: 0 | 1 | 2;
-};
+// ../features/auth kiem tra nha
 
 const initForm: RegisterForm = {
   username: "",
@@ -35,14 +20,9 @@ const RegForm = () => {
   const [form_data, set_form_data] = useState<RegisterForm>(initForm);
   const [confirm_password, set_confirm_password] = useState<string>("");
 
-  const register = (): Promise<AxiosResponse<RegisterStatus>> => {
-    const url = "auth/register/";
-    return axios.post(url, form_data);
-  };
-
   const handleSubmit = () => {
     if (form_data.password === confirm_password) {
-      register()
+      register(form_data)
         .then((res) => {
           const r = res.data;
           if (r.status === 0) {
