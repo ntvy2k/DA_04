@@ -4,7 +4,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Course, Chapter, Lesson, Content
 from .serializers.generics import CourseSerializer, ChapterSerializer, LessonSerializer, ContentSerializer
-from .serializers.details import CourseDetailSerializer
+from .serializers.details import CourseDetailSerializer, ChapterDetailSerializer, LessonsDetailSerializer
 
 
 class CourseViewSet(ModelViewSet):
@@ -23,6 +23,13 @@ class ChapterViewSet(ModelViewSet):
     def get_queryset(self):
         return Chapter.objects.filter(course=self.kwargs['course_pk'])
 
+
+    def retrieve(self, request, *args, **kwargs):
+        chapter = get_object_or_404(self.get_queryset().filter(), pk=kwargs['pk'])
+        serializer = ChapterDetailSerializer(chapter)
+        return Response(serializer.data)
+
+
     def get_serializer_context(self):
         context = super(ChapterViewSet, self).get_serializer_context()
         context.update({"course": self.kwargs['course_pk']})
@@ -35,6 +42,12 @@ class LessonViewSet(ModelViewSet):
     def get_queryset(self):
         return Lesson.objects.filter(chapter__course=self.kwargs['course_pk'], chapter=self.kwargs['chapter_pk'])
     
+
+    def retrieve(self, request, *args, **kwargs):
+        lesson = get_object_or_404(self.get_queryset().filter(), pk=kwargs['pk'])
+        serializer = LessonsDetailSerializer(lesson)
+        return Response(serializer.data)
+
 
     def list(self, request, course_pk, chapter_pk):
         get_object_or_404(Chapter.objects.filter(course=course_pk, pk=chapter_pk))

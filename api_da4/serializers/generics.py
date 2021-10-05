@@ -1,5 +1,6 @@
 from api_da4.models import Course, Chapter, Lesson, Content
-from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, StringRelatedField
+from .shorts import ChapterShortSerializer, LessonShortSerializer
+from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 
 
 class CourseSerializer(ModelSerializer):
@@ -14,13 +15,11 @@ class ChapterFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
         return queryset
 
 
-class ChapterSerializer(ModelSerializer):
+class ChapterSerializer(ChapterShortSerializer):
     course = ChapterFilteredPrimaryKeyRelatedField()
-    lessons = StringRelatedField(many=True, read_only=True)
 
-    class Meta:
-        model = Chapter
-        fields = ['id', 'name', 'created_at', 'last_modified', 'course', 'lessons']
+    class Meta(ChapterShortSerializer.Meta):
+        fields = ChapterShortSerializer.Meta.fields + ['created_at', 'last_modified', 'course']
 
 
 class LessonFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
@@ -29,13 +28,11 @@ class LessonFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
         return queryset
 
 
-class LessonSerializer(ModelSerializer):
+class LessonSerializer(LessonShortSerializer):
     chapter = LessonFilteredPrimaryKeyRelatedField()
-    contents = StringRelatedField(many=True, read_only=True)
 
-    class Meta:
-        model = Lesson
-        fields = ['id', 'name', 'created_at', 'last_modified', 'chapter', 'contents']
+    class Meta(LessonShortSerializer.Meta):
+        fields = LessonShortSerializer.Meta.fields + ['created_at', 'last_modified', 'chapter']
 
 
 class ContentFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
