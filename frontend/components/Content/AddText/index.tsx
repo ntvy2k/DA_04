@@ -13,19 +13,23 @@ interface addText {
 
 export function AddText(props: addText) {
     const { id, onSubmit } = props
-    const [value, setValue] = useState<string>();
+    const type = 'text'
+    const [content, setContent] = useState<any>('');
+    function handleChange(content: string) {
+        setContent(content)
+    }
 
     return (
         <div>
             <SunEditor
-                setContents={value}
-                onChange={setValue}
-                onBlur={onSubmit({ id, value })}
+                setContents={content}
+                onChange={setContent}
+                onBlur={onSubmit({ id, content, type })}
                 setOptions={{
                     buttonList: [
                         ["undo", "redo"],
                         ["font", "fontSize"],
-                        // ['paragraphStyle', 'blockquote'],
+                        ['paragraphStyle', 'blockquote'],
                         [
                             "bold",
                             "underline",
@@ -39,14 +43,14 @@ export function AddText(props: addText) {
                         ["outdent", "indent"],
 
                         ["table", "horizontalRule", "link", "image", "video"],
-                        // ['math'] //You must add the 'katex' library at options to use the 'math' plugin.
+                        // ['math'], //You must add the 'katex' library at options to use the 'math' plugin.
                         // ['imageGallery'], // You must add the "imageGalleryUrl".
-                        // ["fullScreen", "showBlocks", "codeView"],
+                        ["fullScreen", "showBlocks", "codeView"],
                         ["preview", "print"],
                         ["removeFormat"]
 
                         // ['save', 'template'],
-                        // '/', Line break
+                        // ['/'],// Line break
                     ],
                     defaultTag: "div",
                     minHeight: "300px",
