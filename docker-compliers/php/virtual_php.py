@@ -1,11 +1,12 @@
 import os
 
-from subprocess import Popen, PIPE
+from subprocess import TimeoutExpired, run
 from string import ascii_lowercase, digits
 from random import choices
 from time import time
 
 PHP_CODE_PATH = "php_tmp/code/"
+RUN_TIME_OUT = 4
 
 class VirtualPHP:
 
@@ -23,10 +24,12 @@ class VirtualPHP:
 
     def run(self):
         begin = time()
-        p = Popen(['php', self.filename], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-        output, err = p.communicate(b"Run php scripts...")
+        try:
+            result = run(['php', self.filename], capture_output=True, text=True, timeout=RUN_TIME_OUT)
+            output, err = result.stdout, result.stderr
+        except TimeoutExpired:
+            output, err = "", "Error: timeout"
         end = time()
-        output, err = output.decode(), err.decode()
         t = str(round(end - begin, 6)) + 's'
         return output, err, t
     
