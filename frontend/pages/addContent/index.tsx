@@ -26,7 +26,7 @@ function AddContent() {
                 return content.id == data.id
             })
             if (checkValue) {
-                submitContent.map(content => {
+                submitContent.map((content) => {
                     if (content.id === data.id) {
                         content.value = data.value
                     }
@@ -39,11 +39,11 @@ function AddContent() {
 
     function handleSubmit() {
         console.log(submitContent)
-        submitContent.map(async (content) => {
+        submitContent.map(async ({ id, ...newObject }) => {
             const value = {
                 lesson: 1,
                 title: "test",
-                content: content
+                content: newObject
             }
             courseApi.postContent(value)
         })
