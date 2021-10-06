@@ -20,7 +20,7 @@ def run_code(phpcode: PHPCode):
 
     php = VirtualPHP()
     php.create_file(phpcode.code)
-    out, err = php.run()
+    out, err, t = php.run()
     php.cleanup()
     
-    return ({"out": out, "err": err})
+    return ({"out": out, "err": err, "time": t})

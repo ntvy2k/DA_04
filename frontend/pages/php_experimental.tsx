@@ -6,6 +6,7 @@ import axios, { AxiosResponse } from "axios";
 type CodeResponse = {
   out: string;
   err: string;
+  time: string;
 };
 
 const run_code = async (code: string) => {
@@ -21,6 +22,7 @@ const PHP = () => {
   const [code, set_code] = React.useState<string>("<?php");
   const [output, set_output] = React.useState<string>("");
   const [error, set_error] = React.useState<string>("");
+  const [time, set_time] = React.useState<string>("");
 
   const handleChange = (
     value: string | undefined,
@@ -36,6 +38,7 @@ const PHP = () => {
       .then((data) => {
         set_output(data.out);
         set_error(data.err);
+        set_time(data.time);
       })
       .catch((err) => console.log(err));
   };
@@ -55,6 +58,7 @@ const PHP = () => {
       <p></p>
       {output === "" ? "" : <p>{output}</p>}
       {error === "" ? "" : <p>{error}</p>}
+      <p>{time}</p>
     </>
   );
 };

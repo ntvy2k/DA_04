@@ -3,6 +3,7 @@ import os
 from subprocess import Popen, PIPE
 from string import ascii_lowercase, digits
 from random import choices
+from time import time
 
 PHP_CODE_PATH = "php_tmp/code/"
 
@@ -21,11 +22,13 @@ class VirtualPHP:
 
 
     def run(self):
-        # TODO calculate time
+        begin = time()
         p = Popen(['php', self.filename], stdin=PIPE, stdout=PIPE, stderr=PIPE)
         output, err = p.communicate(b"Run php scripts...")
+        end = time()
         output, err = output.decode(), err.decode()
-        return output, err
+        t = str(round(end - begin, 6)) + 's'
+        return output, err, t
     
 
     def cleanup(self):
