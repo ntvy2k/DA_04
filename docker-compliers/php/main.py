@@ -12,7 +12,7 @@ class PHPCode(BaseModel):
 
 @app.get('/')
 def index():
-    return {"output": "output", "err": "err"}
+    return {"description": "Day la php complier"}
 
 
 @app.post('/')
