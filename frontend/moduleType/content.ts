@@ -15,5 +15,5 @@ export interface valuePlayGround {
 export interface dataContent {
     id: number,
     type: string,
-    value: String | valuePlayGround,
+    value: string | valuePlayGround,
 }

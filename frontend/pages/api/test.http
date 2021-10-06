@@ -1,0 +1,15 @@
+GET http://localhost/api/course/
+
+###
+
+POST http://localhost/api/course/1/chapter/1/lesson/1/content/
+Content-Type: application/json
+
+{
+    "lesson":1,
+    "title":"test",
+    "content":{
+        "id":1,
+        "value":"hahahhaha"
+    }
+}

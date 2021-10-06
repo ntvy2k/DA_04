@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { AddPlayGround, AddText } from '../../components/Content';
 import { dataContent } from '../../moduleType';
+import axiosServer from '../api/axiosServer';
+import courseApi from '../api/courseApi';
 
 
 function AddContent() {
@@ -26,7 +28,7 @@ function AddContent() {
             if (checkValue) {
                 submitContent.map(content => {
                     if (content.id === data.id) {
-                        content.content = data.value
+                        content.value = data.value
                     }
                 })
             } else {
@@ -36,8 +38,16 @@ function AddContent() {
     }, [data])
 
     function handleSubmit() {
-        // courseApi.postContent(1, submitContent)
         console.log(submitContent)
+        submitContent.map(async (content) => {
+            const value = {
+                lesson: 1,
+                title: "test",
+                content: content
+            }
+            courseApi.postContent(value)
+        })
+
     }
     function handleClick(type: 'text' | 'playGroundWithRunCode') {
         switch (type) {

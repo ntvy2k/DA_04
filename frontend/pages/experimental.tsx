@@ -77,7 +77,7 @@ const initData = [init_text_content, init_playground_content];
 
 // client(not nextjs) -> server (nginx) -> backend-api
 const send_content = async (content: Content) => {
-  const url = "/api/course/1/chapter/1/lesson/2/content/";
+  const url = "/api/course/1/chapter/4/lesson/1/content/";
   const response = await axios.post(url, content);
   const data = await response.data;
   console.log("data submit:", data);

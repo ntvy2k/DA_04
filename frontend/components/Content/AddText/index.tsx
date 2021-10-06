@@ -14,17 +14,18 @@ interface addText {
 export function AddText(props: addText) {
     const { id, onSubmit } = props
     const type = 'text'
-    const [content, setContent] = useState<any>('');
+    const [value, setValue] = useState<string>('')
     function handleChange(content: string) {
-        setContent(content)
+        setValue(content)
+        console.log(content)
     }
 
     return (
         <div>
             <SunEditor
-                setContents={content}
-                onChange={setContent}
-                onBlur={onSubmit({ id, content, type })}
+                setContents={value}
+                onChange={handleChange}
+                onBlur={onSubmit({ id, value, type })}
                 setOptions={{
                     buttonList: [
                         ["undo", "redo"],
