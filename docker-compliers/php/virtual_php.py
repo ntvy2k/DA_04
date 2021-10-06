@@ -21,6 +21,7 @@ class VirtualPHP:
 
 
     def run(self):
+        # TODO calculate time
         p = Popen(['php', self.filename], stdin=PIPE, stdout=PIPE, stderr=PIPE)
         output, err = p.communicate(b"Run php scripts...")
         output, err = output.decode(), err.decode()
