@@ -2,8 +2,15 @@ from .generics import CourseSerializer, ChapterSerializer, LessonSerializer
 from .shorts import ChapterShortSerializer, ContentShortSerializer, LessonShortSerializer
 
 
+class ChapterShortDetail(ChapterShortSerializer):
+    lessons = LessonShortSerializer(many=True, read_only=True)
+
+    class Meta(ChapterShortSerializer.Meta):
+        fields = ChapterShortSerializer.Meta.fields + ['lessons']
+
+
 class CourseDetailSerializer(CourseSerializer):
-    chapters = ChapterShortSerializer(many=True, read_only=True)
+    chapters = ChapterShortDetail(many=True, read_only=True)
 
     class Meta(CourseSerializer.Meta):
         fields = CourseSerializer.Meta.fields + ['chapters']
