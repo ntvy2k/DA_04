@@ -121,6 +121,12 @@ const Experimental = ({ data }: { data: Array<Course> }) => {
           <CourseElement key={c.id} course={c} />
         ))}
       </div>
+      <p>Hello World</p>
+      <p>Hello world 2</p>
+      <p>Hello world 3</p>
+      <p>Hello world 4</p>
+      <p>Hello world 5</p>
+      <p>Hello world 6</p>
 
       <button type="button" onClick={() => handleSubmit()}>
         JustTest

@@ -27,14 +27,18 @@ services:
     depends_on:
       - backend_api
     volumes:
-      - ./frontend/pages/:/front_side/pages/
-      - ./frontend/styles/:/front_side/styles/
-      - ./frontend/components/:/front_side/components/
-      - ./frontend/moduleType/:/front_side/moduleType/
-      - ./frontend/features/:/front_side/features/
-      - ./frontend/app/:/front_side/app/
+      - ./frontend/:/front_side/
+      - /front_side/node_modules
+      - /front_side/.next
+      # - ./frontend/pages/:/front_side/pages/
+      # - ./frontend/styles/:/front_side/styles/
+      # - ./frontend/components/:/front_side/components/
+      # - ./frontend/moduleType/:/front_side/moduleType/
+      # - ./frontend/features/:/front_side/features/
+      # - ./frontend/app/:/front_side/app/
     networks:
       - frontnet
+    restart: always
   backend_api:
     build:
       context: ./
