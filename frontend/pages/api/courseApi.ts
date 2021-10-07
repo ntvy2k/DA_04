@@ -1,25 +1,27 @@
 import axios, { AxiosResponse } from "axios";
-import { Course, dataContent } from "../../moduleType";
-import axiosClient from "./axiosClient";
-import axiosServer from "./axiosServer";
+import { CourseList, dataContent } from "../../moduleType";
 
 // api/productApi.js
 const courseApi = {
-  getAll(): Promise<AxiosResponse<Array<Course>>> {
-    const url = `/course`
-    return axiosClient.get(url)
+  getAll(): Promise<AxiosResponse<Array<CourseList>>> {
+    const url = `/api/course`
+    return axios.get(url)
   },
-  getListChapter(id: number | string): Promise<AxiosResponse<Array<Course>>> {
-    const url = `/course/${id}/chapter`
-    return axiosClient.get(url)
+  getListChapter(id: number | string | string[] | undefined): Promise<AxiosResponse<Array<any>>> {
+    const url = `/api/course/${id}/chapter`
+    return axios.get(url)
   },
   postContent(values: any) {
-    const url = `/course/1/chapter/1/lesson/1/content/`
-    return axiosServer.post(url, values)
+    const url = `/api/course/1/chapter/1/lesson/1/content/`
+    return axios.post(url, values)
   },
   updateContent(id: number, values: any) {
-    const url = `/course/1/chapter/4/lesson/${id}/content/1`
-    return axiosClient.put(url, values)
+    const url = `/api/course/1/chapter/4/lesson/${id}/content/1`
+    return axios.put(url, values)
+  },
+  getContentList(courseID: number | undefined, chapterID: number | undefined, lessonID: number | undefined) {
+    const url = `/api/course/${courseID}/chapter/${chapterID}/lesson/${lessonID}/content`
+    return axios.get(url)
   }
 
 };

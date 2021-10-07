@@ -1,15 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ContentList } from '../../moduleType';
+import Editor from '@monaco-editor/react';
+import "suneditor/dist/css/suneditor.min.css";
+import dynamic from 'next/dynamic';
+import PHP from '../RunCode/PHP';
+
+const SunEditor = dynamic(() => import("suneditor-react"), {
+    ssr: false,
+})
+
 
 export interface ContentProps {
-    id: number
+    data: Array<ContentList | null>
 }
 
 function ContentChapter(props: ContentProps) {
-    const { id } = props
+    const { data } = props
     return (
         <div>
-            <p>This is chapter {id} </p>
+            {data.map((content) => {
+                switch (content?.content.type) {
+                    case 'text': {
+                        return (<SunEditor
+                            key={content.id}
+                            setContents={content.content.value}
+                            hideToolbar={true}
+                            disable={true}
+                        />)
+                    }
+                    case 'playground': {
+                        return (
+                            <div key={content.id}>
+                                <PHP
+                                    value={content.content.value}
+                                    button={content.content.button}
+                                />
+                            </div>
+                        )
+                    }
+                }
+            })}
         </div>
     );
 }

@@ -1,13 +1,9 @@
 import React from "react";
-// import PropTypes from "prop-types";
 import styles from "../../styles/HeaderCourse.module.css";
 import Link from "next/link";
-import { Course } from "../../moduleType";
-import { GetServerSideProps } from "next";
-import { AxiosResponse } from "axios";
-import courseApi from "../../pages/api/courseApi";
+import { Course, CourseList } from "../../moduleType";
 
-function HeaderCourse({ data }: { data: Array<Course> }) {
+function HeaderCourse({ data }: { data: Array<CourseList> }) {
   return (
     <div>
       <ul className={styles.header}>

@@ -3,15 +3,11 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
-import courseApi from "./api/courseApi";
-import HeaderCourse from "../components/HeaderCourse";
-import { GetStaticProps } from "next";
-import { Course } from "../moduleType";
-import { AxiosResponse } from "axios";
 import { fetch_user, logout, set_not_authenticated } from "../features/auth";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import HomeLayout from "../components/Layouts/homeLayout";
 
-const Home = ({ data }: { data: Array<Course> }) => {
+const Home = () => {
   const dispatch = useAppDispatch();
   const user_is_authenticated = useAppSelector(
     (state) => state.auth.is_authenticated
@@ -42,7 +38,6 @@ const Home = ({ data }: { data: Array<Course> }) => {
         <meta name="description" content="Adudududu" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HeaderCourse data={data} />
 
       <div>Hello Django NextJS Nginx</div>
       <div>
@@ -74,12 +69,15 @@ const Home = ({ data }: { data: Array<Course> }) => {
     </div>
   );
 };
-export const getStaticProps: GetStaticProps = async () => {
-  const response: AxiosResponse<Array<Course>> = await courseApi.getAll();
-  const data = response.data;
-  return {
-    props: { data },
-  };
-};
+
+Home.getLayout = HomeLayout
+
+// export const getStaticProps: GetStaticProps = async () => {
+//   const response: AxiosResponse<Array<Course>> = await courseApi.getAll();
+//   const data = response.data;
+//   return {
+//     props: { data },
+//   };
+// };
 
 export default Home;
