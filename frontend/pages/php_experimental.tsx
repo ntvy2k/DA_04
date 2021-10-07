@@ -2,6 +2,7 @@ import Editor from "@monaco-editor/react";
 import { editor } from "monaco-editor";
 import React from "react";
 import axios, { AxiosResponse } from "axios";
+import code_styles from "../styles/code.module.css";
 
 type CodeResponse = {
   out: string;
@@ -56,8 +57,10 @@ const PHP = () => {
         Run
       </button>
       <p></p>
-      {output === "" ? "" : <p>{output}</p>}
-      {error === "" ? "" : <p>{error}</p>}
+      <div className={code_styles.code_container}>
+        {output === "" ? "" : <p>{output}</p>}
+        {error === "" ? "" : <p>{error}</p>}
+      </div>
       <p>{time}</p>
     </>
   );
