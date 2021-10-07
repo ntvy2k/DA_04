@@ -39,13 +39,13 @@ class UserLoginView(APIView):
 
 
 class UserLogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def delete(self, request):
-        if request.user.is_authenticated:
-            user = request.user
-            token = Token.objects.get(user=user)
-            token.delete()
-            return Response(status.HTTP_204_NO_CONTENT)
-        return Response(status.HTTP_202_ACCEPTED)
+        user = request.user
+        token = Token.objects.get(user=user)
+        token.delete()
+        return Response(status.HTTP_204_NO_CONTENT)
 
 
 class UserProfileView(APIView):
