@@ -11,17 +11,28 @@ class Course(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=50, unique=True)
+    owner = models.ForeignKey(User, related_name='courses', on_delete=models.CASCADE)
 
 
     def __str__(self):
         return self.name
     
 
-    def save(self, *args, **kwargs):
+    def init_or_ignore_slug(self):
         if not self.slug:
             self.slug = slugify(self.name)
             if Course.objects.filter(slug=self.slug).exists():
                 self.slug = self.slug + '-' + str(self.id)
+    
+
+    def init_or_ignore_author(self):
+        if not self.author:
+            self.author = self.owner.last_name.strip() + " " + self.owner.first_name.strip()
+
+
+    def save(self, *args, **kwargs):
+        self.init_or_ignore_slug()
+        self.init_or_ignore_author()
         super(Course, self).save(*args, **kwargs)
 
 
@@ -31,6 +42,7 @@ class Chapter(models.Model):
     course = models.ForeignKey(Course, related_name="chapters", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+
 
     class Meta:
         order_with_respect_to = 'course'

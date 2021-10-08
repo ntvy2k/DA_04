@@ -21,5 +21,6 @@ urlpatterns = [
     path('', include(chapter_router.urls)),
     path('', include(lesson_router.urls)),
     path('', include(content_router.urls)),
+    path('api-auth/', include('rest_framework.urls')),  # xong viec, xoa
 ]
 

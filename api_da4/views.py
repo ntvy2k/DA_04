@@ -1,6 +1,8 @@
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .permissions import IsOwnerOrReadOnly, CourseOwnerOrReadOnly
 
 from .models import Course, Chapter, Lesson, Content
 from .serializers.generics import CourseSerializer, ChapterSerializer, LessonSerializer, ContentSerializer
@@ -11,6 +13,12 @@ class CourseViewSet(ModelViewSet):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
     lookup_field = 'slug'
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 
     def retrieve(self, request, slug):
         course = get_object_or_404(self.queryset.filter(), slug=slug)
@@ -20,6 +28,8 @@ class CourseViewSet(ModelViewSet):
 
 class ChapterViewSet(ModelViewSet):
     serializer_class = ChapterSerializer
+    permission_classes = [CourseOwnerOrReadOnly]
+
 
     def get_queryset(self):
         return Chapter.objects.filter(course__slug=self.kwargs['course_slug'])
@@ -39,6 +49,8 @@ class ChapterViewSet(ModelViewSet):
 
 class LessonViewSet(ModelViewSet):
     serializer_class = LessonSerializer
+    permission_classes = [CourseOwnerOrReadOnly]
+
 
     def get_queryset(self):
         return Lesson.objects.filter(chapter__course__slug=self.kwargs['course_slug'], chapter=self.kwargs['chapter_pk'])
@@ -68,6 +80,8 @@ class LessonViewSet(ModelViewSet):
 
 class ContentViewSet(ModelViewSet):
     serializer_class = ContentSerializer
+    permission_classes = [CourseOwnerOrReadOnly]
+
 
     def get_queryset(self):
         return Content.objects.filter(lesson__chapter__course__slug=self.kwargs['course_slug'],

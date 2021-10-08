@@ -8,7 +8,7 @@ class CourseSerializer(ModelSerializer):
         model = Course
         fields = ['id', 'name', 'author', 'created_at', 'last_modified', 'slug']
         lookup_field = 'slug'
-        read_only_fields = ['slug']
+        read_only_fields = ['slug', 'author']
 
 
 class ChapterFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
