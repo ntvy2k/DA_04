@@ -30,12 +30,6 @@ services:
       - ./frontend/:/front_side/
       - /front_side/node_modules
       - /front_side/.next
-      # - ./frontend/pages/:/front_side/pages/
-      # - ./frontend/styles/:/front_side/styles/
-      # - ./frontend/components/:/front_side/components/
-      # - ./frontend/moduleType/:/front_side/moduleType/
-      # - ./frontend/features/:/front_side/features/
-      # - ./frontend/app/:/front_side/app/
     networks:
       - frontnet
     restart: always

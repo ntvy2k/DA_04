@@ -16,5 +16,5 @@ echo "Run server"
 # python manage.py runserver 0.0.0.0:8000
 # prod
 python manage.py collectstatic  --noinput
-gunicorn --bind :8000 dA_04.wsgi:application
+gunicorn --bind :8000 dA_04.wsgi:application --reload
 exec "$@"

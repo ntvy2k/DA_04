@@ -10,9 +10,10 @@ from .serializers.details import CourseDetailSerializer, ChapterDetailSerializer
 class CourseViewSet(ModelViewSet):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
+    lookup_field = 'slug'
 
-    def retrieve(self, request, pk):
-        course = get_object_or_404(self.queryset.filter(), pk=pk)
+    def retrieve(self, request, slug):
+        course = get_object_or_404(self.queryset.filter(), slug=slug)
         serializer = CourseDetailSerializer(course)
         return Response(serializer.data)
 
@@ -21,7 +22,7 @@ class ChapterViewSet(ModelViewSet):
     serializer_class = ChapterSerializer
 
     def get_queryset(self):
-        return Chapter.objects.filter(course=self.kwargs['course_pk'])
+        return Chapter.objects.filter(course__slug=self.kwargs['course_slug'])
 
 
     def retrieve(self, request, *args, **kwargs):
@@ -32,7 +33,7 @@ class ChapterViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         context = super(ChapterViewSet, self).get_serializer_context()
-        context.update({"course": self.kwargs['course_pk']})
+        context.update({"course": self.kwargs['course_slug']})
         return context
 
 
@@ -40,7 +41,7 @@ class LessonViewSet(ModelViewSet):
     serializer_class = LessonSerializer
 
     def get_queryset(self):
-        return Lesson.objects.filter(chapter__course=self.kwargs['course_pk'], chapter=self.kwargs['chapter_pk'])
+        return Lesson.objects.filter(chapter__course__slug=self.kwargs['course_slug'], chapter=self.kwargs['chapter_pk'])
     
 
     def retrieve(self, request, *args, **kwargs):
@@ -49,13 +50,13 @@ class LessonViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
-    def list(self, request, course_pk, chapter_pk):
-        get_object_or_404(Chapter.objects.filter(course=course_pk, pk=chapter_pk))
+    def list(self, request, course_slug, chapter_pk):
+        get_object_or_404(Chapter.objects.filter(course__slug=course_slug, pk=chapter_pk))
         return super().list(request)
     
 
-    def create(self, request, course_pk, chapter_pk):
-        get_object_or_404(Chapter.objects.filter(course=course_pk, pk=chapter_pk))
+    def create(self, request, course_slug, chapter_pk):
+        get_object_or_404(Chapter.objects.filter(course__slug=course_slug, pk=chapter_pk))
         return super().create(request)
 
     
@@ -69,18 +70,18 @@ class ContentViewSet(ModelViewSet):
     serializer_class = ContentSerializer
 
     def get_queryset(self):
-        return Content.objects.filter(lesson__chapter__course=self.kwargs['course_pk'],
+        return Content.objects.filter(lesson__chapter__course__slug=self.kwargs['course_slug'],
                                     lesson__chapter=self.kwargs['chapter_pk'],
                                     lesson=self.kwargs['lesson_pk'])
 
 
-    def list(self, request, course_pk, chapter_pk, lesson_pk):
-        get_object_or_404(Lesson.objects.filter(chapter__course=course_pk, chapter=chapter_pk, pk=lesson_pk))
+    def list(self, request, course_slug, chapter_pk, lesson_pk):
+        get_object_or_404(Lesson.objects.filter(chapter__course__slug=course_slug, chapter=chapter_pk, pk=lesson_pk))
         return super().list(request)
 
     
-    def create(self, request, course_pk, chapter_pk, lesson_pk):
-        get_object_or_404(Lesson.objects.filter(chapter__course=course_pk, chapter=chapter_pk, pk=lesson_pk))
+    def create(self, request, course_slug, chapter_pk, lesson_pk):
+        get_object_or_404(Lesson.objects.filter(chapter__course__slug=course_slug, chapter=chapter_pk, pk=lesson_pk))
         return super().create(request)
     
 

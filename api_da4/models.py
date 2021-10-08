@@ -1,14 +1,29 @@
+from uuid import uuid4
+
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 class Course(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    author = models.CharField(max_length=50)
+    author = models.CharField(max_length=50, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    slug = models.SlugField(max_length=50, unique=True)
+
 
     def __str__(self):
         return self.name
+    
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+            if Course.objects.filter(slug=self.slug).exists():
+                self.slug = self.slug + '-' + str(self.id)
+        super(Course, self).save(*args, **kwargs)
+
 
 
 class Chapter(models.Model):
@@ -26,6 +41,7 @@ class Chapter(models.Model):
 
 
 class Lesson(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     name = models.CharField(max_length=50)
     chapter = models.ForeignKey(Chapter, related_name="lessons",on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

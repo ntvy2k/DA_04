@@ -6,12 +6,14 @@ from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 class CourseSerializer(ModelSerializer):
     class Meta:
         model = Course
-        fields = ['id', 'name', 'author', 'created_at', 'last_modified']
+        fields = ['id', 'name', 'author', 'created_at', 'last_modified', 'slug']
+        lookup_field = 'slug'
+        read_only_fields = ['slug']
 
 
 class ChapterFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
     def get_queryset(self):
-        queryset = Course.objects.filter(id=self.context['course'])
+        queryset = Course.objects.filter(slug=self.context['course'])
         return queryset
 
 
