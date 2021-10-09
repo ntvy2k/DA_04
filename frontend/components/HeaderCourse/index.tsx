@@ -7,10 +7,10 @@ function HeaderCourse({ data }: { data: Array<CourseList> }) {
   return (
     <div>
       <ul className={styles.header}>
-        {data.map(({ id, name }) => {
+        {data.map(({ id, name, slug }) => {
           return (
             <li key={id} className={styles.header_course}>
-              <Link href={`/${id}`} key={id}>
+              <Link href={`/${slug}`} key={id}>
                 {name}
               </Link>
             </li>

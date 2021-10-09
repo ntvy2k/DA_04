@@ -9,9 +9,9 @@ import HomeLayout from "../../components/Layouts/homeLayout";
 import BarCourse from "../../components/BarCourse";
 
 interface url {
-  courseID: number,
+  courseID: number | string,
   chapterID: number,
-  lessonID: number,
+  lessonID: number | string,
 }
 
 function CourseID({ course }: { course: Course }) {
@@ -35,9 +35,9 @@ function CourseID({ course }: { course: Course }) {
     }
   }, [url])
 
-  function handleClick(idChapter: number, idLesson: number) {
+  function handleClick(idChapter: number, idLesson: number | string) {
     const indexUrl = {
-      courseID: Number(courseID),
+      courseID: `${courseID}`,
       chapterID: idChapter,
       lessonID: idLesson,
     }
@@ -65,7 +65,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const data: Array<CourseList> = await response.json()
   const paths = data.map((course: CourseList) => ({
     params: {
-      courseID: course.id.toString(),
+      courseID: course.slug,
     },
   }));
   return {

@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { store } from '../app/store'
 import { NextPage } from 'next'
 import { ReactElement, ReactNode } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode

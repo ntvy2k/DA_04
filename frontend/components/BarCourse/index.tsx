@@ -9,7 +9,7 @@ interface barCourse {
 
 function BarCourse(props: barCourse) {
     const { course, handleClick } = props
-    function click(chapterID: number, lessonID: number) {
+    function click(chapterID: number, lessonID: number | string) {
         handleClick(chapterID, lessonID)
     }
     return (

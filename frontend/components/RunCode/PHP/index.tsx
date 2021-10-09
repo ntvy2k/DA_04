@@ -1,6 +1,6 @@
 import Editor from "@monaco-editor/react";
 import { editor } from "monaco-editor";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import code_styles from '../../../styles/code.module.css'
 
@@ -31,6 +31,7 @@ const PHP = (props: runPhp) => {
     const [output, set_output] = React.useState<string>("");
     const [error, set_error] = React.useState<string>("");
     const [time, set_time] = React.useState<string>("");
+    const [close, setClose] = useState<boolean>(true)
 
     const handleChange = (
         value: string | undefined,
@@ -49,6 +50,7 @@ const PHP = (props: runPhp) => {
                 set_time(data.time);
             })
             .catch((err) => console.log(err));
+        setClose(false)
     };
 
 
@@ -59,6 +61,10 @@ const PHP = (props: runPhp) => {
         editor.updateOptions({
             readOnly: !button
         })
+    }
+
+    function closeRunCode() {
+        setClose(true)
     }
 
     return (
@@ -76,12 +82,14 @@ const PHP = (props: runPhp) => {
                     <button type="button" onClick={handleClick}>
                         Run
                     </button>
-                    <p></p>
-                    <div className={code_styles.code_container}>
-                        {output === "" ? "" : <p>{output}</p>}
-                        {error === "" ? "" : <p>{error}</p>}
-                    </div>
-                    <p>{time}</p>
+                    {!close ? (<div>
+                        <button onClick={closeRunCode} >Close</button>
+                        <div className={code_styles.code_container}>
+                            {output === "" ? "" : <p>{output}</p>}
+                            {error === "" ? "" : <p>{error}</p>}
+                        </div>
+                        <p>{time}</p>
+                    </div>) : null}
                 </div>
             ) : null}
         </>

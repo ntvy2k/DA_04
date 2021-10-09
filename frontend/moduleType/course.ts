@@ -1,7 +1,7 @@
 import { dataContent } from ".";
 
 export interface Generate {
-    id: number,
+    id: number | string,
     created_at: string,
     last_modified: string,
 }
@@ -9,6 +9,7 @@ export interface Generate {
 export interface CourseList extends Generate {
     name: string,
     author: string,
+    slug: string,
 }
 
 export interface Course extends CourseList {
@@ -53,7 +54,7 @@ export interface ContentInfo {
 
 export interface ContentList {
     id: number,
-    lesson: number,
+    lesson: string,
     title: string,
     content: any
 }

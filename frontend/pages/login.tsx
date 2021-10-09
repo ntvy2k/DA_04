@@ -1,24 +1,29 @@
-import Head from "next/head";
-import { useRouter } from "next/router";
-import React from "react";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { login, fetch_user } from "../features/auth";
+import { FastField, Form, Formik } from 'formik';
+import React, { useEffect } from 'react';
+import { Button } from 'react-bootstrap';
+import * as Yup from 'yup'
+import { useRouter } from 'next/router';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { fetch_user, login } from '../features/auth';
+import InputField from '../components/CustomFields/InputField';
 
-const Login = () => {
+function LoginForm() {
   const dispatch = useAppDispatch();
   const router = useRouter();
-
   const is_authenticated = useAppSelector(
     (state) => state.auth.is_authenticated
   );
-
-  React.useEffect(() => {
+  const initialValues = {
+    username: '',
+    password: '',
+  }
+  useEffect(() => {
     if (is_authenticated && localStorage.getItem("key") !== null) {
       router.push("/");
     }
   }, [is_authenticated, router]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem("key");
     if (token !== null) {
       dispatch(fetch_user(token))
@@ -27,51 +32,55 @@ const Login = () => {
     }
   }, [dispatch, router]);
 
-  const [username, setUsername] = React.useState<string>("");
-  const [password, setPassword] = React.useState<string>("");
-
-  const handleClick = () => {
-    login(username, password)
-      .then((response) => {
-        localStorage.setItem("key", response.data.access);
-        router.push("/");
-      })
-      .catch((e) => console.log(e));
-  };
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required('This field is required'),
+    password: Yup.string().required('This field is required').
+      matches(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+      ),
+  })
 
   return (
-    <>
-      <Head>
-        <title>Login</title>
-        <meta name="description" content="Login" />
-      </Head>
-      <div>
-        <form>
-          <label>
-            Username:
-            <input
-              type="text"
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={({ username, password }) => {
+        console.log(username, password)
+        login(username, password)
+          .then((response) => {
+            localStorage.setItem("key", response.data.access);
+            router.push("/");
+          })
+          .catch((e) => console.log(e));
+      }}
+    >
+      {formikProps => {
+        const { values, errors, touched } = formikProps
+        return (
+          <Form>
+            <FastField
               name="username"
-              value={username}
-              onChange={(e) => setUsername(e.currentTarget.value)}
-            />
-          </label>
-          <label>
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.currentTarget.value)}
-            />
-          </label>
-          <button type="button" onClick={() => handleClick()}>
-            Login
-          </button>
-        </form>
-      </div>
-    </>
-  );
-};
+              component={InputField}
 
-export default Login;
+              type="text"
+              label="Username"
+              placeholder="Username..."
+            />
+            <FastField
+              name="password"
+              component={InputField}
+
+              type="password"
+              label="PassWord"
+              placeholder="Passwd..."
+            />
+            <Button type='submit'>Submit</Button>
+          </Form>
+        )
+      }}
+    </Formik>
+  );
+}
+
+export default LoginForm;

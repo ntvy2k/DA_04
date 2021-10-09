@@ -19,7 +19,7 @@ const courseApi = {
     const url = `/api/course/1/chapter/4/lesson/${id}/content/1`
     return axios.put(url, values)
   },
-  getContentList(courseID: number | undefined, chapterID: number | undefined, lessonID: number | undefined) {
+  getContentList(courseID: number | string | undefined, chapterID: number | undefined, lessonID: number | string | undefined) {
     const url = `/api/course/${courseID}/chapter/${chapterID}/lesson/${lessonID}/content`
     return axios.get(url)
   }

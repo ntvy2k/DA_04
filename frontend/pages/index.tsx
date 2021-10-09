@@ -6,6 +6,7 @@ import styles from "../styles/Home.module.css";
 import { fetch_user, logout, set_not_authenticated } from "../features/auth";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import HomeLayout from "../components/Layouts/homeLayout";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -53,11 +54,6 @@ const Home = () => {
           </p>
         ) : (
           <>
-            <p>
-              <Link href="/login">
-                <a>Login</a>
-              </Link>
-            </p>
             <p>
               <Link href="/register">
                 <a>Register</a>
