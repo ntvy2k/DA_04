@@ -6,7 +6,7 @@ from rest_framework.serializers import ModelSerializer
 class CourseShortSerializer(ModelSerializer):
     class Meta:
         model = Course
-        fields = ['id', 'name']
+        fields = ['name', 'slug'] # ['id']
 
 
 class ChapterShortSerializer(ModelSerializer):
