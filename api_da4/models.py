@@ -5,6 +5,32 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 
 
+# Experimental
+class AbstractType(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    
+    class Meta:
+        abstract = True
+
+
+class CourseGroup(AbstractType):
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        ordering = ['name']
+
+
+class CourseTopic(AbstractType):
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+
 class Course(models.Model):
     name = models.CharField(max_length=50, unique=True)
     author = models.CharField(max_length=50, blank=True)
@@ -12,6 +38,9 @@ class Course(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=50, unique=True)
     owner = models.ForeignKey(User, related_name='courses', on_delete=models.CASCADE)
+    # //
+    group = models.ForeignKey(CourseGroup, related_name='gr_courses', null=True, blank=True, on_delete=models.SET_NULL)
+    topics = models.ManyToManyField(CourseTopic, related_name="tp_courses")
 
 
     def __str__(self):
@@ -34,7 +63,6 @@ class Course(models.Model):
         self.init_or_ignore_slug()
         self.init_or_ignore_author()
         super(Course, self).save(*args, **kwargs)
-
 
 
 class Chapter(models.Model):
