@@ -41,9 +41,9 @@ services:
     depends_on:
       - db
     volumes:
-      - ./api_da4/:/code/api_da4/
-      - ./auth_da4/:/code/auth_da4/
-      - ./dA_04/:/code/dA_04/
+      # - ./api_da4/:/code/api_da4/
+      # - ./auth_da4/:/code/auth_da4/
+      # - ./dA_04/:/code/dA_04/
       - backend_static:/code/static/
     networks:
       - backnet
