@@ -15,4 +15,4 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost/api/course/1/chapter/
+GET http://localhost/auth/token/
