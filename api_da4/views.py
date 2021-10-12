@@ -13,6 +13,6 @@ class CourseSearchView(APIView):
         topics = request.query_params.getlist("topics")
 
         result = CourseSearch(terms, group, topics).result()
-
         serializer = CourseSerializer(result, many=True)
+        
         return Response(serializer.data)
