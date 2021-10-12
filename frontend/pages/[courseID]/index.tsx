@@ -1,12 +1,12 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import courseApi from "../api/courseApi";
 import { GetStaticPaths, GetStaticProps } from "next";
 import ContentChapter from "../../components/ContentChapter";
-import { ChapterList, ContentList, Course, CourseList } from "../../moduleType";
-import Link from 'next/link'
+import { ContentList, Course, CourseList } from "../../moduleType";
 import HomeLayout from "../../components/Layouts/homeLayout";
 import BarCourse from "../../components/BarCourse";
+import HeaderCourse from "../../components/HeaderCourse";
 
 interface url {
   courseID: number | string,
@@ -17,9 +17,16 @@ interface url {
 function CourseID({ course }: { course: Course }) {
   const router = useRouter();
   const { courseID } = router.query;
-  const [chapterID, setChapterID] = useState<number>(1);
+  const [data, setData] = useState<Array<CourseList>>([])
   const [dataContent, setDataContent] = useState<Array<ContentList | null>>([null])
   const [url, setUrl] = useState<url | null>(null)
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await courseApi.getAll()
+      setData(res.data)
+    }
+    fetch()
+  }, [])
 
   useEffect(() => {
     setDataContent([null])
@@ -46,6 +53,7 @@ function CourseID({ course }: { course: Course }) {
 
   return (
     <>
+      <HeaderCourse data={data} />
       <div>
         <p>This is course: {courseID}</p>
         <BarCourse course={course} handleClick={handleClick} />

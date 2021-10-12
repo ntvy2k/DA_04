@@ -1,6 +1,8 @@
-import React from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import axios, { AxiosResponse } from "axios";
+import courseApi from "./api/courseApi";
+import { Button, ButtonGroup, Dropdown, ListGroup, ToggleButton } from "react-bootstrap";
 
 type Course = {
   id: number;
@@ -67,16 +69,58 @@ const Submit = (
   group: number | null,
   topics: number[]
 ) => {
+  console.log({ search_terms, group, topics })
   Send(search_terms, group, topics)
     .then((data) => console.log(data))
     .catch((err) => console.log(err));
 };
 
 const Search = () => {
-  const [search_terms, set_search_terms] = React.useState<string>("");
-  const [group, set_group] = React.useState<number | null>(2); // Ví dụ trường hợp này là group 2
-  const [topics, set_topics] = React.useState<number[]>([1, 2]); // ví dụ trường hợp này có 2 topics liên quan (1 và 2)
+  const [search_terms, set_search_terms] = useState<string>("");
+  const [courseGroup, setCourseGroup] = useState<Array<any>>([])
+  const [courseTopic, setCourseTopic] = useState<Array<any>>([])
+  const [topicListName, setTopicListName] = useState<Array<any>>([])
 
+  const [group, set_group] = React.useState<number | null>(null); // Ví dụ trường hợp này là group 2
+  const [topics, set_topics] = React.useState<number[]>([]); // ví dụ trường hợp này có 2 topics liên quan (1 và 2)
+
+  useEffect(() => {
+    const fetchGroup = async () => {
+      const res = await courseApi.getGroupCourse()
+      const resTopic = await courseApi.getTopicCourse()
+      setCourseGroup(res.data.map(({ gr_courses, ...newObject }) =>
+        newObject
+      ))
+      setCourseTopic(resTopic.data.map(({ tp_courses, ...newObject }) => newObject))
+    }
+    fetchGroup()
+  }, [])
+  const handleAddTopic = (topic: any) => {
+    const found = topicListName.some(oj => oj.id === topic.id)
+    if (!found) {
+      set_topics([...topics, topic.id])
+      setTopicListName([...topicListName, topic])
+    }
+  }
+  const handleRemoveTopic = (topic: any) => {
+    const [...newTopic] = topicListName
+    const [...newTopicID] = topics
+    const index = newTopic.indexOf(topic)
+    const indexID = newTopicID.indexOf(topic.id)
+    if (index > -1) {
+      newTopic.splice(index, 1)
+    }
+    if (indexID > -1) {
+      newTopicID.splice(index, 1)
+    }
+    setTopicListName(newTopic)
+    set_topics(newTopicID)
+  }
+  const handleClearAll = () => {
+    set_group(null)
+    set_topics([])
+    setTopicListName([])
+  }
   return (
     <>
       <Head>
@@ -84,6 +128,41 @@ const Search = () => {
         <meta name="description" content="Adudududu" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <Dropdown>
+        <Dropdown.Toggle>
+          Topic
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          {courseTopic.map((topic, index) => {
+            return (
+              <Dropdown.Item key={index} onClick={() => handleAddTopic(topic)} >{topic.name}</Dropdown.Item>
+            )
+          })}
+        </Dropdown.Menu>
+      </Dropdown>
+
+      {courseGroup.map((radio, index) => {
+        return (
+          <ButtonGroup key={index} id={radio.id} className="mb-2">
+            {group === radio.id && <Button onClick={() => set_group(null)} >x</Button>}
+            <Button onClick={() => set_group(radio.id)}>{radio.name}</Button>
+          </ButtonGroup>
+        )
+      })}
+      {(group || topics.length !== 0) && <Button onClick={handleClearAll}>Clear all</Button>}
+
+      <ListGroup>
+        {topicListName.map((topic) => {
+          return (
+            <ButtonGroup key={topic.id}>
+              <Button onClick={() => handleRemoveTopic(topic)}>x</Button>
+              <Button>{topic.name}</Button>
+            </ButtonGroup>
+          )
+        })}
+      </ListGroup>
       <div>
         <form>
           <label>

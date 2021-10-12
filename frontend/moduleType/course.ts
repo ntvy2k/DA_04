@@ -59,3 +59,24 @@ export interface ContentList {
     content: any
 }
 
+export interface GroupCourse {
+    id: number,
+    gr_courses: Array<grCourse>,
+    name: string
+}
+
+export interface grCourse {
+    name: string,
+    slug: string,
+}
+
+export interface TopicCourse {
+    id: number,
+    tp_courses: Array<tp_courses>,
+    name: string,
+}
+export interface tp_courses {
+    name: string,
+    slug: string,
+}
+

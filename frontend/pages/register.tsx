@@ -1,11 +1,11 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { register } from "../features/auth";
 import type { RegisterForm } from "../features/auth";
 import { FastField, Form, Formik } from "formik";
 import InputField from "../components/CustomFields/InputField";
-import { Button } from "react-bootstrap";
+import { Button, Toast, ToastContainer } from "react-bootstrap";
 import * as Yup from 'yup'
 
 // Uncomplete... Lam di Phuc
@@ -21,6 +21,10 @@ const initForm: RegisterForm = {
 
 const RegForm = () => {
   const router = useRouter();
+  const [show1, setShow1] = useState(true);
+  const toggleShow1 = () => setShow1(false);
+  const [show2, setShow2] = useState(true);
+  const toggleShow2 = () => setShow2(false);
   const initialValues = {
     first_name: '',
     last_name: '',
@@ -46,6 +50,20 @@ const RegForm = () => {
 
   return (
     <>
+      <ToastContainer className="position-fixed p-3" position="top-end">
+        <Toast show={show1} onClose={toggleShow1} bg="danger" delay={2000} autohide>
+          <Toast.Header>
+            <strong className="me-auto">Error</strong>
+          </Toast.Header>
+          <Toast.Body>Username already exists</Toast.Body>
+        </Toast>
+        <Toast show={show2} onClose={toggleShow2} bg="danger" delay={2000} autohide>
+          <Toast.Header>
+            <strong className="me-auto">Error</strong>
+          </Toast.Header>
+          <Toast.Body>Email already exists</Toast.Body>
+        </Toast>
+      </ToastContainer>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -57,9 +75,9 @@ const RegForm = () => {
                 console.log("Register Successful");
                 router.push("/login");
               } else if (r.status === 1) {
-                console.log("Username already exists");
+                setShow1(true)
               } else if (r.status === 2) {
-                console.log("Email already exists");
+                setShow2(true)
               }
             })
             .catch((err) => console.log("Error: Unknown...", err));

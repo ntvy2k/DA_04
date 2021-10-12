@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { CourseList, dataContent } from "../../moduleType";
+import { CourseList, dataContent, GroupCourse, TopicCourse } from "../../moduleType";
 
 // api/productApi.js
 const courseApi = {
@@ -9,6 +9,14 @@ const courseApi = {
   },
   getListChapter(id: number | string | string[] | undefined): Promise<AxiosResponse<Array<any>>> {
     const url = `/api/course/${id}/chapter`
+    return axios.get(url)
+  },
+  getGroupCourse(): Promise<AxiosResponse<Array<GroupCourse>>> {
+    const url = '/api/group'
+    return axios.get(url)
+  },
+  getTopicCourse(): Promise<AxiosResponse<Array<TopicCourse>>> {
+    const url = '/api/topic'
     return axios.get(url)
   },
   postContent(values: any) {

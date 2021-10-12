@@ -5,18 +5,10 @@ import { store } from '../app/store'
 import { NextPage } from 'next'
 import { ReactElement, ReactNode } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import HomeLayout from '../components/Layouts/homeLayout'
 
-type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
-
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
-
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout ?? ((page) => page)
-  return getLayout(
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
     <Provider store={store}>
       <Component {...pageProps} />
     </Provider>
