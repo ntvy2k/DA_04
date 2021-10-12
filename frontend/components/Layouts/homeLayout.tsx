@@ -10,6 +10,7 @@ import { store } from '../../app/store';
 import { useRouter } from 'next/router';
 
 export default function HomeLayout({ children }: { children: ReactElement }) {
+    const router = useRouter()
     const dispatch = useAppDispatch();
     const user = useAppSelector(
         (state) =>
@@ -46,7 +47,7 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
     };
     const checkEnter = (e: any) => {
         if (e.key === 'Enter') {
-            console.log('This is enter key')
+            router.push(`/search/id?terms=${e.currentTarget.value}`)
         }
     }
     return (

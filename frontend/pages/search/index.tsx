@@ -1,8 +1,9 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import axios, { AxiosResponse } from "axios";
-import courseApi from "./api/courseApi";
-import { Button, ButtonGroup, Dropdown, ListGroup, ToggleButton } from "react-bootstrap";
+import courseApi from "../api/courseApi";
+import { Button, ButtonGroup, Dropdown, ListGroup } from "react-bootstrap";
+import router, { useRouter } from "next/router";
 
 type Course = {
   id: number;
@@ -64,18 +65,8 @@ const Send = async (
   return response.data;
 };
 
-const Submit = (
-  search_terms: string,
-  group: number | null,
-  topics: number[]
-) => {
-  console.log({ search_terms, group, topics })
-  Send(search_terms, group, topics)
-    .then((data) => console.log(data))
-    .catch((err) => console.log(err));
-};
-
 const Search = () => {
+  const router = useRouter()
   const [search_terms, set_search_terms] = useState<string>("");
   const [courseGroup, setCourseGroup] = useState<Array<any>>([])
   const [courseTopic, setCourseTopic] = useState<Array<any>>([])
@@ -120,6 +111,25 @@ const Search = () => {
     set_group(null)
     set_topics([])
     setTopicListName([])
+  }
+  const Submit = (
+    search_terms: string,
+    group: number | null,
+    topics: number[]
+  ) => {
+    // Send(search_terms, group, topics)
+    //   .then((data) => console.log(data))
+    //   .catch((err) => console.log(err));
+    // router.push(`/?router=${search_terms}&group=${group}&${
+    //   topics.map((topic)=>{
+    //     return(`topic=${topic}`)
+    //   })
+    // }`)
+    const topicUrl = topics_param(topics)
+    const groupUrl = group_param(group)
+    const url = `/search/id?router=${search_terms}${groupUrl}${topicUrl}`
+    console.log(url)
+    router.push(url)
   }
   return (
     <>

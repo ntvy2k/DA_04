@@ -80,3 +80,9 @@ export interface tp_courses {
     slug: string,
 }
 
+export interface searchUrl {
+    terms: string,
+    group?: string,
+    topic?: Array<string>,
+}
+
