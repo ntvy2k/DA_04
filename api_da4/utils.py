@@ -68,24 +68,25 @@ class CourseSearch:
     def topics_query(self, queryset=None):
         return self._queryset(self._topics_query, queryset, self.topics)
 
+    
+    def query(self, current_query):
+        def _next(next_query=None):
+            if next_query is None:
+                return current_query
+            return self.query(next_query(current_query))
+        if is_queryset_empty(current_query):
+            raise ValueError("Queryset is empty, return []")
+        return _next
+
 
     def _get_result(self):
-        terms_result = self.terms_query()
-        if is_queryset_empty(terms_result):
-            return terms_result
-
-        group_result = self.group_query(terms_result)
-        if is_queryset_empty(group_result):
-            return group_result
-        
-        return self.topics_query(group_result)
+        try:
+            return self.query(self.terms_query())(self.group_query)(self.topics_query)()
+        except ValueError:
+            return []
 
 
     def result(self):
         if self._strict():
-            result = self._get_result()
-            if result is not None:
-                return result
-        
-        # list all if no input
+            return self._get_result()
         return Course.objects.all()
