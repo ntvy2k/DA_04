@@ -3,6 +3,12 @@ from .models import Course
 from django.db.models import Count
 
 
+def is_queryset_empty(queryset):
+    if queryset is None:
+        return False
+    return list(queryset) == []
+
+
 class CourseSearch:
     def __init__(self, terms=None, group=None, topics=None):
         self.terms = terms
@@ -14,7 +20,7 @@ class CourseSearch:
         return not (self.terms is None and self.group is None and self.topics is None)
     
 
-    def _terms_search_only(self):
+    def _terms_only(self):
         return Course.objects.filter(name__icontains=self.terms)
     
 
@@ -26,62 +32,61 @@ class CourseSearch:
         return Course.objects.filter(topics__in=self.topics).annotate(num_topics=Count('topics')).filter(num_topics=len(self.topics))
     
 
-    def terms_search(self):
+    def terms_query(self):
         """
-        Initialize queryset
+        Initialize
         """
         if self.terms is None:
             return None
-        return self._terms_search_only()
+        return self._terms_only()
+
+
+    def _queryset(self, f_search, queryset, attribute):
+        if queryset is None and attribute is None:
+            return None
+        elif queryset and attribute is None:
+            return queryset
+        return f_search(queryset=queryset)
 
     
-    def _group_search(self, queryset=None):
+    def _group_query(self, queryset=None):
         if queryset:
             return queryset.filter(group=self.group)
         return self._group_only()
 
 
-    def group_search(self, queryset=None):
-        if queryset is None and self.group is None:
-            return None
-        elif queryset and self.group is None:
-            return queryset
-        else:
-            return self._group_search(queryset=queryset)
+    def group_query(self, queryset=None):
+        return self._queryset(self._group_query, queryset, self.group)
 
 
-    def _topics_search(self, queryset=None):
+    def _topics_query(self, queryset=None):
         if queryset:
             return queryset.filter(topics__in=self.topics).annotate(num_topics=Count('topics')).filter(num_topics=len(self.topics))
         return self._topics_only()
 
 
-    def topics_search(self, queryset=None):
-        if queryset is None and self.topics is None:
-            return None
-        elif queryset and self.topics is None:
-            return queryset
-        else:
-            return self._topics_search(queryset=queryset)
+    def topics_query(self, queryset=None):
+        return self._queryset(self._topics_query, queryset, self.topics)
+
+    
+    def query(self, current_query):
+        def _next(next_query=None):
+            if next_query is None:
+                return current_query
+            return self.query(next_query(current_query))
+        if is_queryset_empty(current_query):
+            raise ValueError("Queryset is empty, return []")
+        return _next
 
 
-    def _search(self):
-        terms_result = self.terms_search()
-        group_result = self.group_search(terms_result)
-
-        if group_result is None:
-            return self.topics_search(None)
-        if not group_result:
-            return group_result
-        
-        return self.topics_search(group_result)
+    def _get_result(self):
+        try:
+            return self.query(self.terms_query())(self.group_query)(self.topics_query)()
+        except ValueError:
+            return []
 
 
     def result(self):
         if self._strict():
-            result = self._search()
-            if result is not None:
-                return result
-        
-        # list all if no input
+            return self._get_result()
         return Course.objects.all()

@@ -5,7 +5,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
-from .serializers import UserBaseSerializer
+from .serializers import UserSerializer
 
 
 class UserRegisterView(APIView):
@@ -48,10 +48,30 @@ class UserLogoutView(APIView):
         return Response(status.HTTP_204_NO_CONTENT)
 
 
-class UserProfileView(APIView):
+class OwnerProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        user = request.user
-        serializer = UserBaseSerializer(user)
+        serializer = UserSerializer(request.user)
         return Response(serializer.data)
+
+
+    def put(self, request):
+        serializer = UserSerializer(request.user, request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+
+class UserChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        data = request.data
+        old_password = data['current_password']
+        if user.check_password(old_password):
+            user.set_password(data['new_password'])
+            user.save()
+            return Response(status.HTTP_200_OK)
+        return Response(status.HTTP_400_BAD_REQUEST)
