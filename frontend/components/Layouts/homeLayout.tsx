@@ -1,13 +1,15 @@
 import React, { Fragment, ReactElement, useEffect, useState } from 'react';
-import { Button, Container, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { CircleHalf, Search } from 'react-bootstrap-icons';
+import { Button, Col, Container, Form, FormControl, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
+import { CircleHalf, Columns, Search } from 'react-bootstrap-icons';
 import { GroupCourse } from '../../moduleType';
 import courseApi from '../../pages/api/courseApi';
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetch_user, logout, set_not_authenticated } from '../../features/auth';
-import { store } from '../../app/store';
 import { useRouter } from 'next/router';
+import styles from '../../styles/HomeLayout.module.css'
+import Banner from '../../public/Banner.png'
+import Image from 'next/image'
 
 export default function HomeLayout({ children }: { children: ReactElement }) {
     const router = useRouter()
@@ -52,67 +54,96 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
     }
     return (
         <>
-            <Navbar bg="light" expand="lg">
-                <Container>
-                    <Navbar.Brand><Link href="/">DA-4</Link></Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <NavDropdown title="Tutorials" id="basic-nav-dropdown">
-                                {dataGroup.map((groupCourse, index) => {
-                                    return (
-                                        <Fragment key={index}>
-                                            {index !== 0 && <NavDropdown.Divider />}
-                                            <NavDropdown.ItemText key={groupCourse.id} ><h3>{groupCourse.name}</h3></NavDropdown.ItemText>
-                                            {groupCourse.gr_courses.map((course, index) => {
-                                                return (
-                                                    <NavDropdown.Item key={index}><Link href={`${course.slug}`}>{course.name}</Link></NavDropdown.Item>
-                                                )
-                                            })}
-                                        </Fragment>
-                                    )
-                                })}
-                            </NavDropdown>
-                        </Nav>
-                        <Nav>
-                            <Form className="d-flex" onSubmit={e => { e.preventDefault(); }}>
-                                <FormControl
-                                    type="search"
-                                    placeholder="Search"
-                                    className="mr-2"
-                                    aria-label="Search"
-                                    list="courseName"
-                                    onChange={(e) => setValueSearch(e.currentTarget.value)}
-                                    onKeyPress={checkEnter}
-                                />
-                                <datalist id="courseName">
-                                    {courseName.map((name, index) => {
+            <Container className={styles.bannerHome}>
+                <div className={styles.image}></div>
+                <Navbar className="fw-bolder" expand="lg" variant="dark">
+                    <Container>
+                        <Navbar.Brand ><Link href="/search">
+                            <div className={styles.brand}>
+                                <h3 className="text-primary fw-bolder">Nhái</h3>
+                                <h3 className="text-dark fw-bolder">W3school</h3>
+                            </div>
+                        </Link></Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+                            <Nav>
+                                <NavDropdown title="Tutorials" id="basic-nav-dropdown">
+                                    {dataGroup.map((groupCourse, index) => {
                                         return (
-                                            <option key={index} value={name}></option>
+                                            <Fragment key={index}>
+                                                {index !== 0 && <NavDropdown.Divider />}
+                                                <NavDropdown.ItemText key={groupCourse.id} ><h3>{groupCourse.name}</h3></NavDropdown.ItemText>
+                                                {groupCourse.gr_courses.map((course, index) => {
+                                                    return (
+                                                        <NavDropdown.Item key={index}><Link href={`${course.slug}`}>{course.name}</Link></NavDropdown.Item>
+                                                    )
+                                                })}
+                                            </Fragment>
                                         )
                                     })}
-                                </datalist>
-                                <Button variant="outline-success" onClick={() => console.log(valueSearch)}><Search /></Button>
-                            </Form>
-                        </Nav>
-                        <Nav>
-                            <Navbar.Text> <CircleHalf /> </Navbar.Text>
-
-                            {user.is_authenticated ? (
-                                <NavDropdown title={user.user?.username} id="user">
-                                    <NavDropdown.Item onClick={() => handleLogout()}>
-                                        Logout
-                                    </NavDropdown.Item>
                                 </NavDropdown>
+                            </Nav>
+                            <Nav className="ms-3">
+                                <Form className="d-flex" onSubmit={e => { e.preventDefault(); }}>
+                                    <FormControl
+                                        type="search"
+                                        placeholder="Search"
+                                        className="mr-2"
+                                        aria-label="Search"
+                                        list="courseName"
+                                        onChange={(e) => setValueSearch(e.currentTarget.value)}
+                                        onKeyPress={checkEnter}
+                                    />
+                                    <datalist id="courseName">
+                                        {courseName.map((name, index) => {
+                                            return (
+                                                <option key={index} value={name}></option>
+                                            )
+                                        })}
+                                    </datalist>
+                                    <Button variant="dark" onClick={() => console.log(valueSearch)}><Search /></Button>
+                                </Form>
+                            </Nav>
+                            <Nav className="ms-3">
+                                {user.is_authenticated ? (
+                                    <NavDropdown title={user.user?.username} id="user">
+                                        <NavDropdown.Item onClick={() => handleLogout()}>
+                                            Logout
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
 
-                            ) : (
-                                <Navbar.Text><Link href="/login">Login</Link></Navbar.Text>
-                            )}
-                        </Nav>
-                    </Navbar.Collapse>
+                                ) : (
+                                    <Navbar.Text><Link href="/login">Login</Link></Navbar.Text>
+                                )}
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
+                <Container className={styles.banner}>
+                    <Row className={styles.banner}>
+                        <Col sm={12} md={6}>
+                            <h1>Nơi học nhưng điều mới gì cũng có trừ porn</h1>
+                            <p>Web nhái lửa chùa đm nextjs như lìn</p>
+                            <Button>Khám Phá</Button>
+                        </Col>
+                        <Col sm={12} md={6}>
+                            <Image
+                                src="/../public/Banner.png"
+                                alt="Picture of the author"
+                                layout="responsive"
+                                width={250}
+                                height={150}
+                            />
+                        </Col>
+                    </Row>
+
+
                 </Container>
-            </Navbar>
+            </Container>
             {children}
+            <Container className="mt-5">
+                <p>Cảm ơn vì đã đọc đến đây nhưng footer chưa làm</p>
+            </Container>
         </>
     );
 }

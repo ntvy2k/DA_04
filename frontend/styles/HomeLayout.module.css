@@ -1,0 +1,28 @@
+.navBar {
+    position: absolute;
+}
+
+.bannerHome {
+    width: 100vw;
+    height: 100vh;
+}
+
+.image {
+    position: absolute;
+    right: 0;
+    background: url("../public/LineHome.png") no-repeat;
+
+    width: 60vw;
+    height: 35vh;
+}
+
+.banner {
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    cursor: pointer;
+}

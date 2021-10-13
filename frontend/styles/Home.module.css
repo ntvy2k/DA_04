@@ -1,0 +1,24 @@
+.card {
+    margin-top: 20px;
+}
+
+.card:hover {
+    background-color: #acabf9;
+}
+
+.card_icon {
+    color: #acabf9;
+}
+
+.card:hover .card_icon {
+    color: white;
+}
+
+.card_button {
+    background-color: #acabf9;
+}
+
+.card:hover .card_button {
+    color: black;
+    background-color: white;
+}
