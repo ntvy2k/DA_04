@@ -11,7 +11,8 @@ services:
       - backend_api
     volumes:
       - ./docker-nginx/:/etc/nginx/
-      - backend_static:/srv/
+      - backend_static:/srv/static/
+      # - backend_media:/srv/media/
     ports:
       - "80:80"
     networks:
@@ -26,10 +27,10 @@ services:
     container_name: frontend
     depends_on:
       - backend_api
-    volumes:
-      - ./frontend/:/front_side/
-      - /front_side/node_modules
-      - /front_side/.next
+    # volumes:
+    #   - ./frontend/:/front_side/
+    #   - /front_side/node_modules
+    #   - /front_side/.next
     networks:
       - frontnet
     restart: always
@@ -43,8 +44,8 @@ services:
     volumes:
       # - ./api_da4/:/code/api_da4/
       # - ./auth_da4/:/code/auth_da4/
-      # - ./dA_04/:/code/dA_04/
       - backend_static:/code/static/
+      # - backend_media:/code/media/
     networks:
       - backnet
       - dbnet
@@ -74,6 +75,7 @@ services:
 volumes:
   da04_db:
   backend_static:
+  # backend_media:
 
 networks:
   frontnet:

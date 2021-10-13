@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 
 
-# Experimental
 class AbstractType(models.Model):
     name = models.CharField(max_length=50, unique=True)
     
@@ -14,7 +13,6 @@ class AbstractType(models.Model):
 
 
 class CourseGroup(AbstractType):
-
     def __str__(self):
         return self.name
     
@@ -23,12 +21,18 @@ class CourseGroup(AbstractType):
 
 
 class CourseTopic(AbstractType):
-
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ['name']
+
+
+class CourseIcon(AbstractType):
+    nontation = models.CharField(max_length=40, primary_key=True, editable=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Course(models.Model):
@@ -41,6 +45,7 @@ class Course(models.Model):
     # //
     group = models.ForeignKey(CourseGroup, related_name='gr_courses', null=True, blank=True, on_delete=models.SET_NULL)
     topics = models.ManyToManyField(CourseTopic, related_name="tp_courses")
+    icon = models.ForeignKey(CourseIcon, null=True, blank=True, on_delete=models.SET_NULL)
 
 
     def __str__(self):

@@ -4,11 +4,16 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .permissions import IsOwnerOrReadOnly, CourseOwnerOrReadOnly
 
-from .models import Course, Chapter, Lesson, Content, CourseGroup, CourseTopic
+from .models import Course, Chapter, Lesson, Content, CourseGroup, CourseTopic, CourseIcon
 from .serializers.generics import ( CourseSerializer, ChapterSerializer, 
                                     LessonSerializer, ContentSerializer, 
-                                    CourseGroupSerializer, CourseTopicSerializer)
+                                    CourseGroupSerializer, CourseTopicSerializer, CourseIconSerializer)
 from .serializers.details import CourseDetailSerializer, ChapterDetailSerializer, LessonsDetailSerializer
+
+
+class CourseIconViewSet(ModelViewSet):
+    serializer_class = CourseIconSerializer
+    queryset = CourseIcon.objects.all()
 
 
 class CourseGroupViewSet(ModelViewSet):

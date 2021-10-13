@@ -1,6 +1,12 @@
-from api_da4.models import Course, Chapter, Lesson, Content, CourseGroup, CourseTopic
+from api_da4.models import Course, Chapter, Lesson, Content, CourseGroup, CourseTopic, CourseIcon
 from .shorts import ChapterShortSerializer, LessonShortSerializer, CourseShortSerializer
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
+
+
+class CourseIconSerializer(ModelSerializer):
+    class Meta:
+        model = CourseIcon
+        fields = '__all__'
 
 
 class CourseGroupSerializer(ModelSerializer):
@@ -22,7 +28,7 @@ class CourseTopicSerializer(ModelSerializer):
 class CourseSerializer(ModelSerializer):
     class Meta:
         model = Course
-        fields = ['id', 'name', 'author', 'created_at', 'last_modified', 'slug'] + ['group', 'topics']
+        fields = ['id', 'name', 'author', 'created_at', 'last_modified', 'slug'] + ['group', 'topics'] + ['icon']
         lookup_field = 'slug'
         read_only_fields = ['slug', 'author']
 

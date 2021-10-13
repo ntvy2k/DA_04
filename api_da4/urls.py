@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_nested.routers import NestedDefaultRouter
 from .viewsets import (CourseViewSet, ChapterViewSet, 
                     LessonViewSet, ContentViewSet, 
-                    CourseGroupViewSet, CourseTopicViewSet)
+                    CourseGroupViewSet, CourseTopicViewSet, CourseIconViewSet)
 
 from .views import CourseSearchView
 
@@ -12,6 +12,8 @@ router = DefaultRouter();
 router.register(r'course', CourseViewSet, basename='course')
 router.register(r'group', CourseGroupViewSet, basename='group')
 router.register(r'topic', CourseTopicViewSet, basename='topic')
+router.register(r'icon', CourseIconViewSet, basename='icon')
+
 
 chapter_router = NestedDefaultRouter(router, r'course', lookup='course')
 chapter_router.register(r'chapter', ChapterViewSet, basename='chapter')
