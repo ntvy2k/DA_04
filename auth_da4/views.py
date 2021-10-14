@@ -5,7 +5,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
-from .serializers import UserSerializer
+from .serializers import UserSerializer, CreateUserSerializer
 
 
 class UserRegisterView(APIView):
@@ -13,13 +13,9 @@ class UserRegisterView(APIView):
         data = request.data
         if not User.objects.filter(username=data['username']).exists():
             if not User.objects.filter(email=data['email']).exists():
-                user = User()
-                user.first_name = data['first_name']
-                user.last_name = data['last_name']
-                user.username = data['username']
-                user.email = data['email']
-                user.set_password(data['password'])
-                user.save()
+                serializer = CreateUserSerializer(data=data)
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
                 return Response({"status": 0})  # Register: Successful
             return Response({"status": 2})      # Email already exists
         return Response({"status": 1})          # Username already exists
