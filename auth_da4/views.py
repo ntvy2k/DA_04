@@ -6,19 +6,25 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 from .serializers import UserSerializer, CreateUserSerializer
+from .utils import ExistUser
 
 
 class UserRegisterView(APIView):
+    def perform_create(self, data):
+        serializer = CreateUserSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+
     def post(self, request):
         data = request.data
-        if not User.objects.filter(username=data['username']).exists():
-            if not User.objects.filter(email=data['email']).exists():
-                serializer = CreateUserSerializer(data=data)
-                serializer.is_valid(raise_exception=True)
-                serializer.save()
-                return Response({"status": 0})  # Register: Successful
-            return Response({"status": 2})      # Email already exists
-        return Response({"status": 1})          # Username already exists
+        user = ExistUser(data['username'], data['email'])
+        code = user.is_exists()
+        if code:
+            return Response({"status": code})
+        else:
+            self.perform_create(data)
+            return Response({"status": code})
 
 
 class UserLoginView(APIView):
