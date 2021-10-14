@@ -19,7 +19,7 @@ class ExistUser:
         return User.objects.filter(username=self.username).exists()
     
 
-    def _exists(self):
+    def get_exists_code(self):
         if self.is_username_exists():
             return USERNAME_ALREADY
         if self.is_email_exists():
@@ -27,5 +27,5 @@ class ExistUser:
         return OK
 
 
-    def is_exists(self):
-        return self._exists()
+    def exists_code(self):
+        return self.get_exists_code()

@@ -19,7 +19,7 @@ class UserRegisterView(APIView):
     def post(self, request):
         data = request.data
         user = ExistUser(data['username'], data['email'])
-        code = user.is_exists()
+        code = user.exists_code()
         if code:
             return Response({"status": code})
         else:
