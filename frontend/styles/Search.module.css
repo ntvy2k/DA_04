@@ -1,0 +1,165 @@
+.bannerSearch {
+    background: url("../public/Search.png") no-repeat;
+    background-size: cover;
+    height: 80vh;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.title {
+    font-size: 60px;
+    color: whitesmoke;
+}
+
+.container_search {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.input_group {
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 100%;
+    background: #8383da;
+    box-shadow: inset 9px 9px 18px #6d6db5, inset -9px -9px 18px #9999ff;
+    border-radius: 20px;
+}
+
+.input_group:hover {
+    box-shadow: 9px 9px 18px #6d6db5, -9px -9px 18px #9999ff;
+}
+
+.input_text {
+    width: calc(100% - 60px);
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.input_icon {
+    width: 60px;
+    background-color: white;
+    border: none;
+    background-color: transparent;
+}
+
+.input_icon:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.group_course {
+    display: flex;
+}
+
+.button_group {
+    background: #8383da;
+    box-shadow: inset 9px 9px 18px #6d6db5, inset -9px -9px 18px #9999ff;
+    border-radius: 20px;
+    border: none;
+    padding: 5px 15px;
+}
+
+.button_group + .button_group {
+    margin-left: 10px;
+}
+
+.button_group:hover {
+    box-shadow: 9px 9px 18px #6d6db5, -9px -9px 18px #9999ff;
+}
+
+.button_group_name {
+    background-color: transparent;
+    color: black;
+    border: none;
+}
+
+.button_group_name:hover {
+    background-color: transparent;
+    color: white;
+}
+
+.button_group_cancel {
+    background-color: transparent;
+    border: none;
+    color: black;
+}
+
+.button_group_cancel:hover {
+    background-color: transparent;
+}
+
+.dropdown_topic {
+    color: black;
+    background: #8383da;
+    box-shadow: inset 9px 9px 18px #6d6db5, inset -9px -9px 18px #9999ff;
+    border: none;
+    border-radius: 20px;
+
+    padding: 10px 20px;
+    margin-bottom: 10px;
+}
+
+.dropdown_topic:hover {
+    box-shadow: 9px 9px 18px #6d6db5, -9px -9px 18px #9999ff;
+    background: #8383da;
+}
+
+.dropdown_topic:focus {
+    box-shadow: 9px 9px 18px #6d6db5, -9px -9px 18px #9999ff;
+    background: #8383da;
+    outline: none;
+}
+
+.button_clear {
+    background: #8383da;
+    box-shadow: inset 9px 9px 18px #6d6db5, inset -9px -9px 18px #9999ff;
+    border: none;
+    border-radius: 20px;
+
+    margin-left: 20px;
+    padding: 0 30px;
+}
+
+.button_clear:hover {
+    box-shadow: 9px 9px 18px #6d6db5, -9px -9px 18px #9999ff;
+    color: white;
+}
+
+.card {
+    margin-top: 20px;
+    width: 15rem;
+    border: none;
+    border-radius: 30px;
+    background: #e0e0e0;
+    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+}
+
+.card_icon {
+    font-size: 50px;
+    color: #6d6db5;
+}
+
+.card_body {
+    text-align: center;
+    padding: 30px;
+}
+
+.card_button {
+    background: #e0e0e0;
+    box-shadow: inset 5px 5px 10px #8b8b8b, inset -5px -5px 10px #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+
+    text-decoration: none;
+    color: black;
+}
+
+.card_button:hover {
+    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+    color: #6d6db5;
+}
