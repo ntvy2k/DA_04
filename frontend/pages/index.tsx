@@ -8,13 +8,12 @@ import axios from "axios";
 import styles from "../styles/Home.module.css"
 import Link from 'next/link'
 import { useRouter } from "next/router";
-import Image from 'next/image'
 import Quizz from "../public/Quizz.json"
 import LoginAnimation from "../public/Blogging.json"
 import Lottie from "react-lottie"
 import { Book, Bug, Google } from "react-bootstrap-icons";
 import { motion, useAnimation } from "framer-motion"
-import { InView } from "react-intersection-observer";
+import { InView } from "react-intersection-observer"
 
 const titleVariants = {
   hidden: {

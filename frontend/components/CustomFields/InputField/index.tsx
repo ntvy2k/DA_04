@@ -1,6 +1,7 @@
 import { FieldProps } from 'formik';
 import React from 'react';
 import { Form, FormGroup } from 'react-bootstrap';
+import styles from '../../../styles/InputField.module.css'
 
 interface userName {
     type: string,
@@ -24,6 +25,7 @@ function InputField(props: FieldProps & userName) {
                     type={type}
                     placeholder={placeholder}
                     isInvalid={touched[name] && !!errors[name]}
+                    className={styles.input}
                     {...field}
                 ></Form.Control>
                 <Form.Control.Feedback type="invalid">{errors[name]}</Form.Control.Feedback>

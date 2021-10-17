@@ -1,0 +1,11 @@
+.input {
+    background: #e0e0e0;
+    box-shadow: inset 5px 5px 10px #8b8b8b, inset -5px -5px 10px #ffffff;
+}
+
+.input:focus {
+    background: #e0e0e0;
+    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+    outline: none;
+    border: none;
+}

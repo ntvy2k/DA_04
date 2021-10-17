@@ -8,6 +8,7 @@ import Image from 'next/image'
 import styles from '../../styles/Search.module.css'
 import { MenuButtonWide, Search, X } from 'react-bootstrap-icons';
 import { motion } from "framer-motion"
+import SearchImage from "../../public/Search.json"
 
 type Course = {
   id: number;
@@ -95,6 +96,15 @@ const title = {
     }
   }
 }
+
+const SearchOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: SearchImage,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
 
 
 const SearchPage = () => {
