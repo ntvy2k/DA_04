@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import axios, { AxiosResponse } from "axios";
 import courseApi from "../api/courseApi";
-import { Button, ButtonGroup, Dropdown, ListGroup } from "react-bootstrap";
+import { Button, ButtonGroup, Card, Container, Dropdown, InputGroup, ListGroup } from "react-bootstrap";
 import router, { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
+import styles from "../../styles/Search.module.css"
+import { MenuButtonWide, Search, X } from "react-bootstrap-icons";
+import SearchLayout from "../../components/Layouts/searchLayout";
+import Link from 'next/link'
 
 type Course = {
     id: number;
@@ -67,12 +71,12 @@ const Send = async (
 };
 
 const SearchID = ({ data }: { data: any }) => {
-    console.log(data)
     const router = useRouter()
     const [search_terms, set_search_terms] = useState<string>("");
     const [courseGroup, setCourseGroup] = useState<Array<any>>([])
     const [courseTopic, setCourseTopic] = useState<Array<any>>([])
     const [topicListName, setTopicListName] = useState<Array<any>>([])
+
 
     const [group, set_group] = React.useState<number | null>(null); // Ví dụ trường hợp này là group 2
     const [topics, set_topics] = React.useState<number[]>([]); // ví dụ trường hợp này có 2 topics liên quan (1 và 2)
@@ -133,75 +137,118 @@ const SearchID = ({ data }: { data: any }) => {
         console.log(url)
         router.push(url)
     }
+
+    const checkEnter = (e: any) => {
+        if (e.key === 'Enter' && e.currentTarget.value !== '') {
+            const topicUrl = topics_param(topics)
+            const groupUrl = group_param(group)
+            const url = `/search/id?terms=${search_terms}${groupUrl}${topicUrl}`
+            router.push(url)
+        }
+    }
+
+    const handleSubmit = () => {
+        const topicUrl = topics_param(topics)
+        const groupUrl = group_param(group)
+        const url = `/search/id?terms=${search_terms}${groupUrl}${topicUrl}`
+        router.push(url)
+    }
     return (
-        <>
-            <Head>
-                <title>Test Docker</title>
-                <meta name="description" content="Adudududu" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+        <SearchLayout>
+            <>
+                <Head>
+                    <title>Test Docker</title>
+                    <meta name="description" content="Adudududu" />
+                    <link rel="icon" href="/favicon.ico" />
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css"></link>
+                </Head>
 
-            <Dropdown>
-                <Dropdown.Toggle>
-                    Topic
-                </Dropdown.Toggle>
+                <div className={styles.bannerSearch}>
+                    <Container className={styles.container_search}>
+                        <h1 className={styles.title}>Tìm kiếm khóa học</h1>
+                        <InputGroup size="lg" className={styles.input_group}>
+                            <input
+                                type="search"
+                                placeholder="Tìm kiếm ..."
+                                className={styles.input_text}
+                                aria-label="Search"
+                                list="courseName"
+                                onChange={(e) => set_search_terms(e.currentTarget.value)}
+                                onKeyPress={checkEnter}
+                            />
+                            <InputGroup.Text className={styles.input_icon} onClick={handleSubmit} ><Search /></InputGroup.Text>
+                        </InputGroup>
 
-                <Dropdown.Menu>
-                    {courseTopic.map((topic, index) => {
+                        {/* <Form className="d-flex" onSubmit={e => { e.preventDefault(); }}>
+              <FormControl
+                type="search"
+                placeholder="Search"
+                className="mr-2"
+                aria-label="Search"
+                onChange={(e) => console.log(e.currentTarget.value)}
+              // onKeyPress={checkEnter}
+              />
+              <Button variant="dark"><Search /></Button>
+            </Form> */}
+                        <div className={styles.group_course}>
+                            {courseGroup.map((radio, index) => {
+                                return (
+                                    <ButtonGroup key={index} id={radio.id} className={styles.button_group}>
+                                        {group === radio.id && <Button className={styles.button_group_cancel} onClick={() => set_group(null)} ><X /></Button>}
+                                        <button className={styles.button_group_name} onClick={() => set_group(radio.id)}>{radio.name}</button>
+                                    </ButtonGroup>
+                                )
+                            })}
+                            {(group || topics.length !== 0) && <button className={styles.button_clear} onClick={handleClearAll}>Xóa tất cả</button>}
+                        </div>
+                        <Dropdown className="mt-3">
+                            <Dropdown.Toggle className={styles.dropdown_topic}>
+                                Chủ đề
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                {courseTopic.map((topic, index) => {
+                                    return (
+                                        <Dropdown.Item key={index} onClick={() => handleAddTopic(topic)} >{topic.name}</Dropdown.Item>
+                                    )
+                                })}
+                            </Dropdown.Menu>
+                        </Dropdown>
+
+
+
+                        <ListGroup horizontal>
+                            {topicListName.map((topic) => {
+                                return (
+                                    <ButtonGroup key={topic.id} className={styles.button_group}>
+                                        <button className={styles.button_group_cancel} onClick={() => handleRemoveTopic(topic)}><X /></button>
+                                        <button className={styles.button_group_name}>{topic.name}</button>
+                                    </ButtonGroup>
+                                )
+                            })}
+                        </ListGroup>
+
+                    </Container>
+
+                </div>
+                <Container className="mt-5">
+                    <h1><MenuButtonWide /> Khóa học tìm thấy</h1>
+                    {data.map((course: any) => {
                         return (
-                            <Dropdown.Item key={index} onClick={() => handleAddTopic(topic)} >{topic.name}</Dropdown.Item>
+                            <Card key={course.id} className={styles.card}>
+                                <Card.Body className={styles.card_body}>
+                                    <Card.Text><i className={`${styles.card_icon} ${course.icon}`} /></Card.Text>
+                                    <Card.Title className="mb-4">{course.name.toUpperCase()}</Card.Title>
+                                    <Card.Text>
+                                        <Link href={`/${course.slug}`} ><a className={styles.card_button}>Học ngay</a></Link>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
                         )
                     })}
-                </Dropdown.Menu>
-            </Dropdown>
-
-            {courseGroup.map((radio, index) => {
-                return (
-                    <ButtonGroup key={index} id={radio.id} className="mb-2">
-                        {group === radio.id && <Button onClick={() => set_group(null)} >x</Button>}
-                        <Button onClick={() => set_group(radio.id)}>{radio.name}</Button>
-                    </ButtonGroup>
-                )
-            })}
-            {(group || topics.length !== 0) && <Button onClick={handleClearAll}>Clear all</Button>}
-
-            <ListGroup>
-                {topicListName.map((topic) => {
-                    return (
-                        <ButtonGroup key={topic.id}>
-                            <Button onClick={() => handleRemoveTopic(topic)}>x</Button>
-                            <Button>{topic.name}</Button>
-                        </ButtonGroup>
-                    )
-                })}
-            </ListGroup>
-            <div>
-                <form>
-                    <label>
-                        <input
-                            type="text"
-                            value={search_terms}
-                            onChange={(e) => set_search_terms(e.currentTarget.value)}
-                        />
-                    </label>
-                    {/* Để vua frontend Phúc xử lý */}
-                    {/* Render cái list group ra rồi chọn (chỉ được chọn 1 cái hoặc không có cái nào) */}
-                    {/* Render cái list topic ra rồi chọn (chọn được từ 0 đến hết cái danh sách) */}
-                    <button
-                        type="button"
-                        onClick={() => Submit(search_terms, group, topics)}
-                    >
-                        Search
-                    </button>
-                </form>
-            </div>
-            <div>
-                <h1>Du lieu</h1>
-                {data.map((course: any) => {
-                    return <p>{course.name}</p>
-                })}
-            </div>
-        </>
+                </Container>
+            </>
+        </SearchLayout>
     );
 };
 

@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Head from "next/head";
-import axios, { AxiosResponse } from "axios";
 import courseApi from "../api/courseApi";
-import { Button, ButtonGroup, Dropdown, ListGroup } from "react-bootstrap";
+import { Button, ButtonGroup, Container, Dropdown, Form, FormControl, InputGroup, ListGroup } from "react-bootstrap";
 import router, { useRouter } from "next/router";
+import SearchLayout from "../../components/Layouts/searchLayout";
+import Image from 'next/image'
+import styles from '../../styles/Search.module.css'
+import { MenuButtonWide, Search, X } from 'react-bootstrap-icons';
+import { motion } from "framer-motion"
+import SearchImage from "../../public/Search.json"
 
 type Course = {
   id: number;
@@ -31,41 +36,78 @@ const topics_param = (topics: number[]) => {
   return params;
 };
 
-const Send = async (
-  search_terms: string,
-  group: number | null,
-  topics: number[]
-) => {
-  // Chức năng tìm kiếm khóa học.
-  // Ví dụ:
-  // Từ khóa là "python", trong group 1, và liên quan đến 2 chủ đề 1, 2 <[1, 2]>
-  // api/search/?terms=python&group=1&topics=1&topics=2
-  // -----------------
-  // Từ khóa là "javascript", và không quan tâm mấy cái sau.
-  // api/search/?terms=javascript
-  // -----------------
-  // Chỉ tìm theo group, trường hợp dưới đây là tìm tất cả các course trong group 1
-  // (mà Phúc design như w3 thì chắc xổ ra thoi và có lẽ k cần thứ này )
-  // api/search/?terms=&group=1 (1) hoặc api/search/?group=1 (2)
-  // ............^^^^^^
-  // không có từ khóa thì để trống nghĩa là để yên "terms=" (1) hoặc xóa luôn (2)
-  // -----------------
-  // Theo các topic khác nhau: ví dụ dưới đây là có 3 topic lần lượt là 1, 3, 4
-  // Hay [1, 3, 4]
-  // Giả sử tìm khóa học có liên quan đến chủ đề như (lập trình, cấu trúc dữ liệu và giải thuật, python)
-  // Cái này chỉ là thử nghiệm thôi, nhưng ưu điểm là lọc gọn hơn, sát yêu cầu hơn.
-  // api/search/?topics=1&topics=2&topics=3
-  // ======= Happy End =======
-  const url =
-    `api/search/?terms=${search_terms}` +
-    group_param(group) +
-    topics_param(topics);
+// const Send = async (
+//   search_terms: string,
+//   group: number | null,
+//   topics: number[]
+// ) => {
+//   // Chức năng tìm kiếm khóa học.
+//   // Ví dụ:
+//   // Từ khóa là "python", trong group 1, và liên quan đến 2 chủ đề 1, 2 <[1, 2]>
+//   // api/search/?terms=python&group=1&topics=1&topics=2
+//   // -----------------
+//   // Từ khóa là "javascript", và không quan tâm mấy cái sau.
+//   // api/search/?terms=javascript
+//   // -----------------
+//   // Chỉ tìm theo group, trường hợp dưới đây là tìm tất cả các course trong group 1
+//   // (mà Phúc design như w3 thì chắc xổ ra thoi và có lẽ k cần thứ này )
+//   // api/search/?terms=&group=1 (1) hoặc api/search/?group=1 (2)
+//   // ............^^^^^^
+//   // không có từ khóa thì để trống nghĩa là để yên "terms=" (1) hoặc xóa luôn (2)
+//   // -----------------
+//   // Theo các topic khác nhau: ví dụ dưới đây là có 3 topic lần lượt là 1, 3, 4
+//   // Hay [1, 3, 4]
+//   // Giả sử tìm khóa học có liên quan đến chủ đề như (lập trình, cấu trúc dữ liệu và giải thuật, python)
+//   // Cái này chỉ là thử nghiệm thôi, nhưng ưu điểm là lọc gọn hơn, sát yêu cầu hơn.
+//   // api/search/?topics=1&topics=2&topics=3
+//   // ======= Happy End =======
+//   const url =
+//     `api/search/?terms=${search_terms}` +
+//     group_param(group) +
+//     topics_param(topics);
 
-  const response: AxiosResponse<Course[]> = await axios.get(url);
-  return response.data;
+//   const response: AxiosResponse<Course[]> = await axios.get(url);
+//   return response.data;
+// };
+
+const bannerSearchVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      delay: 0.2,
+    }
+  }
+}
+
+const title = {
+  hidden: {
+    opacity: 0,
+    y: -20
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.4,
+      type: 'spring'
+    }
+  }
+}
+
+const SearchOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: SearchImage,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
 };
 
-const Search = () => {
+
+const SearchPage = () => {
   const router = useRouter()
   const [search_terms, set_search_terms] = useState<string>("");
   const [courseGroup, setCourseGroup] = useState<Array<any>>([])
@@ -131,70 +173,115 @@ const Search = () => {
     console.log(url)
     router.push(url)
   }
+
+  const checkEnter = (e: any) => {
+    if (e.key === 'Enter' && e.currentTarget.value !== '') {
+      const topicUrl = topics_param(topics)
+      const groupUrl = group_param(group)
+      const url = `/search/id?terms=${search_terms}${groupUrl}${topicUrl}`
+      router.push(url)
+    }
+  }
+
+  const handleSubmit = () => {
+    const topicUrl = topics_param(topics)
+    const groupUrl = group_param(group)
+    const url = `/search/id?terms=${search_terms}${groupUrl}${topicUrl}`
+    router.push(url)
+  }
   return (
-    <>
-      <Head>
-        <title>Test Docker</title>
-        <meta name="description" content="Adudududu" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <SearchLayout>
+      <Fragment>
+        <Head>
+          <title>Test Docker</title>
+          <meta name="description" content="Adudududu" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <Dropdown>
-        <Dropdown.Toggle>
-          Topic
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-          {courseTopic.map((topic, index) => {
-            return (
-              <Dropdown.Item key={index} onClick={() => handleAddTopic(topic)} >{topic.name}</Dropdown.Item>
-            )
-          })}
-        </Dropdown.Menu>
-      </Dropdown>
-
-      {courseGroup.map((radio, index) => {
-        return (
-          <ButtonGroup key={index} id={radio.id} className="mb-2">
-            {group === radio.id && <Button onClick={() => set_group(null)} >x</Button>}
-            <Button onClick={() => set_group(radio.id)}>{radio.name}</Button>
-          </ButtonGroup>
-        )
-      })}
-      {(group || topics.length !== 0) && <Button onClick={handleClearAll}>Clear all</Button>}
-
-      <ListGroup>
-        {topicListName.map((topic) => {
-          return (
-            <ButtonGroup key={topic.id}>
-              <Button onClick={() => handleRemoveTopic(topic)}>x</Button>
-              <Button>{topic.name}</Button>
-            </ButtonGroup>
-          )
-        })}
-      </ListGroup>
-      <div>
-        <form>
-          <label>
-            <input
-              type="text"
-              value={search_terms}
-              onChange={(e) => set_search_terms(e.currentTarget.value)}
-            />
-          </label>
-          {/* Để vua frontend Phúc xử lý */}
-          {/* Render cái list group ra rồi chọn (chỉ được chọn 1 cái hoặc không có cái nào) */}
-          {/* Render cái list topic ra rồi chọn (chọn được từ 0 đến hết cái danh sách) */}
-          <button
-            type="button"
-            onClick={() => Submit(search_terms, group, topics)}
+        <motion.div
+          className={styles.bannerSearch}
+          variants={bannerSearchVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div
+            className={`${styles.container_search} container`}
+            variants={title}
+            initial="hidden"
+            animate="visible"
           >
-            Search
-          </button>
-        </form>
-      </div>
-    </>
+            <h1 className={styles.title}>Tìm kiếm khóa học</h1>
+            <InputGroup size="lg" className={styles.input_group}>
+              <input
+                type="search"
+                placeholder="Tìm kiếm ..."
+                className={styles.input_text}
+                aria-label="Search"
+                list="courseName"
+                onChange={(e) => set_search_terms(e.currentTarget.value)}
+                onKeyPress={checkEnter}
+              />
+              <InputGroup.Text className={styles.input_icon} onClick={handleSubmit} ><Search /></InputGroup.Text>
+            </InputGroup>
+
+            {/* <Form className="d-flex" onSubmit={e => { e.preventDefault(); }}>
+              <FormControl
+                type="search"
+                placeholder="Search"
+                className="mr-2"
+                aria-label="Search"
+                onChange={(e) => console.log(e.currentTarget.value)}
+              // onKeyPress={checkEnter}
+              />
+              <Button variant="dark"><Search /></Button>
+            </Form> */}
+            <div className={styles.group_course}>
+              {courseGroup.map((radio, index) => {
+                return (
+                  <ButtonGroup key={index} id={radio.id} className={styles.button_group}>
+                    {group === radio.id && <Button className={styles.button_group_cancel} onClick={() => set_group(null)} ><X /></Button>}
+                    <button className={styles.button_group_name} onClick={() => set_group(radio.id)}>{radio.name}</button>
+                  </ButtonGroup>
+                )
+              })}
+              {(group || topics.length !== 0) && <button className={styles.button_clear} onClick={handleClearAll}>Xóa tất cả</button>}
+            </div>
+            <Dropdown className="mt-3">
+              <Dropdown.Toggle className={styles.dropdown_topic}>
+                Chủ đề
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {courseTopic.map((topic, index) => {
+                  return (
+                    <Dropdown.Item key={index} onClick={() => handleAddTopic(topic)} >{topic.name}</Dropdown.Item>
+                  )
+                })}
+              </Dropdown.Menu>
+            </Dropdown>
+
+
+
+            <ListGroup horizontal>
+              {topicListName.map((topic) => {
+                return (
+                  <ButtonGroup key={topic.id} className={styles.button_group}>
+                    <button className={styles.button_group_cancel} onClick={() => handleRemoveTopic(topic)}><X /></button>
+                    <button className={styles.button_group_name}>{topic.name}</button>
+                  </ButtonGroup>
+                )
+              })}
+            </ListGroup>
+
+          </motion.div>
+
+        </motion.div>
+        <Container className="mt-5">
+          <h1><MenuButtonWide /> Khóa học tìm thấy</h1>
+        </Container>
+      </Fragment>
+    </SearchLayout>
   );
 };
 
-export default Search;
+export default SearchPage;

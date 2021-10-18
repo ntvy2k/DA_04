@@ -1,16 +1,32 @@
 .card {
     margin-top: 20px;
-}
-
-.card:hover {
-    background-color: #acabf9;
+    width: 15rem;
+    border: none;
+    border-radius: 30px;
+    background: #e0e0e0;
+    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
 }
 
 .card_icon {
-    color: #acabf9;
+    font-size: 50px;
 }
 
-.card:hover .card_icon {
+.card_icon.book {
+    color: #61b231;
+}
+
+.card_icon.google {
+    color: #ff9305;
+}
+.card_icon.bug {
+    color: #8700b2;
+}
+
+.card_body {
+    text-align: center;
+}
+
+/* .card:hover .card_icon {
     color: white;
 }
 
@@ -21,4 +37,43 @@
 .card:hover .card_button {
     color: black;
     background-color: white;
+}
+
+.card_link {
+    text-decoration: none;
+    color: white;
+}
+
+.card:hover .card_link {
+    color: black;
+} */
+
+.section {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-weight: 800;
+    font-size: 70px;
+    color: #3a38aa;
+}
+
+.button {
+    color: #6c7585;
+    border: none;
+    padding: 20px 40px;
+    border-radius: 40px;
+    background: #e0e0e0;
+    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+    font-size: large;
+}
+
+.button:hover {
+    box-shadow: inset 5px 5px 10px #8b8b8b, inset -5px -5px 10px #ffffff;
+    background: #e0e0e0;
+    color: #3a38aa;
 }

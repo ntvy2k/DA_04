@@ -1,3 +1,7 @@
+.container {
+    margin-bottom: 40px;
+}
+
 .navBar {
     position: absolute;
 }
@@ -14,6 +18,7 @@
 
     width: 60vw;
     height: 35vh;
+    z-index: -100;
 }
 
 .banner {
@@ -25,4 +30,50 @@
 .brand {
     display: flex;
     cursor: pointer;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.text {
+    font-weight: bolder;
+    color: white;
+}
+
+.input_group {
+    box-shadow: inset 5px 5px 10px #8b8b8b, inset -5px -5px 10px #ffffff;
+    padding: 7px 15px;
+    border-radius: 20px;
+}
+
+.input_group:hover {
+    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+}
+
+.input_icon {
+    background-color: transparent;
+    border: none;
+}
+
+.input_group:hover .input_icon {
+    color: #3a38aa;
+}
+
+.input_text {
+    background-color: transparent;
+    border: none;
+}
+
+.input_text:focus {
+    background-color: transparent;
+    outline: none;
+    border: none;
+}
+
+@media (max-width: 975px) {
+    .text {
+        color: black;
+    }
 }

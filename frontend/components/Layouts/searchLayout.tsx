@@ -1,26 +1,26 @@
-import React, { Fragment, ReactElement, useEffect, useRef, useState } from 'react';
-import { Button, Col, Container, Form, FormControl, InputGroup, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
-import { CircleHalf, Columns, Discord, Facebook, Instagram, Search } from 'react-bootstrap-icons';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { GroupCourse } from '../../moduleType';
 import courseApi from '../../pages/api/courseApi';
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetch_user, logout, set_not_authenticated } from '../../features/auth';
 import { useRouter } from 'next/router';
-import styles from '../../styles/HomeLayout.module.css'
-import Banner from '../../public/Banner.png'
-import Image from 'next/image'
+import styles from '../../styles/SearchLayout.module.css'
+import { Discord, Facebook, Instagram } from 'react-bootstrap-icons';
 import { motion } from "framer-motion"
-import Lottie from 'react-lottie'
 
 const navBarVariants = {
     hidden: {
         opacity: 0,
-        y: -20
+        y: -20,
     },
     visible: {
         opacity: 1,
-        y: 0
+        y: 0,
+        trasition: {
+            type: 'spring'
+        }
     }
 }
 
@@ -31,13 +31,13 @@ const variants = {
         x: 0,
         y: 0,
         transition: {
-            type: 'linear',
+            type: 'linear'
         }
     },
     exit: { opacity: 0, x: 0, y: -100 },
 }
 
-export default function HomeLayout({ children }: { children: ReactElement }) {
+export default function SearchLayout({ children }: { children: ReactElement }) {
     const router = useRouter()
     const dispatch = useAppDispatch();
     const user = useAppSelector(
@@ -74,12 +74,10 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
         }
     };
     const checkEnter = (e: any) => {
-        if (e.key === 'Enter' && e.currentTarget.value !== '') {
+        if (e.key === 'Enter') {
             router.push(`/search/id?terms=${e.currentTarget.value}`)
         }
     }
-
-
     return (
         <motion.main
             variants={variants} // Pass the variant object into Framer Motion 
@@ -88,12 +86,12 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
             exit="exit" // Exit state (used later) to variants.exit
         >
             <motion.div
-                className={`${styles.container} container`}
+                className="container"
                 variants={navBarVariants}
                 initial="hidden"
                 animate="visible"
-                transition={{ type: 'spring' }}
             >
+                <div className={styles.image}></div>
                 <Navbar className={styles.text} expand="lg">
                     <Container>
                         <Navbar.Brand ><Link href="/">
@@ -103,46 +101,7 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                             </div>
                         </Link></Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end align-self-center">
-                            <Nav>
-                                <NavDropdown title="Khóa học" id="basic-nav-dropdown">
-                                    {dataGroup.map((groupCourse, index) => {
-                                        return (
-                                            <Fragment key={index}>
-                                                {groupCourse.gr_courses.map((course, index) => {
-                                                    return (
-                                                        <NavDropdown.Item key={index}>
-                                                            <Link href={`${course.slug}`}><a className={styles.link}>{course.name}</a></Link>
-                                                        </NavDropdown.Item>
-                                                    )
-                                                })}
-                                            </Fragment>
-                                        )
-                                    })}
-                                </NavDropdown>
-                            </Nav>
-                            <Nav className="ms-3">
-                                <InputGroup size="sm" className={styles.input_group}>
-                                    <InputGroup.Text className={styles.input_icon}><Search /></InputGroup.Text>
-                                    <input
-                                        type="search"
-                                        placeholder="Tìm kiếm ..."
-                                        className={styles.input_text}
-                                        aria-label="Search"
-                                        list="courseName"
-                                        onChange={(e) => setValueSearch(e.currentTarget.value)}
-                                        onKeyPress={checkEnter}
-
-                                    />
-                                    <datalist id="courseName">
-                                        {courseName.map((name, index) => {
-                                            return (
-                                                <option key={index} value={name}></option>
-                                            )
-                                        })}
-                                    </datalist>
-                                </InputGroup>
-                            </Nav>
+                        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                             <Nav className="ms-3">
                                 {user.is_authenticated ? (
                                     <NavDropdown title={user.user?.username} id="user">
