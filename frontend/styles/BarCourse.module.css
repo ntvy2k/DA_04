@@ -1,0 +1,26 @@
+.barCourse {
+    background: #e0e0e0;
+    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.listChapter {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.link {
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.link:hover {
+    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+}
+
+.link.active {
+    box-shadow: inset 5px 5px 10px #8b8b8b, inset -5px -5px 10px #ffffff;
+}
