@@ -67,7 +67,7 @@ class Course(models.Model):
         if not self.author:
             self.author = (
                 self.owner.last_name.strip() + " " + self.owner.first_name.strip()
-            )
+            ).strip()
 
     def save(self, *args, **kwargs):
         self.init_or_ignore_slug()

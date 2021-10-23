@@ -29,3 +29,10 @@ class IsOwnerOrReadOnly(BasePermission):
 
         # Write permissions are only allowed to the owner of the snippet.
         return obj.owner == request.user
+
+
+class IsAdminUserOrReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        if request.method in SAFE_METHODS:
+            return True
+        return bool(request.user and request.user.is_staff)

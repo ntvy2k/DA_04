@@ -14,7 +14,7 @@ log = logging.getLogger("Initialize")
 def init_admin():
     if not User.objects.filter(username="admin"):
         User.objects.create_superuser(
-            username="admin", password="admin", email="admin@site.net"
+            username="admin", password="admin", first_name="TD4", email="admin@site.net"
         )
         log.info("Superuser: Created")
 
