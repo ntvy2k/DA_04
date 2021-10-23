@@ -1,29 +1,38 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Course } from '../../moduleType';
 import Link from 'next/link'
+import styles from '../../styles/BarCourse.module.css'
+import courseApi from '../../pages/api/courseApi';
+import axios from 'axios';
 
-interface barCourse {
-    course: Course
-    handleClick: Function
-}
-
-function BarCourse(props: barCourse) {
-    const { course, handleClick } = props
-    function click(chapterID: number, lessonID: number | string) {
-        handleClick(chapterID, lessonID)
-    }
+function BarCourse({ courseName, current }: { courseName: any, current: any }) {
+    const [data, setData] = useState<Course>()
+    useEffect(() => {
+        const fetch = async () => {
+            const response = await axios.get(`/api/course/${courseName}/`)
+            const course: Course = response.data
+            setData(course)
+        }
+        fetch()
+    }, [courseName])
     return (
-        <>
-            {course.chapters.map(({ id, name, lessons }) => {
+        <div className={styles.barCourse}>
+            {data?.chapters.map(({ id, name, lessons }) => {
                 const chapterID = id
                 return (
                     <div key={id}>
-                        <h3>{name}</h3>
-                        <ul>
+                        <h5>{name}</h5>
+                        <ul className={styles.listChapter}>
                             {lessons.map(({ id, name }) => {
+                                const active = (id === current) ? true : false
                                 return (
-                                    <li key={id} onClick={() => click(chapterID, id)}>
-                                        {name}
+                                    <li
+                                        key={id}
+                                        className={`${styles.link} ${active ? styles.active : ''}`}
+                                    >
+                                        <Link href={`/${courseName}/id?chapter=${chapterID}&lesson=${id}`}>
+                                            <a className='text-decoration-none text-reset'>{name}</a>
+                                        </Link>
                                     </li>
                                 )
                             })}
@@ -31,7 +40,7 @@ function BarCourse(props: barCourse) {
                     </div>
                 )
             })}
-        </>
+        </div>
     );
 }
 

@@ -269,7 +269,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const url = `http://nginx/api/search/?terms=${termsParams}${groupUrl}${topicUrl}`;
     const response = await fetch(url);
     const data = await response.json()
-    console.log(data)
     return {
         props: {
             data,

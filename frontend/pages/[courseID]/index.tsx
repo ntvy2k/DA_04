@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import courseApi from "../api/courseApi";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import ContentChapter from "../../components/ContentChapter";
 import { ContentList, Course, CourseList } from "../../moduleType";
 import HomeLayout from "../../components/Layouts/homeLayout";
@@ -14,20 +14,11 @@ interface url {
   lessonID: number | string,
 }
 
-function CourseID({ course }: { course: Course }) {
+function CourseID() {
   const router = useRouter();
   const { courseID } = router.query;
-  const [data, setData] = useState<Array<CourseList>>([])
   const [dataContent, setDataContent] = useState<Array<ContentList | null>>([null])
   const [url, setUrl] = useState<url | null>(null)
-  useEffect(() => {
-    const fetch = async () => {
-      const res = await courseApi.getAll()
-      setData(res.data)
-    }
-    fetch()
-  }, [])
-
   useEffect(() => {
     setDataContent([null])
   }, [courseID])
@@ -52,45 +43,33 @@ function CourseID({ course }: { course: Course }) {
   }
 
   return (
-    <>
-      <HeaderCourse data={data} />
-      <div>
-        <p>This is course: {courseID}</p>
-        <BarCourse course={course} handleClick={handleClick} />
-
-        {dataContent != null ? (
-          <ContentChapter data={dataContent}></ContentChapter>
-        ) : null}
+    <HomeLayout>
+      <div className="container">
+        <HeaderCourse current={courseID} />
+        <div className="row mt-4">
+          <div className="col-2">
+            <BarCourse courseName={courseID} current={null} />
+          </div>
+          <div className="col-10">
+            {dataContent != null ? (
+              <ContentChapter data={dataContent}></ContentChapter>
+            ) : null}
+          </div>
+        </div>
       </div>
-    </>
+    </HomeLayout>
   );
 }
 
-CourseID.getLayout = HomeLayout
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetch("http://nginx/api/course/")
-  const data: Array<CourseList> = await response.json()
-  const paths = data.map((course: CourseList) => ({
-    params: {
-      courseID: course.slug,
-    },
-  }));
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const response = await fetch(`http://nginx/api/course/${params?.courseID}/`)
-  const course: Course = await response.json()
-  return {
-    props: {
-      course,
-    },
-  };
-};
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const res = await fetch(`http://nginx/api/course/1/chapter/1/lesson/1/content/`)
+//   const data = await res.json()
+//   return {
+//     props: {
+//       data: data
+//     }
+//   }
+// }
 
 
 
