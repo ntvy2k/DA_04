@@ -14,5 +14,5 @@ class CourseSearchView(APIView):
 
         result = CourseSearch(terms, group, topics).result()
         serializer = CourseSerializer(result, many=True)
-        
+
         return Response(serializer.data)

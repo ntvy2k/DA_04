@@ -9,9 +9,7 @@ python manage.py migrate
 
 echo 'Migrations: OK'
 
-echo 'Initialize...'
 python manage.py shell < docker-django/data_initialize.py
-echo 'Initialize: OK'
 
 echo "Run server"
 # dev

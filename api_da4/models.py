@@ -7,7 +7,7 @@ from django.utils.text import slugify
 
 class AbstractType(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    
+
     class Meta:
         abstract = True
 
@@ -15,9 +15,9 @@ class AbstractType(models.Model):
 class CourseGroup(AbstractType):
     def __str__(self):
         return self.name
-    
+
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
 
 class CourseTopic(AbstractType):
@@ -25,7 +25,7 @@ class CourseTopic(AbstractType):
         return self.name
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
 
 class CourseIcon(AbstractType):
@@ -41,28 +41,33 @@ class Course(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=50, unique=True)
-    owner = models.ForeignKey(User, related_name='courses', on_delete=models.CASCADE)
-    # //
-    group = models.ForeignKey(CourseGroup, related_name='gr_courses', null=True, blank=True, on_delete=models.SET_NULL)
+    owner = models.ForeignKey(User, related_name="courses", on_delete=models.CASCADE)
+    group = models.ForeignKey(
+        CourseGroup,
+        related_name="gr_courses",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
     topics = models.ManyToManyField(CourseTopic, related_name="tp_courses")
-    icon = models.ForeignKey(CourseIcon, null=True, blank=True, on_delete=models.SET_NULL)
-
+    icon = models.ForeignKey(
+        CourseIcon, null=True, blank=True, on_delete=models.SET_NULL
+    )
 
     def __str__(self):
         return self.name
-    
 
     def init_or_ignore_slug(self):
         if not self.slug:
             self.slug = slugify(self.name)
             if Course.objects.filter(slug=self.slug).exists():
-                self.slug = self.slug + '-' + str(self.id)
-    
+                self.slug = self.slug + "-" + str(self.id)
 
     def init_or_ignore_author(self):
         if not self.author:
-            self.author = self.owner.last_name.strip() + " " + self.owner.first_name.strip()
-
+            self.author = (
+                self.owner.last_name.strip() + " " + self.owner.first_name.strip()
+            )
 
     def save(self, *args, **kwargs):
         self.init_or_ignore_slug()
@@ -72,14 +77,14 @@ class Course(models.Model):
 
 class Chapter(models.Model):
     name = models.CharField(max_length=50)
-    course = models.ForeignKey(Course, related_name="chapters", on_delete=models.CASCADE)
+    course = models.ForeignKey(
+        Course, related_name="chapters", on_delete=models.CASCADE
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
-
     class Meta:
-        order_with_respect_to = 'course'
-
+        order_with_respect_to = "course"
 
     def __str__(self):
         return self.name
@@ -88,12 +93,14 @@ class Chapter(models.Model):
 class Lesson(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     name = models.CharField(max_length=50)
-    chapter = models.ForeignKey(Chapter, related_name="lessons",on_delete=models.CASCADE)
+    chapter = models.ForeignKey(
+        Chapter, related_name="lessons", on_delete=models.CASCADE
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
     class Meta:
-        order_with_respect_to = 'chapter'
+        order_with_respect_to = "chapter"
 
     def __str__(self):
         return self.name
@@ -102,10 +109,12 @@ class Lesson(models.Model):
 class Content(models.Model):
     title = models.CharField(max_length=24)
     content = models.JSONField(null=True)
-    lesson = models.ForeignKey(Lesson, related_name="contents", on_delete=models.CASCADE)
+    lesson = models.ForeignKey(
+        Lesson, related_name="contents", on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.title
-    
+
     class Meta:
-        order_with_respect_to = 'lesson'
+        order_with_respect_to = "lesson"

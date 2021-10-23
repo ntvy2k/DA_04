@@ -8,11 +8,12 @@ class CourseOwnerOrReadOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
             return True
-        
 
-        course = get_object_or_404(Course.objects.filter(), slug=view.kwargs['course_slug'])
+        course = get_object_or_404(
+            Course.objects.filter(), slug=view.kwargs["course_slug"]
+        )
         user = request.user
-        return  user.is_authenticated and user == course.owner
+        return user.is_authenticated and user == course.owner
 
 
 class IsOwnerOrReadOnly(BasePermission):

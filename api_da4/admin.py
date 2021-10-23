@@ -1,5 +1,13 @@
 from django.contrib import admin
-from .models import Course, Chapter, Lesson, Content, CourseTopic, CourseGroup, CourseIcon
+from .models import (
+    Course,
+    Chapter,
+    Lesson,
+    Content,
+    CourseTopic,
+    CourseGroup,
+    CourseIcon,
+)
 
 
 admin.site.register(Course)
