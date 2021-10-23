@@ -1,0 +1,23 @@
+TOPICS = [
+    "Functional Programming",
+    "Network",
+    "System Design",
+    "Software Design",
+    "Web Development",
+    "Algorithms",
+    "Data Structures",
+    "Databases",
+    "Recursion",
+    "React",
+    "Python",
+    "C",
+    "C++",
+    "C#",
+    "Javascript",
+    "HTML",
+    "CSS",
+    "Concurrency",
+    "Cloud",
+    "Data Science",
+    # Them topic tai day
+]

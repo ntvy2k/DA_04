@@ -1,7 +1,11 @@
-from django.contrib.auth.models import User
-from api_da4.models import CourseGroup, CourseTopic
-
 import logging
+
+from django.contrib.auth.models import User
+from api_da4.models import CourseGroup, CourseTopic, CourseIcon
+from data.course_topics import TOPICS
+from data.course_icons import ICONS
+from data.course_groups import GROUPS
+
 
 logging.basicConfig(level=logging.NOTSET)
 log = logging.getLogger("Initialize")
@@ -12,26 +16,35 @@ def init_admin():
         User.objects.create_superuser(
             username="admin", password="admin", email="admin@site.net"
         )
-        log.info("Superuser: created")
+        log.info("Superuser: Created")
 
 
-# TODO some icons
 def init_course_icons():
-    pass
+    if not CourseIcon.objects.all():
+        for icon in ICONS:
+            CourseIcon.objects.create(name=icon["name"], nontation=icon["nontation"])
+        log.info("Course's Icons: Created")
 
 
-# TODO some groups
 def init_course_groups():
-    pass
+    if not CourseGroup.objects.all():
+        for group in GROUPS:
+            CourseGroup.objects.create(name=group)
+        log.info("Course's Groups: Created")
 
 
-# TODO some topics
 def init_course_topics():
-    pass
+    if not CourseTopic.objects.all():
+        for topic in TOPICS:
+            CourseTopic.objects.create(name=topic)
+        log.info("Course's Topics: Created")
 
 
 def initialize():
     init_admin()
+    init_course_icons()
+    init_course_groups()
+    init_course_topics()
 
 
 log.info("Starting...")
