@@ -13,7 +13,7 @@ RUN pip install -r requirements.txt
 
 RUN mkdir static
 
-RUN chmod +x docker-django/migrate.sh
+RUN chmod +x docker_django/migrate.sh
 
 # auto migrations
-CMD ["sh", "docker-django/migrate.sh"]
+CMD ["sh", "docker_django/migrate.sh"]

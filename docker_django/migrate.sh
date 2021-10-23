@@ -1,6 +1,6 @@
 #!/bin/sh
 # Ensure connect to postgres
-python manage.py shell < docker-django/connect_check.py
+python manage.py shell < docker_django/connect_check.py
 
 python manage.py migrate
 python manage.py makemigrations api_da4
@@ -9,7 +9,7 @@ python manage.py migrate
 
 echo 'Migrations: OK'
 
-python manage.py shell < docker-django/data_initialize.py
+python manage.py shell < docker_django/data_initialize.py
 
 echo "Run server"
 # dev

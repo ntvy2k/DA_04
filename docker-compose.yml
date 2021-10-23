@@ -45,11 +45,10 @@ services:
       # - ./api_da4/:/code/api_da4/
       # - ./auth_da4/:/code/auth_da4/
       - backend_static:/code/static/
-      # - backend_media:/code/media/
     networks:
       - backnet
       - dbnet
-    command: ["./docker-django/migrate.sh"]
+    command: ["./docker_django/migrate.sh"]
   db:
     image: postgres:alpine
     container_name: dA04_PG

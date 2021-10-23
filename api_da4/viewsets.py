@@ -1,7 +1,7 @@
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from .permissions import IsOwnerOrReadOnly, CourseOwnerOrReadOnly
 
 from .models import (
@@ -32,16 +32,19 @@ from .serializers.details import (
 class CourseIconViewSet(ModelViewSet):
     serializer_class = CourseIconSerializer
     queryset = CourseIcon.objects.all()
+    permission_classes = [IsAdminUser]
 
 
 class CourseGroupViewSet(ModelViewSet):
     serializer_class = CourseGroupSerializer
     queryset = CourseGroup.objects.all()
+    permission_classes = [IsAdminUser]
 
 
 class CourseTopicViewSet(ModelViewSet):
     serializer_class = CourseTopicSerializer
     queryset = CourseTopic.objects.all()
+    permission_classes = [IsAdminUser]
 
 
 class CourseViewSet(ModelViewSet):

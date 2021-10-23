@@ -2,9 +2,9 @@ import logging
 
 from django.contrib.auth.models import User
 from api_da4.models import CourseGroup, CourseTopic, CourseIcon
-from data.course_topics import TOPICS
-from data.course_icons import ICONS
-from data.course_groups import GROUPS
+from docker_django.data.course_topics import TOPICS
+from docker_django.data.course_icons import ICONS
+from docker_django.data.course_groups import GROUPS
 
 
 logging.basicConfig(level=logging.NOTSET)
