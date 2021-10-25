@@ -87,7 +87,7 @@ class Chapter(models.Model):
         order_with_respect_to = "course"
 
     def __str__(self):
-        return self.name
+        return self.name + " | " + self.course.name
 
 
 class Lesson(models.Model):
@@ -103,7 +103,7 @@ class Lesson(models.Model):
         order_with_respect_to = "chapter"
 
     def __str__(self):
-        return self.name
+        return self.name + " | " + str(self.chapter)
 
 
 class Content(models.Model):
@@ -114,7 +114,7 @@ class Content(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        return self.title + " | " + str(self.lesson)
 
     class Meta:
         order_with_respect_to = "lesson"
