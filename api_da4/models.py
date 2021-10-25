@@ -6,6 +6,9 @@ from django.utils.text import slugify
 
 
 COURSE_DEFAULT_NAME = "Khóa học mới"
+CHAPTER_DEFAULT_NAME = "Chương mới"
+LESSON_DEFAULT_NAME = "Bài học mới"
+CONTENT_DEFAULT_TITLE = "Nội dung mới"
 
 
 class AbstractType(models.Model):
@@ -95,7 +98,7 @@ class Course(models.Model):
 
 
 class Chapter(models.Model):
-    name = models.CharField(max_length=50, default="Chương mới")
+    name = models.CharField(max_length=50, default=CHAPTER_DEFAULT_NAME)
     course = models.ForeignKey(
         Course, related_name="chapters", on_delete=models.CASCADE
     )
@@ -111,7 +114,7 @@ class Chapter(models.Model):
 
 class Lesson(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    name = models.CharField(max_length=50, default="Bài học mới")
+    name = models.CharField(max_length=50, default=LESSON_DEFAULT_NAME)
     chapter = models.ForeignKey(
         Chapter, related_name="lessons", on_delete=models.CASCADE
     )
@@ -126,8 +129,8 @@ class Lesson(models.Model):
 
 
 class Content(models.Model):
-    title = models.CharField(max_length=24)
-    content = models.JSONField(null=True)
+    title = models.CharField(max_length=50, default=CONTENT_DEFAULT_TITLE)
+    content = models.JSONField(null=True, blank=True)
     lesson = models.ForeignKey(
         Lesson, related_name="contents", on_delete=models.CASCADE
     )
