@@ -1,8 +1,14 @@
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from .permissions import IsOwnerOrReadOnly, CourseOwnerOrReadOnly, IsAdminUserOrReadOnly
+from rest_framework.permissions import (
+    IsAuthenticatedOrReadOnly,
+)
+from .permissions import (
+    IsOwnerOrReadOnly,
+    IsCourseOwner,
+    ReadOnly,
+)
 
 from .models import (
     Course,
@@ -32,19 +38,19 @@ from .serializers.details import (
 class CourseIconViewSet(ModelViewSet):
     serializer_class = CourseIconSerializer
     queryset = CourseIcon.objects.all()
-    permission_classes = [IsAdminUserOrReadOnly]
+    permission_classes = [ReadOnly]
 
 
 class CourseGroupViewSet(ModelViewSet):
     serializer_class = CourseGroupSerializer
     queryset = CourseGroup.objects.all()
-    permission_classes = [IsAdminUserOrReadOnly]
+    permission_classes = [ReadOnly]
 
 
 class CourseTopicViewSet(ModelViewSet):
     serializer_class = CourseTopicSerializer
     queryset = CourseTopic.objects.all()
-    permission_classes = [IsAdminUserOrReadOnly]
+    permission_classes = [ReadOnly]
 
 
 class CourseViewSet(ModelViewSet):
@@ -64,7 +70,7 @@ class CourseViewSet(ModelViewSet):
 
 class ChapterViewSet(ModelViewSet):
     serializer_class = ChapterSerializer
-    permission_classes = [CourseOwnerOrReadOnly]
+    permission_classes = [IsCourseOwner | ReadOnly]
 
     def get_queryset(self):
         return Chapter.objects.filter(course__slug=self.kwargs["course_slug"])
@@ -82,7 +88,7 @@ class ChapterViewSet(ModelViewSet):
 
 class LessonViewSet(ModelViewSet):
     serializer_class = LessonSerializer
-    permission_classes = [CourseOwnerOrReadOnly]
+    permission_classes = [IsCourseOwner | ReadOnly]
 
     def get_queryset(self):
         return Lesson.objects.filter(
@@ -115,7 +121,7 @@ class LessonViewSet(ModelViewSet):
 
 class ContentViewSet(ModelViewSet):
     serializer_class = ContentSerializer
-    permission_classes = [CourseOwnerOrReadOnly]
+    permission_classes = [IsCourseOwner | ReadOnly]
 
     def get_queryset(self):
         return Content.objects.filter(
