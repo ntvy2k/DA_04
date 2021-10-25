@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 
 
+COURSE_DEFAULT_NAME = "Khóa học mới"
+
+
 class AbstractType(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -36,7 +39,7 @@ class CourseIcon(AbstractType):
 
 
 class Course(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, default=COURSE_DEFAULT_NAME)
     author = models.CharField(max_length=50, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
@@ -49,7 +52,7 @@ class Course(models.Model):
         blank=True,
         on_delete=models.SET_NULL,
     )
-    topics = models.ManyToManyField(CourseTopic, related_name="tp_courses")
+    topics = models.ManyToManyField(CourseTopic, related_name="tp_courses", blank=True)
     icon = models.ForeignKey(
         CourseIcon, null=True, blank=True, on_delete=models.SET_NULL
     )
@@ -57,26 +60,42 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
-    def init_or_ignore_slug(self):
-        if not self.slug:
-            self.slug = slugify(self.name)
-            if Course.objects.filter(slug=self.slug).exists():
-                self.slug = self.slug + "-" + str(self.id)
+    def _generate_slug(self):
+        self.slug = slugify(self.name)
+        if Course.objects.filter(slug=self.slug).exists():
+            self.slug = self.slug + "-" + str(self.pk)
 
-    def init_or_ignore_author(self):
+    def init_slug(self):
+        if not self.slug:
+            if self.name == COURSE_DEFAULT_NAME:
+                self.slug = str(self.pk)
+            else:
+                self._generate_slug()
+        else:
+            if self.slug.isnumeric():
+                self._generate_slug()
+
+    def init_author(self):
         if not self.author:
             self.author = (
                 self.owner.last_name.strip() + " " + self.owner.first_name.strip()
             ).strip()
 
+    def _update(self):
+        self.init_author()
+        self.init_slug()
+        super(Course, self).save(force_update=True)
+
     def save(self, *args, **kwargs):
-        self.init_or_ignore_slug()
-        self.init_or_ignore_author()
-        super(Course, self).save(*args, **kwargs)
+        if self.pk:
+            self._update()
+        else:
+            super(Course, self).save(*args, **kwargs)
+            self.save(*args, **kwargs)
 
 
 class Chapter(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, default="Chương mới")
     course = models.ForeignKey(
         Course, related_name="chapters", on_delete=models.CASCADE
     )
@@ -92,7 +111,7 @@ class Chapter(models.Model):
 
 class Lesson(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, default="Bài học mới")
     chapter = models.ForeignKey(
         Chapter, related_name="lessons", on_delete=models.CASCADE
     )
