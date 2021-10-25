@@ -72,6 +72,7 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                 dispatch(set_not_authenticated());
             });
         }
+        router.push('/')
     };
     const checkEnter = (e: any) => {
         if (e.key === 'Enter' && e.currentTarget.value !== '') {
@@ -148,6 +149,11 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                                     <NavDropdown title={user.user?.username} id="user">
                                         <NavDropdown.Item onClick={() => handleLogout()}>
                                             Logout
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Item>
+                                            <Link href='/user'>
+                                                <a className='text-reset text-decoration-none'>Thông tin</a>
+                                            </Link>
                                         </NavDropdown.Item>
                                     </NavDropdown>
 

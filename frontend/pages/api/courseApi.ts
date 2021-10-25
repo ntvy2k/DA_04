@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { CourseList, dataContent, GroupCourse, TopicCourse } from "../../moduleType";
+import { CourseList, dataContent, GroupCourse, listIcon, TopicCourse } from "../../moduleType";
 
 // api/productApi.js
 const courseApi = {
@@ -11,6 +11,10 @@ const courseApi = {
     const url = `/api/course/${id}/chapter`
     return axios.get(url)
   },
+  getListLesson(course: any, chapter: any) {
+    const url = `/api/course/${course}/chapter/${chapter}/lesson`
+    return axios.get(url)
+  },
   getGroupCourse(): Promise<AxiosResponse<Array<GroupCourse>>> {
     const url = '/api/group'
     return axios.get(url)
@@ -19,9 +23,25 @@ const courseApi = {
     const url = '/api/topic'
     return axios.get(url)
   },
-  postContent(values: any) {
-    const url = `/api/course/1/chapter/1/lesson/1/content/`
-    return axios.post(url, values)
+  getListIcon(): Promise<AxiosResponse<Array<listIcon>>> {
+    const url = '/api/icon'
+    return axios.get(url)
+  },
+  postContent(values: any, courseID: any, chapterID: any, lessonID: any, config: any) {
+    const url = `/api/course/${courseID}/chapter/${chapterID}/lesson/${lessonID}/content/`
+    return axios.post(url, values, config)
+  },
+  postCourse(values: any, config: any) {
+    const url = `/api/course/`
+    return axios.post(url, values, config)
+  },
+  postChapter(values: any, slugCourse: any, config: any) {
+    const url = `/api/course/${slugCourse}/chapter/`
+    return axios.post(url, values, config)
+  },
+  postLesson(values: any, slugCourse: any, slugChpater: any, config: any) {
+    const url = `/api/course/${slugCourse}/chapter/${slugChpater}/lesson/`
+    return axios.post(url, values, config)
   },
   updateContent(id: number, values: any) {
     const url = `/api/course/1/chapter/4/lesson/${id}/content/1`

@@ -170,7 +170,6 @@ const SearchPage = () => {
     const topicUrl = topics_param(topics)
     const groupUrl = group_param(group)
     const url = `/search/id?router=${search_terms}${groupUrl}${topicUrl}`
-    console.log(url)
     router.push(url)
   }
 

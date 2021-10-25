@@ -21,12 +21,13 @@ export interface AuthState {
   is_loading: boolean;
   is_authenticated: boolean;
   user: User | null;
+  userName: string | null;
 }
 
 type Enpoint = "token" | "token-destroy" | "profile" | "register";
 
 const make_url = (enpoint: Enpoint): string => {
-  const relative_url = "auth/";
+  const relative_url = "http://localhost/auth/";
   return relative_url + enpoint + "/";
 };
 
@@ -74,6 +75,7 @@ const initialState: AuthState = {
   is_loading: false,
   is_authenticated: false,
   user: null,
+  userName: null,
 };
 
 export const fetch_user = createAsyncThunk<User, string>(
@@ -95,6 +97,7 @@ export const AuthSlice = createSlice({
     set_not_authenticated: (state) => {
       state.is_authenticated = false;
       state.user = null;
+      state.userName = null;
     },
   },
   extraReducers: (auth) => {
@@ -105,11 +108,13 @@ export const AuthSlice = createSlice({
       state.is_loading = false;
       state.is_authenticated = true;
       state.user = action.payload;
+      state.userName = `${action.payload.last_name} ${action.payload.first_name}`
     });
     auth.addCase(fetch_user.rejected, (state, action) => {
       state.is_loading = false;
       state.is_authenticated = false;
       state.user = null;
+      state.userName = null
     });
   },
 });

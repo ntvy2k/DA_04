@@ -1,5 +1,6 @@
 import Editor from '@monaco-editor/react';
 import React, { useRef, useState } from 'react';
+import styles from '../../../styles/AddPlayGround.module.css'
 
 interface addPlayGround {
     id: number,
@@ -47,15 +48,19 @@ export function AddPlayGround(props: addPlayGround) {
     return (
 
         <div onBlur={handleBlur} >
-            < select
-                onChange={e => handleAddrTypeChange(e)}
-                className="browser-default custom-select" >
-                {
-                    Add.map((address, key) => <option key={key} value={address}>{address}</option>)
-                }
-            </select >
-            <label htmlFor="buttonRun">Add button run code ?</label>
-            <input type="checkbox" id="buttonRun" onChange={() => setButton(!button)} />
+            <div className='d-flex align-items-center'>
+                <select
+                    onChange={e => handleAddrTypeChange(e)}
+                    className={styles.select} >
+                    {
+                        Add.map((address, key) => <option key={key} value={address}>{address}</option>)
+                    }
+                </select >
+                <div className={styles.button}>
+                    <label htmlFor="buttonRun">Add button run code ?</label>
+                    <input className='ms-2' type="checkbox" id="buttonRun" onChange={() => setButton(!button)} />
+                </div>
+            </div>
             <Editor
                 height="90vh"
                 defaultLanguage={language}

@@ -10,6 +10,13 @@ body {
   box-sizing: border-box;
 }
 
+:root {
+  --color-page: #e0e0e0;
+  --shadow-down: inset 5px 5px 10px #8b8b8b, inset -5px -5px 10px #ffffff;
+  --shadow-up: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+  --color-active: rgb(180, 82, 180);
+}
+
 .colorpage {
   background-color: #e0e0e0;
 }
