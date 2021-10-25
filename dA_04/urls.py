@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('api/', include('api_da4.urls')),
-    path('auth/', include("auth_da4.urls")),
-    path('admin/', admin.site.urls),
+    path("api/", include("api_da4.urls")),
+    path("auth/", include("auth_da4.urls")),
+    path("manage/", include("manage_da4.urls")),
+    path("admin/", admin.site.urls),  # remove after manage done...
 ]
