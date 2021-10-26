@@ -1,8 +1,5 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-
-from .models import Course
 
 from .serializers.generics import CourseSerializer
 
@@ -16,6 +13,8 @@ class CourseSearchView(APIView):
         topics = request.query_params.getlist("topics")
 
         result = CourseSearch(terms, group, topics).result()
+        if result:
+            result = result.filter(status="p")
         serializer = CourseSerializer(result, many=True)
 
         return Response(serializer.data)
