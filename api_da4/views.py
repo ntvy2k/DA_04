@@ -1,5 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+
+from .models import Course
 
 from .serializers.generics import CourseSerializer
 
@@ -15,4 +18,13 @@ class CourseSearchView(APIView):
         result = CourseSearch(terms, group, topics).result()
         serializer = CourseSerializer(result, many=True)
 
+        return Response(serializer.data)
+
+
+class CourseOwnerListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        queryset = Course.objects.filter(owner=request.user)
+        serializer = CourseSerializer(queryset, many=True)
         return Response(serializer.data)

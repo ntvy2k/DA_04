@@ -11,6 +11,12 @@ LESSON_DEFAULT_NAME = "Bài học mới"
 CONTENT_DEFAULT_TITLE = "Nội dung mới"
 
 
+STATUS_CHOICES = [
+    ("d", "Draft"),
+    ("p", "Published"),
+]
+
+
 class AbstractType(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -59,6 +65,7 @@ class Course(models.Model):
     icon = models.ForeignKey(
         CourseIcon, null=True, blank=True, on_delete=models.SET_NULL
     )
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default="d")
 
     def __str__(self):
         return self.name
