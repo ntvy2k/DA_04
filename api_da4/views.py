@@ -19,12 +19,3 @@ class CourseSearchView(APIView):
         serializer = CourseSerializer(result, many=True)
 
         return Response(serializer.data)
-
-
-class CourseOwnerListView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        queryset = Course.objects.filter(owner=request.user)
-        serializer = CourseSerializer(queryset, many=True)
-        return Response(serializer.data)

@@ -11,7 +11,6 @@ from .permissions import (
     IsOwnerOrReadOnly,
     IsCourseOwner,
     ReadOnly,
-    IsOwner,
 )
 
 from .models import (
