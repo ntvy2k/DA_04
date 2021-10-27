@@ -7,6 +7,12 @@ from .serializers.generics import (
     OptionSerializer,
 )
 
+# TODO auth, permission
+# TODO View for creator
+# TODO View for co-creator
+# TODO View for learner
+# TODO Check answer for learner
+
 
 class ExerciseViewSet(ModelViewSet):
     serializer_class = ExerciseSerializer
