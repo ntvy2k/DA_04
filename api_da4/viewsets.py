@@ -37,6 +37,8 @@ from .serializers.details import (
     LessonsDetailSerializer,
 )
 
+from .serializers.actions import CoursePublisherSerializer
+
 # Read-Only ViewSets
 
 
@@ -140,9 +142,15 @@ class OwnerCourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
     lookup_field = "slug"
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    serializer_actions_class = CoursePublisherSerializer
 
     def get_queryset(self):
         return self.queryset.filter(owner=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == "make_publish":
+            return self.serializer_actions_class
+        return super(OwnerCourseViewSet, self).get_serializer_class()
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -158,12 +166,11 @@ class OwnerCourseViewSet(ModelViewSet):
         url_path="make-publish",
     )
     def make_publish(self, request, slug):
-        instance = get_object_or_404(self.get_queryset().filter(slug=slug))
-        serializer = CourseDetailSerializer(instance)
+        instance = self.get_object()
         if request.method == "PUT":
             instance.status = "p"
             instance.save()
-            return Response({"message": "Published"})
+        serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
 

@@ -82,7 +82,7 @@ class Course(models.Model):
             else:
                 self._generate_slug()
         else:
-            if self.slug.isnumeric():
+            if self.slug.isnumeric() and COURSE_DEFAULT_NAME not in self.name:
                 self._generate_slug()
 
     def init_author(self):
