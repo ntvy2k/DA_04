@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "api_da4.apps.ApiDa4Config",
     "auth_da4.apps.AuthDa4Config",
     "manage_da4.apps.ManageDa4Config",
+    "quiz_da4.apps.QuizDa4Config",
 ]
 
 MIDDLEWARE = [

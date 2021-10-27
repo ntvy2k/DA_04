@@ -5,13 +5,11 @@ python manage.py shell < docker_django/connect_check.py
 python manage.py migrate
 python manage.py makemigrations api_da4
 python manage.py makemigrations auth_da4
+python manage.py makemigrations quiz_da4
 python manage.py migrate
-
-echo 'Migrations: OK'
 
 python manage.py shell < docker_django/data_initialize.py
 
-echo "Run server"
 # dev
 # python manage.py runserver 0.0.0.0:8000
 # prod
