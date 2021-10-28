@@ -9,7 +9,7 @@ QUESTION_TYPE = [("one", "One Answer"), ("mul", "Multiple Answers")]
 
 
 class Question(BaseQuestion):
-    question_type = models.CharField(
+    genus = models.CharField(
         max_length=3, choices=QUESTION_TYPE, null=True, blank=True, editable=False
     )
 
@@ -17,25 +17,25 @@ class Question(BaseQuestion):
         return "{} | {}".format(self.statement, str(self.quiz))
 
     def _update_type(self, correct_answers):
-        if len(correct_answers) < 1:
+        count = correct_answers.count()
+        if count < 1:
             return False
-        elif len(correct_answers) > 1:
-            self.question_type = "mul"
-            return True
         else:
-            self.question_type = "one"
+            if count > 1:
+                self.genus = "mul"
+            else:
+                self.genus = "one"
+            self.save(force_update=True)
             return True
 
     def confirm(self):
         if self.pk:
             options = self.options.all()
-            if len(options) < 2:
+            if options.count() < 2:
                 return False
             else:
                 correct_answers = options.filter(is_right=True)
-                if self._update_type(correct_answers):
-                    self.save(force_update=True)
-                    return True
+                return self._update_type(correct_answers)
         return False
 
 

@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 
 class Exercise(models.Model):
     exercise = models.CharField(max_length=50)
-    owner = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
-    co_owner = models.ManyToManyField(User, blank=True, related_name="co_owners")
+    creator = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    co_creator = models.ManyToManyField(User, blank=True, related_name="co_creator")
 
     def __str__(self):
         return self.exercise
@@ -13,7 +13,7 @@ class Exercise(models.Model):
 
 class Quiz(models.Model):
     quiz = models.CharField(max_length=100, blank=True, null=True)
-    owner = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    creator = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     exercise = models.ForeignKey(
         Exercise, on_delete=models.SET_NULL, null=True, blank=True
     )
