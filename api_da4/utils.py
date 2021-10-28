@@ -7,7 +7,7 @@ class CourseSearch:
     def __init__(self, terms=None, group=None, topics=None):
         self.terms = terms
         self.group = group
-        self.topics = topics if len(topics) > 0 else None
+        self.topics = topics
         self.__queryset = Course.objects.filter(status="p")
 
     def __by_terms(self):
