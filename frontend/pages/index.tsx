@@ -141,8 +141,8 @@ const Home = () => {
             </Container>
           </Container> */}
           <Container className={styles.section}>
-            <div className="row align-items-center">
-              <div className="col col-md-6">
+            <div className={`row ${styles.container}`}>
+              <div className={`col-12 col-md-6 ${styles.content}`}>
                 <motion.h1
                   className={styles.title}
                   variants={titleVariants}
@@ -165,7 +165,7 @@ const Home = () => {
                 ><Link href='/search'><a className="text-decoration-none link-secondary">Khám Phá</a></Link></motion.button>
               </div>
               <motion.div
-                className="col col-md-6"
+                className="col-12 col-md-6"
                 variants={scaleToBigger}
                 initial="hidden"
                 animate="visible"
@@ -181,7 +181,7 @@ const Home = () => {
             }}
             threshold={0.4}
           >
-            <Container className="d-flex flex-column align-items-center">
+            <Container className="d-flex flex-column align-items-center mb-5">
               <motion.h1
                 variants={titleVariants}
                 initial="hidden"
@@ -194,9 +194,9 @@ const Home = () => {
                 animate={animation}
                 transition={{ type: 'spring', delay: 0.2 }}
               >Theo khuyến khích của nhóm chúng tôi</motion.p>
-              <div className="row justify-content-around">
+              <div className={`row justify-content-around`}>
                 <motion.div
-                  className="col"
+                  className="col d-flex justify-content-center"
                   variants={toTheRight}
                   initial="hidden"
                   animate={animation}
@@ -214,7 +214,7 @@ const Home = () => {
                   </Card>
                 </motion.div>
                 <motion.div
-                  className="col"
+                  className="col d-flex justify-content-center"
                   variants={toTheRight}
                   initial="hidden"
                   animate={animation}
@@ -232,7 +232,7 @@ const Home = () => {
                   </Card>
                 </motion.div>
                 <motion.div
-                  className="col"
+                  className="col d-flex justify-content-center"
                   variants={toTheRight}
                   initial="hidden"
                   animate={animation}
@@ -257,10 +257,10 @@ const Home = () => {
             onChange={(inView, entry) => {
               handInView1(inView)
             }}
-            threshold={0.4}
+            threshold={0.2}
           >
             <Container className={styles.section}>
-              <div className="row align-items-center">
+              <div className={`row mt-5 ${styles.container}`}>
                 <motion.div
                   className="col"
                   variants={scaleToBigger}
@@ -269,7 +269,7 @@ const Home = () => {
                 >
                   <Lottie options={quizzOptions} height={400} width={400}></Lottie>
                 </motion.div>
-                <div className="col">
+                <div className={`col ${styles.content}`}>
                   <motion.h1
                     className={styles.title}
                     variants={titleVariants}

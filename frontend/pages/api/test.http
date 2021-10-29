@@ -16,3 +16,6 @@ Content-Type: application/json
 
 ###
 GET http://localhost/auth/token/
+
+###
+PUT http://localhost/api/owner/course/course-3/make-publish/

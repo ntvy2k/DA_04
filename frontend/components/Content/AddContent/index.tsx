@@ -1,15 +1,10 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Form } from 'react-bootstrap';
-import { AddPlayGround, AddText } from '../../components/Content';
-import { dataContent } from '../../moduleType';
-import axiosServer from '../api/axiosServer';
-import courseApi from '../api/courseApi';
-import styles from '../../styles/AddContent.module.css'
-import { ExclamationCircle, XSquare, XSquareFill } from 'react-bootstrap-icons';
-import { useAppDispatch } from '../../app/hooks';
-import { fetch_user } from '../../features/auth';
-import { store } from '../../app/store';
+import { AddPlayGround, AddText } from '../../../components/Content';
+import { dataContent } from '../../../moduleType';
+import courseApi from '../../../pages/api/courseApi'
+import styles from '../../../styles/AddContent.module.css'
+import { ExclamationCircle, XSquareFill } from 'react-bootstrap-icons';
+import { store } from '../../../app/store';
 import { useRouter } from 'next/router';
 
 
@@ -19,14 +14,6 @@ function AddContent() {
     const [numChild, setNumChild] = useState<number>(0)
     const [submitContent, setSubmitContent] = useState<Array<any>>([])
     const [data, setData] = useState<dataContent>()
-
-    const [courseUser, setCourseUser] = useState<Array<any>>([])
-    const [chapter, setChapter] = useState<Array<any>>([])
-    const [lesson, setLesson] = useState<Array<any>>([])
-
-    const [currentCourse, setCurrentCourse] = useState<any>()
-    const [currentChapter, setCurrentChapter] = useState<any>()
-    const [currentLesson, setCurrentLesson] = useState<any>()
     const handleOnChangeValue = (value: dataContent) => {
         setData(value)
     }
@@ -36,37 +23,6 @@ function AddContent() {
         setContent(newContent)
         submitContent.splice(index, 1)
     }
-    useEffect(() => {
-        const fetchCourseData = async () => {
-            const res = await courseApi.getAll()
-            const profile = store.getState().auth.user
-            const userName = `${profile?.last_name} ${profile?.first_name}`
-            const myCourse = res.data.filter(course => course.author === userName)
-            setCourseUser(myCourse)
-                ; (myCourse.length != 0) ? setCurrentCourse(myCourse[0].slug) : null
-        }
-        fetchCourseData()
-    }, [])
-    useEffect(() => {
-        const fetchChapter = async () => {
-            const res = await courseApi.getListChapter(currentCourse)
-            setChapter(res.data)
-                ; (res.data.length != 0) ? setCurrentChapter(res.data[0].id) : setCurrentChapter(null)
-        }
-        fetchChapter()
-    }, [currentCourse])
-    useEffect(() => {
-        const fetchLesson = async () => {
-            const res = await courseApi.getListLesson(currentCourse, currentChapter)
-            setLesson(res.data)
-                ; (res.data.length != 0) ? setCurrentLesson(res.data[0].id) : setCurrentLesson(null)
-        }
-        if (currentChapter) { fetchLesson() }
-        else {
-            setCurrentLesson(null)
-            setLesson([])
-        }
-    }, [currentChapter])
     useEffect(() => {
         if (data != undefined) {
             const checkValue = submitContent.some((content) => {
@@ -90,14 +46,13 @@ function AddContent() {
         };
         submitContent.map(async ({ id, ...newObject }) => {
             const value = {
-                lesson: currentLesson,
+                lesson: router.query.lessonid,
                 title: "test",
                 content: newObject
             }
-            courseApi.postContent(value, currentCourse, currentChapter, currentLesson, config)
+            courseApi.postContent(value, router.query.editcourse, router.query.chapterid, router.query.lessonid, config)
         })
-        router.push('/user')
-
+        router.push('/user/mycourse')
     }
     function handleClick(type: 'text' | 'playGroundWithRunCode') {
         switch (type) {
@@ -124,7 +79,7 @@ function AddContent() {
 
     return (
         <div className={styles.content}>
-            <div className='d-flex align-items-center mb-3'>
+            {/* <div className='d-flex align-items-center mb-3'>
                 {courseUser.length !== 0 ? (
                     <div>
                         <p>Chọn khóa học</p>
@@ -176,23 +131,21 @@ function AddContent() {
                         <ExclamationCircle className='ms-1' />
                     </div>
                 )}
-            </div>
-            {currentLesson ? (
-                <div>
-                    <div className='mb-3'>
-                        <button className={styles.button} onClick={() => handleClick('text')}>Add text</button>
-                        <button className={styles.button} onClick={() => handleClick('playGroundWithRunCode')}> Add PlayGround</button>
-                    </div>
-                    {content.map((x, index) => {
-                        return <div className='mb-3' key={index} >
-                            <button className={styles.button_close} onClick={() => handleCloseComponent(index)} ><XSquareFill className='text-danger fs-5' /></button>
-                            {x}
-                        </div>
-                    }
-                    )}
-                    <button className={styles.button} onClick={() => handleSubmit()} >Submit</button>
+            </div> */}
+            <div>
+                <div className='mb-3'>
+                    <button className={styles.button} onClick={() => handleClick('text')}>Add text</button>
+                    <button className={styles.button} onClick={() => handleClick('playGroundWithRunCode')}> Add PlayGround</button>
                 </div>
-            ) : null}
+                {content.map((x, index) => {
+                    return <div className='mb-3' key={index} >
+                        <button className={styles.button_close} onClick={() => handleCloseComponent(index)} ><XSquareFill className='text-danger fs-5' /></button>
+                        {x}
+                    </div>
+                }
+                )}
+                <button className={styles.button} onClick={() => handleSubmit()} >Submit</button>
+            </div>
         </div >
     );
 }
