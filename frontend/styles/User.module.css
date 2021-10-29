@@ -1,61 +1,41 @@
-.profile {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px;
-    border-radius: 15px;
-
-    background: var(--color-page);
+.card {
+    background-color: var(--color-page);
     box-shadow: var(--shadow-up);
-}
-
-.profile_button {
     border: none;
-    border-radius: 10px;
-    padding: 10px 15px;
-    background: var(--color-page);
-    color: rgba(0, 0, 0, 0.5);
-    box-shadow: var(--shadow-down);
-}
-
-.profile_button:hover {
-    box-shadow: var(--shadow-up);
-    color: black;
-}
-
-.bar {
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
     border-radius: 15px;
-
-    background: var(--color-page);
-    box-shadow: var(--shadow-up);
+    padding: 20px;
 }
 
-.bar_button {
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 10px;
-    color: rgba(0, 0, 0, 0.5);
+.card:hover.card_profile {
+    color: #efc8b1;
+}
+
+.card:hover.card_course {
+    color: #7689de;
+}
+
+.card_icon {
+    font-size: 50px;
+}
+
+.card_icon.card_icon_profile {
+    color: #efc8b1;
+}
+
+.card_icon.card_icon_course {
+    color: #7689de;
+}
+
+.card_button {
+    margin-top: 20px;
     text-decoration: none;
-}
-
-.bar_button + .bar_button {
-    margin-top: 10px;
-}
-
-.bar_button:hover {
-    background: var(--color-page);
-    box-shadow: var(--shadow-up);
-    color: black;
-}
-
-.bar_button.active {
+    color: rgba(0, 0, 0, 0.5);
     box-shadow: var(--shadow-down);
-    color: black;
+    padding: 10px 25px;
+    border-radius: 10px;
 }
 
-.content {
-    padding-left: 20px;
+.card_button:hover {
+    color: black;
+    box-shadow: var(--shadow-up);
 }

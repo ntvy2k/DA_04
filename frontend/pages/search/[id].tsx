@@ -233,19 +233,21 @@ const SearchID = ({ data }: { data: any }) => {
                 </div>
                 <Container className="mt-5">
                     <h1><MenuButtonWide /> Khóa học tìm thấy</h1>
-                    {data.map((course: any) => {
-                        return (
-                            <Card key={course.id} className={styles.card}>
-                                <Card.Body className={styles.card_body}>
-                                    <Card.Text><i className={`${styles.card_icon} ${course.icon}`} /></Card.Text>
-                                    <Card.Title className="mb-4">{course.name.toUpperCase()}</Card.Title>
-                                    <Card.Text>
-                                        <Link href={`/${course.slug}`} ><a className={styles.card_button}>Học ngay</a></Link>
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        )
-                    })}
+                    <div className='d-flex flex-wrap justify-content-center'>
+                        {data.map((course: any) => {
+                            return (
+                                <Card key={course.id} className={styles.card}>
+                                    <Card.Body className={styles.card_body}>
+                                        <Card.Text><i className={`${styles.card_icon} ${course.icon}`} /></Card.Text>
+                                        <Card.Title className="mb-4">{course.name.toUpperCase()}</Card.Title>
+                                        <Card.Text>
+                                            <Link href={`/${course.slug}`} ><a className={styles.card_button}>Học ngay</a></Link>
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            )
+                        })}
+                    </div>
                 </Container>
             </>
         </SearchLayout>

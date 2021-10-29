@@ -7,12 +7,13 @@ interface userName {
     type: string,
     label: string,
     placeholder: string,
+    readonly?: boolean,
 }
 
 function InputField(props: FieldProps & userName) {
     const {
         field, form,
-        type, label, placeholder
+        type, label, placeholder, readonly
     } = props
     const { name } = field
     const { errors, touched } = form
@@ -26,6 +27,7 @@ function InputField(props: FieldProps & userName) {
                     placeholder={placeholder}
                     isInvalid={touched[name] && !!errors[name]}
                     className={styles.input}
+                    readOnly={readonly}
                     {...field}
                 ></Form.Control>
                 <Form.Control.Feedback type="invalid">{errors[name]}</Form.Control.Feedback>

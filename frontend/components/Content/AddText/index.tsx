@@ -17,7 +17,6 @@ export function AddText(props: addText) {
     const [value, setValue] = useState<string>('')
     function handleChange(content: string) {
         setValue(content)
-        console.log(content)
     }
 
     return (

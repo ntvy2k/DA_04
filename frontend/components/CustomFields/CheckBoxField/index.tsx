@@ -19,19 +19,23 @@ function CheckBoxField(props: FieldProps & checkboxProps) {
     return (
         <Form.Group>
             <Form.Label>{label}</Form.Label>
-            {options.map(option => {
-                return (
-                    <Form.Check
-                        type='checkbox'
-                        id={option.value}
-                        label={option.name}
-                        {...field}
-                        value={option.value}
-                        checked={value.includes(option.value.toString())}
-                        isInvalid={touched[name] && !!errors[name]}
-                    />
-                )
-            })}
+            <div className='row'>
+                {options.map(option => {
+                    return (
+                        <Form.Check
+                            key={option.value}
+                            type='checkbox'
+                            id={option.value}
+                            label={option.name}
+                            {...field}
+                            value={option.value}
+                            checked={value.includes(option.value.toString())}
+                            isInvalid={touched[name] && !!errors[name]}
+                            className='col-4'
+                        />
+                    )
+                })}
+            </div>
             {showError && <p className='text-danger'>{errors[name]}</p>}
         </Form.Group>
     );

@@ -1,16 +1,18 @@
 import React from 'react';
 import HomeLayout from '../../../components/Layouts/homeLayout';
-import AddContent from '../../addContent';
+import ProfileLayout from '../../../components/Layouts/profileLayout';
 import UserLayout from '../../../components/Layouts/userLayout';
 
-function AddCourse() {
+function Profile() {
     return (
         <HomeLayout>
             <UserLayout>
-                <AddContent></AddContent>
+                <ProfileLayout>
+                    <p></p>
+                </ProfileLayout>
             </UserLayout>
         </HomeLayout>
     );
 }
 
-export default AddCourse;
+export default Profile;

@@ -1,0 +1,34 @@
+.card {
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 16rem;
+    border: none;
+    border-radius: 30px;
+    background: #e0e0e0;
+    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+}
+
+.card_icon {
+    font-size: 50px;
+}
+
+.card_body {
+    text-align: center;
+    padding: 30px;
+}
+
+.card_button {
+    background: #e0e0e0;
+    box-shadow: inset 5px 5px 10px #8b8b8b, inset -5px -5px 10px #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+
+    text-decoration: none;
+    color: black;
+}
+
+.card_button:hover {
+    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+    color: #6d6db5;
+}
