@@ -56,6 +56,7 @@ export function AddText(props: addText) {
                     minHeight: "300px",
                     showPathLabel: false,
                 }}
+                height='100%'
             />
         </div>
     );

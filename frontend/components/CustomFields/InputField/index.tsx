@@ -19,8 +19,8 @@ function InputField(props: FieldProps & userName) {
     const { errors, touched } = form
     const showError = errors[name] && touched[name]
     return (
-        <div>
-            <Form.Group controlId={name}>
+        <div >
+            <Form.Group controlId={name} className='mt-4'>
                 {label && <Form.Label >{label}</Form.Label>}
                 <Form.Control
                     type={type}

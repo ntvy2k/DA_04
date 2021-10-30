@@ -28,6 +28,7 @@ function AddContent() {
             const checkValue = submitContent.some((content) => {
                 return content.id == data.id
             })
+            // const checkValue = submitContent.findIndex(obj => obj.id == data.id)
             if (checkValue) {
                 submitContent.map((content) => {
                     if (content.id === data.id) {

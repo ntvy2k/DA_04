@@ -27,6 +27,7 @@ function ContentChapter(props: ContentProps) {
                             setContents={content.content.value}
                             hideToolbar={true}
                             disable={true}
+                            height="100%"
                         />)
                     }
                     case 'playground': {

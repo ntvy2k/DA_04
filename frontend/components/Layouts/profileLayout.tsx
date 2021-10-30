@@ -36,18 +36,23 @@ const contentVariants = {
 function ProfileLayout({ children }: { children: ReactElement }) {
     const router = useRouter().pathname
     return (
-        <div>
+        <div className='row'>
             <motion.div
-                className={`col-2 ${styles.bar}`}
+                className={`col-2 `}
                 variants={barVariants}
                 initial='hidden'
                 animate='visible'
             >
-                <p className={styles.bar_button}>Đổi mật khẩu</p>
-                {/* <Link href='/user/addcontent'>
-                    <a className={`${styles.bar_button} ${router === '/user/addcontent' ? styles.active : null}`}>Thêm nội dung</a>
-                </Link>
-                <Link href='/user/addcourse'>
+                <div className={styles.bar}>
+                    <Link href='/user/profile/changepass'>
+                        <a className={`${styles.bar_button} ${router === '/user/profile/changepass' ? styles.active : null}`}>Đổi mật khẩu</a>
+                    </Link>
+                    <Link href='/user/profile/changeprofile'>
+                        <a className={`${styles.bar_button} ${router === '/user/profile/changeprofile' ? styles.active : null}`}>Đổi thông tin</a>
+                    </Link>
+                </div>
+
+                {/* <Link href='/user/addcourse'>
                     <a className={`${styles.bar_button} ${router === '/user/addcourse' ? styles.active : null}`}>Thêm khóa học</a>
                 </Link>
                 <Link href='/user/addchapter'>
