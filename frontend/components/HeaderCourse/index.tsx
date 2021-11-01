@@ -3,6 +3,7 @@ import styles from "../../styles/HeaderCourse.module.css";
 import Link from "next/link";
 import { Course, CourseList } from "../../moduleType";
 import courseApi from "../../pages/api/courseApi";
+import { HouseFill } from "react-bootstrap-icons";
 
 function HeaderCourse({ current }: { current: any }) {
   const [data, setData] = useState<Array<CourseList>>([])
@@ -15,6 +16,11 @@ function HeaderCourse({ current }: { current: any }) {
   }, [])
   return (
     <ul className={styles.header}>
+      <li className={styles.header_course}>
+        <Link href={`/`}>
+          <a className={styles.header_link_home}><HouseFill /></a>
+        </Link>
+      </li>
       {data.map(({ id, name, slug }) => {
         const active = (slug === current) ? true : false
         return (
@@ -25,7 +31,7 @@ function HeaderCourse({ current }: { current: any }) {
           </li>
         );
       })}
-    </ul>
+    </ul >
   );
 };
 

@@ -61,8 +61,8 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
         const token = local_token == null ? "" : local_token;
         dispatch(fetch_user(token))
             .unwrap()
-            .then((res) => console.log("res", res))
-            .catch((err) => console.log("err", err));
+        // .then((res) => console.log("res", res))
+        // .catch((err) => console.log("err", err));
     }, [dispatch]);
     const handleLogout = () => {
         const token = localStorage.getItem("key");

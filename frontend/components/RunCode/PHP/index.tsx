@@ -1,8 +1,8 @@
 import Editor from "@monaco-editor/react";
-import { editor } from "monaco-editor";
 import React, { useRef, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import code_styles from '../../../styles/code.module.css'
+import { Button, Toast } from 'react-bootstrap'
 
 type CodeResponse = {
     out: string;
@@ -34,8 +34,7 @@ const PHP = (props: runPhp) => {
     const [close, setClose] = useState<boolean>(true)
 
     const handleChange = (
-        value: string | undefined,
-        e: editor.IModelContentChangedEvent
+        value: string | undefined
     ) => {
         if (value !== undefined) {
             set_code(value);
@@ -54,7 +53,7 @@ const PHP = (props: runPhp) => {
     };
 
 
-    function handleEditorDidMount(editor: any, monaco: any) {
+    function handleEditorDidMount(editor: any) {
         // here is the editor instance
         // you can store it in `useRef` for further usage
         editorRef.current = editor;
@@ -74,22 +73,26 @@ const PHP = (props: runPhp) => {
                 theme="vs-dark"
                 defaultLanguage="php"
                 defaultValue={code}
-                onChange={(value, e) => handleChange(value, e)}
+                onChange={(value) => handleChange(value)}
                 onMount={handleEditorDidMount}
             />
             {button ? (
                 <div>
-                    <button type="button" onClick={handleClick}>
+                    <Button type="button" onClick={handleClick}>
                         Run
-                    </button>
-                    {!close ? (<div>
-                        <button onClick={closeRunCode} >Close</button>
-                        <div className={code_styles.code_container}>
-                            {output === "" ? "" : <p>{output}</p>}
-                            {error === "" ? "" : <p>{error}</p>}
-                        </div>
-                        <p>{time}</p>
-                    </div>) : null}
+                    </Button>
+                    {!close && (
+                        <Toast bg={error !== '' ? 'danger' : 'dark'} style={{ width: "100%" }} onClose={closeRunCode}>
+                            <Toast.Header>
+                                <strong className="me-auto">Kết quả code</strong>
+                                <small>{time}</small>
+                            </Toast.Header>
+                            <Toast.Body className={error !== '' ? '' : 'text-white'}>
+                                {output !== "" && output}
+                                {error !== "" && error}
+                            </Toast.Body>
+                        </Toast>
+                    )}
                 </div>
             ) : null}
         </>

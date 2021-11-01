@@ -47,10 +47,10 @@ function CourseID() {
       <div className="container">
         <HeaderCourse current={courseID} />
         <div className="row mt-4">
-          <div className="col-2">
+          <div className="col-4 col-lg-2 col-md-3">
             <BarCourse courseName={courseID} current={null} />
           </div>
-          <div className="col-10">
+          <div className="col-8 col-lg-10 col-md-9">
             {dataContent != null ? (
               <ContentChapter data={dataContent}></ContentChapter>
             ) : null}
