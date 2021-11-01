@@ -38,7 +38,7 @@ function ProfileLayout({ children }: { children: ReactElement }) {
     return (
         <div className='row'>
             <motion.div
-                className={`col-2 `}
+                className={`col-4 col-lg-2 col-md-3`}
                 variants={barVariants}
                 initial='hidden'
                 animate='visible'
@@ -63,7 +63,7 @@ function ProfileLayout({ children }: { children: ReactElement }) {
                 </Link> */}
             </motion.div>
             <motion.div
-                className={`col-10 ${styles.content}`}
+                className={`col-8 col-lg-10 col-md-9 ${styles.content}`}
                 variants={contentVariants}
                 initial='hidden'
                 animate='visible'

@@ -7,7 +7,7 @@
 }
 
 .card:hover.card_profile {
-    color: #efc8b1;
+    color: #d3a388;
 }
 
 .card:hover.card_course {
@@ -19,7 +19,7 @@
 }
 
 .card_icon.card_icon_profile {
-    color: #efc8b1;
+    color: #d3a388;
 }
 
 .card_icon.card_icon_course {

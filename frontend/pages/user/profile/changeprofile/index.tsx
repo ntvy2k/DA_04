@@ -85,7 +85,7 @@ function ChangeProfile() {
                                         <button
                                             type='submit'
                                             className={styles.button}
-                                        >Đổi mật khẩu</button>
+                                        >Cập nhât thông tin</button>
                                     </Form>
                                 )
                             }}

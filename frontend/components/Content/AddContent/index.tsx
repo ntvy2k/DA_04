@@ -21,6 +21,7 @@ function AddContent() {
         const newContent = [...content]
         newContent.splice(index, 1)
         setContent(newContent)
+        // setContent(prev => prev.splice(index, 1))
         submitContent.splice(index, 1)
     }
     useEffect(() => {
@@ -28,7 +29,6 @@ function AddContent() {
             const checkValue = submitContent.some((content) => {
                 return content.id == data.id
             })
-            // const checkValue = submitContent.findIndex(obj => obj.id == data.id)
             if (checkValue) {
                 submitContent.map((content) => {
                     if (content.id === data.id) {
@@ -134,7 +134,7 @@ function AddContent() {
                 )}
             </div> */}
             <div>
-                <div className='mb-3'>
+                <div className={`mb-3 ${styles.sticky}`} >
                     <button className={styles.button} onClick={() => handleClick('text')}>Add text</button>
                     <button className={styles.button} onClick={() => handleClick('playGroundWithRunCode')}> Add PlayGround</button>
                 </div>

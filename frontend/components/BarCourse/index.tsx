@@ -21,7 +21,7 @@ function BarCourse({ courseName, current }: { courseName: any, current: any }) {
                 const chapterID = id
                 return (
                     <div key={id}>
-                        <h5>{name}</h5>
+                        <h5 className='ps-2'>{name}</h5>
                         <ul className={styles.listChapter}>
                             {lessons.map(({ id, name }) => {
                                 const active = (id === current) ? true : false

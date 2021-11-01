@@ -1,7 +1,7 @@
 .bar {
     display: flex;
     flex-direction: column;
-    padding: 30px;
+    padding: 5px;
     border-radius: 15px;
 
     background: var(--color-page);
@@ -17,7 +17,7 @@
 }
 
 .bar_button + .bar_button {
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .bar_button:hover {

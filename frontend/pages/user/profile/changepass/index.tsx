@@ -10,12 +10,12 @@ import styles from '../../../../styles/ChangeProfile.module.css'
 
 function ChangePass() {
     const initialValues = {
-        old_password: '',
+        current_password: '',
         new_password: '',
         confirmPass: '',
     }
     const validationSchema = Yup.object().shape({
-        old_password: Yup.string().required('This field is required'),
+        current_password: Yup.string().required('This field is required'),
         new_password: Yup.string().required('This field is required').
             matches(
                 /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
@@ -36,7 +36,7 @@ function ChangePass() {
                                 await userApi.changePass(values, {
                                     headers: { Authorization: `Token ${localStorage.getItem("key")}` },
                                 }).then((res) => {
-                                    console.log(res.data)
+                                    console.log(res)
                                 }).catch(err => console.log(err))
                             }}
                         >
@@ -44,7 +44,7 @@ function ChangePass() {
                                 return (
                                     <Form>
                                         <FastField
-                                            name='old_password'
+                                            name='current_password'
                                             component={InputField}
 
                                             type='password'
