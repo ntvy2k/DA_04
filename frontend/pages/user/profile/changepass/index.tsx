@@ -1,5 +1,5 @@
 import { FastField, Form, Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import InputField from '../../../../components/CustomFields/InputField';
 import HomeLayout from '../../../../components/Layouts/homeLayout';
 import ProfileLayout from '../../../../components/Layouts/profileLayout';
@@ -7,8 +7,12 @@ import UserLayout from '../../../../components/Layouts/userLayout';
 import * as Yup from 'yup'
 import userApi from '../../../api/userApi';
 import styles from '../../../../styles/ChangeProfile.module.css'
+import { useRouter } from 'next/router';
+import { Toast, ToastContainer } from 'react-bootstrap';
 
 function ChangePass() {
+    const router = useRouter()
+    const [show, setShow] = useState<boolean>(false)
     const initialValues = {
         current_password: '',
         new_password: '',
@@ -18,7 +22,7 @@ function ChangePass() {
         current_password: Yup.string().required('This field is required'),
         new_password: Yup.string().required('This field is required').
             matches(
-                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?([^\w\s]|[_])).{8,}$/,
                 "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
             ),
         confirmPass: Yup.string().
@@ -29,6 +33,18 @@ function ChangePass() {
             <UserLayout>
                 <ProfileLayout>
                     <div className={styles.container}>
+                        <ToastContainer className="p-3" position="top-end">
+                            <Toast
+                                show={show}
+                                onClose={() => setShow(false)}
+                                bg="danger" delay={2000}
+                                autohide>
+                                <Toast.Header>
+                                    <strong className="me-auto">Error</strong>
+                                </Toast.Header>
+                                <Toast.Body>Username already exists</Toast.Body>
+                            </Toast>
+                        </ToastContainer>
                         <Formik
                             initialValues={initialValues}
                             validationSchema={validationSchema}
@@ -36,8 +52,9 @@ function ChangePass() {
                                 await userApi.changePass(values, {
                                     headers: { Authorization: `Token ${localStorage.getItem("key")}` },
                                 }).then((res) => {
+                                    // router.push('/user/profile')
                                     console.log(res)
-                                }).catch(err => console.log(err))
+                                }).catch(() => setShow(true))
                             }}
                         >
                             {formiksProps => {
