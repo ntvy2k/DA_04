@@ -8,6 +8,7 @@ import InputField from '../../../../components/CustomFields/InputField';
 import userApi from '../../../api/userApi';
 import { useRouter } from 'next/router';
 import styles from '../../../../styles/ChangeProfile.module.css'
+import { Toast, ToastContainer } from 'react-bootstrap';
 
 function ChangeProfile() {
     const router = useRouter()

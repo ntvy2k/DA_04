@@ -81,7 +81,7 @@ const RegForm = () => {
     email: Yup.string().email('This field must be valid email').required('This field must be required'),
     password: Yup.string().required('This field must be required').
       matches(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?([^\w\s]|[_])).{8,}$/,
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
       ),
     confirmPassword: Yup.string()

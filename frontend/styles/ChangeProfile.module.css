@@ -3,6 +3,7 @@
     box-shadow: var(--shadow-up);
     padding: 20px;
     border-radius: 15px;
+    position: relative;
 }
 
 .button {
