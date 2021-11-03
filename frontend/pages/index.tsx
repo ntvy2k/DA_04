@@ -1,13 +1,9 @@
-// import type { NextPage } from "next";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment } from "react";
 import Head from "next/head";
 import HomeLayout from "../components/Layouts/homeLayout";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { GetStaticProps } from "next";
-import axios from "axios";
+import { Card, Container } from "react-bootstrap";
 import styles from "../styles/Home.module.css"
 import Link from 'next/link'
-import { useRouter } from "next/router";
 import Quizz from "../public/Quizz.json"
 import LoginAnimation from "../public/Blogging.json"
 import Lottie from "react-lottie"
@@ -115,31 +111,6 @@ const Home = () => {
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css"></link>
         </Head>
         <Container>
-
-          {/* <Container className="d-flex flex-column align-items-center">
-
-            <h3>Nhóm chúng tôi méo ngán ngôn ngữ nào</h3>
-            <p>Dưới đây là những ngôn ngữ hàng đầu được chắc lọc từ tinh túy nhân loại</p>
-            <Container className="d-flex justify-content-around flex-wrap">
-              {data.map((course: any) => {
-                return (
-                  <Card className={styles.card}>
-                    <Card.Body className="d-flex flex-column align-items-center">
-                      <Card.Text className={styles.card_icon}><i className={`${course.icon} fs-1`}></i></Card.Text>
-                      <Card.Title>{course.name.toUpperCase()}</Card.Title>
-                      <Card.Text>
-                        <Button className={styles.card_button}>
-                          <Link href={`/${course.slug}`}>
-                            <a className={styles.card_link}>Học Ngay</a>
-                          </Link>
-                        </Button>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                )
-              })}
-            </Container>
-          </Container> */}
           <Container className={styles.section}>
             <div className={`row ${styles.container}`}>
               <div className={`col-12 col-md-6 ${styles.content}`}>
@@ -151,6 +122,7 @@ const Home = () => {
                   transition={{ type: 'spring' }}
                 >Nơi học những điều mới gì cũng có trừ porn</motion.h1>
                 <motion.p
+                  className={styles.text}
                   variants={titleVariants}
                   initial="hidden"
                   animate="visible"
@@ -162,7 +134,7 @@ const Home = () => {
                   initial="hidden"
                   animate="visible"
                   transition={{ type: 'spring', delay: 0.4 }}
-                ><Link href='/search'><a className="text-decoration-none link-secondary">Khám Phá</a></Link></motion.button>
+                ><Link href='/search'><a className={styles.link}>Khám Phá</a></Link></motion.button>
               </div>
               <motion.div
                 className="col-12 col-md-6"
@@ -176,12 +148,12 @@ const Home = () => {
           </Container>
           <InView
             as="div"
-            onChange={(inView, entry) => {
+            onChange={(inView) => {
               handInView(inView)
             }}
             threshold={0.4}
           >
-            <Container className="d-flex flex-column align-items-center mb-5">
+            <Container className={styles.tutorial}>
               <motion.h1
                 variants={titleVariants}
                 initial="hidden"
@@ -254,7 +226,7 @@ const Home = () => {
           </InView>
           <InView
             as="div"
-            onChange={(inView, entry) => {
+            onChange={(inView) => {
               handInView1(inView)
             }}
             threshold={0.2}
@@ -278,6 +250,7 @@ const Home = () => {
                     transition={{ type: 'spring', delay: 0.4 }}
                   >Ôn lại kiến thức cùng những câu hỏi thú vị</motion.h1>
                   <motion.p
+                    className={styles.text}
                     variants={titleVariants}
                     initial="hidden"
                     animate={animation1}

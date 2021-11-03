@@ -131,40 +131,44 @@
     color: white;
 }
 
+.result_title {
+    color: var(--color-text);
+}
+
 .card {
     margin-top: 20px;
     margin-left: 20px;
     width: 14rem;
     border: none;
     border-radius: 30px;
-    background: #e0e0e0;
-    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+    background: var(--color-page);
+    box-shadow: var(--shadow-up);
 }
 
 .card_icon {
     font-size: 50px;
-    color: #6d6db5;
 }
 
 .card_body {
     text-align: center;
     padding: 30px;
+    color: var(--color-text);
 }
 
 .card_button {
-    background: #e0e0e0;
-    box-shadow: inset 5px 5px 10px #8b8b8b, inset -5px -5px 10px #ffffff;
+    background-color: var(--color-page);
+    box-shadow: var(--shadow-down);
     border: none;
     border-radius: 20px;
     padding: 10px 20px;
 
     text-decoration: none;
-    color: black;
+    color: var(--color-text);
 }
 
 .card_button:hover {
-    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
-    color: #6d6db5;
+    box-shadow: var(--shadow-up);
+    color: var(--color-brand);
 }
 
 @media screen and (max-width: 750px) {

@@ -3,8 +3,8 @@
     width: 15rem;
     border: none;
     border-radius: 30px;
-    background: #e0e0e0;
-    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+    background-color: var(--color-page);
+    box-shadow: var(--shadow-up);
 }
 
 .card_icon {
@@ -62,23 +62,41 @@
 .title {
     font-weight: 800;
     font-size: 70px;
-    color: #3a38aa;
+    color: var(--color-brand);
+}
+
+.text {
+    color: var(--color-text);
 }
 
 .button {
-    color: #6c7585;
     border: none;
     padding: 20px 40px;
     border-radius: 40px;
-    background: #e0e0e0;
-    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+    background-color: var(--color-page);
+    box-shadow: var(--shadow-down);
     font-size: large;
 }
 
 .button:hover {
-    box-shadow: inset 5px 5px 10px #8b8b8b, inset -5px -5px 10px #ffffff;
-    background: #e0e0e0;
-    color: #3a38aa;
+    box-shadow: var(--shadow-up);
+}
+
+.link {
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.link:hover {
+    color: var(--color-brand);
+}
+
+.tutorial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    color: var(--color-text);
 }
 
 @media screen and (max-width: 750px) {

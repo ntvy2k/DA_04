@@ -1,11 +1,22 @@
 .input {
-    background: #e0e0e0;
-    box-shadow: inset 5px 5px 10px #8b8b8b, inset -5px -5px 10px #ffffff;
+    border: none;
+    background: var(--color-page);
+    box-shadow: var(--shadow-down);
+    color: var(--color-text);
+}
+
+.input:hover {
+    box-shadow: var(--shadow-up);
 }
 
 .input:focus {
-    background: #e0e0e0;
-    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+    box-shadow: var(--shadow-up);
     outline: none;
-    border: none;
+    background-color: var(--color-page);
+    color: var(--color-text);
+}
+
+.text {
+    margin-top: 20px;
+    color: var(--color-text);
 }

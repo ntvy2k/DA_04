@@ -1,6 +1,6 @@
 import { FastField, Form, Formik } from 'formik';
-import React, { useEffect } from 'react';
-import { Button, Container } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Container, Toast, ToastContainer } from 'react-bootstrap';
 import * as Yup from 'yup'
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
@@ -51,6 +51,7 @@ const inputTextvariants = {
 function LoginForm() {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [show, setShow] = useState<boolean>(false)
   const is_authenticated = useAppSelector(
     (state) => state.auth.is_authenticated
   );
@@ -85,6 +86,18 @@ function LoginForm() {
   return (
     <SearchLayout>
       <Container className={styles.section}>
+        <ToastContainer className="p-3" position="top-end">
+          <Toast
+            show={show}
+            onClose={() => setShow(false)}
+            bg="danger" delay={3000}
+            autohide>
+            <Toast.Header>
+              <strong className="me-auto">Có lỗi nè</strong>
+            </Toast.Header>
+            <Toast.Body>Thông tin hoặc mật khẩu không đúng, đề nghị đồng chí thử lại</Toast.Body>
+          </Toast>
+        </ToastContainer>
         <div className="row align-items-center">
           <motion.div
             className="col col-md-6"
@@ -105,11 +118,10 @@ function LoginForm() {
                     localStorage.setItem("key", response.data.access);
                     router.push("/");
                   })
-                  .catch((e) => console.log(e));
+                  .catch(() => setShow(true));
               }}
             >
               {formikProps => {
-                const { values, errors, touched } = formikProps
                 return (
                   <Form>
                     <motion.div
@@ -141,7 +153,7 @@ function LoginForm() {
                         label="Mật khẩu"
                         placeholder="Passwd..."
                       />
-                      <p>Chưa có tài khoản? <Link href="/register">Đăng ký</Link></p>
+                      <p className={styles.text}>Chưa có tài khoản? <Link href="/register"><a className={styles.link}>Đăng ký</a></Link></p>
                     </motion.div>
                     <motion.button
                       type='submit'

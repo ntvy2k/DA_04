@@ -3,7 +3,7 @@ import Head from "next/head";
 import axios, { AxiosResponse } from "axios";
 import courseApi from "../api/courseApi";
 import { Button, ButtonGroup, Card, Container, Dropdown, InputGroup, ListGroup } from "react-bootstrap";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import styles from "../../styles/Search.module.css"
 import { MenuButtonWide, Search, X } from "react-bootstrap-icons";
@@ -178,18 +178,6 @@ const SearchID = ({ data }: { data: any }) => {
                             />
                             <InputGroup.Text className={styles.input_icon} onClick={handleSubmit} ><Search /></InputGroup.Text>
                         </InputGroup>
-
-                        {/* <Form className="d-flex" onSubmit={e => { e.preventDefault(); }}>
-              <FormControl
-                type="search"
-                placeholder="Search"
-                className="mr-2"
-                aria-label="Search"
-                onChange={(e) => console.log(e.currentTarget.value)}
-              // onKeyPress={checkEnter}
-              />
-              <Button variant="dark"><Search /></Button>
-            </Form> */}
                         <div className={styles.group_course}>
                             {courseGroup.map((radio, index) => {
                                 return (
@@ -232,13 +220,13 @@ const SearchID = ({ data }: { data: any }) => {
 
                 </div>
                 <Container className="mt-5">
-                    <h1><MenuButtonWide /> Khóa học tìm thấy</h1>
+                    <h1 className={styles.result_title}><MenuButtonWide /> Khóa học tìm thấy</h1>
                     <div className='d-flex flex-wrap justify-content-center'>
                         {data.map((course: any) => {
                             return (
                                 <Card key={course.id} className={styles.card}>
                                     <Card.Body className={styles.card_body}>
-                                        <Card.Text><i className={`${styles.card_icon} ${course.icon}`} /></Card.Text>
+                                        <Card.Text><i className={`${styles.card_icon} ${course.icon} colored`} /></Card.Text>
                                         <Card.Title className="mb-4">{course.name.toUpperCase()}</Card.Title>
                                         <Card.Text>
                                             <Link href={`/${course.slug}`} ><a className={styles.card_button}>Học ngay</a></Link>

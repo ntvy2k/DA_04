@@ -48,7 +48,7 @@ function MyCourse() {
             </Head>
             <HomeLayout>
                 <div className='container'>
-                    <h1>Các khóa học của tôi</h1>
+                    <h1 className={styles.text}>Các khóa học của tôi</h1>
                     <div className='d-flex flex-wrap'>
                         <motion.div
                             variants={faceUp}

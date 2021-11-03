@@ -222,18 +222,6 @@ const SearchPage = () => {
               />
               <InputGroup.Text className={styles.input_icon} onClick={handleSubmit} ><Search /></InputGroup.Text>
             </InputGroup>
-
-            {/* <Form className="d-flex" onSubmit={e => { e.preventDefault(); }}>
-              <FormControl
-                type="search"
-                placeholder="Search"
-                className="mr-2"
-                aria-label="Search"
-                onChange={(e) => console.log(e.currentTarget.value)}
-              // onKeyPress={checkEnter}
-              />
-              <Button variant="dark"><Search /></Button>
-            </Form> */}
             <div className={styles.group_course}>
               {courseGroup.map((radio, index) => {
                 return (
@@ -276,7 +264,7 @@ const SearchPage = () => {
 
         </motion.div>
         <Container className="mt-5">
-          <h1><MenuButtonWide /> Khóa học tìm thấy</h1>
+          <h1 className={styles.result_title}><MenuButtonWide /> Khóa học tìm thấy</h1>
         </Container>
       </Fragment>
     </SearchLayout>

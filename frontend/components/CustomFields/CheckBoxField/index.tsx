@@ -1,6 +1,7 @@
-import { Field, FieldProps } from 'formik';
+import { FieldProps } from 'formik';
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import styles from '../../../styles/CheckBoxField.module.css'
 
 interface checkboxProps {
     label: string,
@@ -17,7 +18,7 @@ function CheckBoxField(props: FieldProps & checkboxProps) {
     const showError = errors[name] && touched[name]
 
     return (
-        <Form.Group>
+        <Form.Group className={styles.container}>
             <Form.Label>{label}</Form.Label>
             <div className='row'>
                 {options.map(option => {

@@ -166,7 +166,7 @@ function EditCourse() {
                         <Toast.Body>Khóa học của bạn đã cập nhật</Toast.Body>
                     </Toast>
                 </ToastContainer>
-                <h1>Sửa khóa học</h1>
+                <h1 className={styles.text}>Sửa khóa học</h1>
                 <div className='row align-items-center mb-5'>
                     <div className='col-6'>
                         <Image
@@ -241,9 +241,9 @@ function EditCourse() {
                         </Formik>
                     </div>
                 </div>
-                {courseId && <h1>Chương của khóa học {courseId.name}</h1>}
+                {courseId && <h1 className={styles.text}>Chương của khóa học {courseId.name}</h1>}
                 {courseId &&
-                    <div>
+                    <div className={styles.text}>
                         {courseId.chapters.length !== 0 &&
                             <div>
                                 {courseId.chapters.map((chapter: any) => {

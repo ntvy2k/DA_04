@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import courseApi from "../api/courseApi";
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import ContentChapter from "../../components/ContentChapter";
-import { ContentList, Course, CourseList } from "../../moduleType";
+import { ContentList } from "../../moduleType";
 import HomeLayout from "../../components/Layouts/homeLayout";
 import BarCourse from "../../components/BarCourse";
 import HeaderCourse from "../../components/HeaderCourse";

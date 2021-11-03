@@ -17,7 +17,7 @@ function SelectField(props: FieldProps & selectField) {
     const { name } = field
     const { touched, errors } = form
     return (
-        <Form.Group>
+        <Form.Group className={styles.container}>
             <Form.Label>{label}</Form.Label>
             <Form.Select
                 aria-label="Default select example"

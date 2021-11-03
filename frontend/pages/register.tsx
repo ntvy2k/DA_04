@@ -90,7 +90,7 @@ const RegForm = () => {
 
   return (
     <SearchLayout>
-      <Container className={styles.section}>
+      <Container className={`${styles.section}`}>
         <ToastContainer className="position-fixed p-3" position="top-end">
           <Toast show={show1} onClose={toggleShow1} bg="danger" delay={2000} autohide>
             <Toast.Header>
@@ -200,7 +200,7 @@ const RegForm = () => {
           </div>
         </div>
       </Container>
-    </SearchLayout>
+    </SearchLayout >
   );
 };
 

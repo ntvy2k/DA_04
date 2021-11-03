@@ -4,6 +4,7 @@
     border: none;
     border-radius: 15px;
     padding: 20px;
+    color: var(--color-text);
 }
 
 .card:hover.card_profile {
@@ -29,13 +30,13 @@
 .card_button {
     margin-top: 20px;
     text-decoration: none;
-    color: rgba(0, 0, 0, 0.5);
+    color: var(--color-text);
     box-shadow: var(--shadow-down);
     padding: 10px 25px;
     border-radius: 10px;
 }
 
 .card_button:hover {
-    color: black;
+    color: var(--color-brand);
     box-shadow: var(--shadow-up);
 }

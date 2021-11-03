@@ -1,17 +1,15 @@
-import React, { Fragment, ReactElement, useEffect, useRef, useState } from 'react';
-import { Button, Col, Container, Form, FormControl, InputGroup, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
-import { CircleHalf, Columns, Discord, Facebook, Instagram, Search } from 'react-bootstrap-icons';
-import { GroupCourse } from '../../moduleType';
+import React, { Fragment, ReactElement, useEffect, useState } from 'react';
+import { Container, InputGroup, Nav, Navbar, NavDropdown, NavItem } from 'react-bootstrap';
+import { BrightnessAltLow, BrightnessLow, CloudMoonFill, Discord, Facebook, Instagram, MoonStars, MoonStarsFill, Search, Sun } from 'react-bootstrap-icons';
+import { CourseList, GroupCourse } from '../../moduleType';
 import courseApi from '../../pages/api/courseApi';
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetch_user, logout, set_not_authenticated } from '../../features/auth';
 import { useRouter } from 'next/router';
 import styles from '../../styles/HomeLayout.module.css'
-import Banner from '../../public/Banner.png'
-import Image from 'next/image'
 import { motion } from "framer-motion"
-import Lottie from 'react-lottie'
+import { useTheme } from 'next-themes'
 
 const navBarVariants = {
     hidden: {
@@ -39,23 +37,22 @@ const variants = {
 
 export default function HomeLayout({ children }: { children: ReactElement }) {
     const router = useRouter()
+    const { theme, setTheme } = useTheme()
     const dispatch = useAppDispatch();
     const user = useAppSelector(
         (state) =>
             state.auth
     );
-    const [dataGroup, setDataGroup] = useState<Array<GroupCourse>>([])
-    const [courseName, setCourseName] = useState<Array<string>>([])
+    const [courses, setCourses] = useState<Array<CourseList>>([])
     const [valueSearch, setValueSearch] = useState<string>('')
     useEffect(() => {
         const fetchData = async () => {
-            const res = await courseApi.getGroupCourse()
             const response = await courseApi.getAll()
-            setDataGroup(res.data)
-            setCourseName(response.data.map(x => x.name))
+            setCourses(response.data)
         }
         fetchData()
     }, [])
+    console.log(courses)
     useEffect(() => {
         const local_token = localStorage.getItem("key");
         const token = local_token == null ? "" : local_token;
@@ -80,7 +77,6 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
         }
     }
 
-
     return (
         <motion.main
             variants={variants} // Pass the variant object into Framer Motion 
@@ -99,32 +95,38 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                     <Container>
                         <Navbar.Brand ><Link href="/">
                             <div className={styles.brand}>
-                                <h3 className="text-primary fw-bolder">Nhái</h3>
-                                <h3 className="text-dark fw-bolder">W3school</h3>
+                                <h3 className={styles.brand_first}>Nhái</h3>
+                                <h3 className={styles.brand_last}>W3school</h3>
                             </div>
                         </Link></Navbar.Brand>
-                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end align-self-center">
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end align-self-center">
                             <Nav>
-                                <NavDropdown title="Khóa học" id="basic-nav-dropdown">
-                                    {dataGroup.map((groupCourse, index) => {
+                                <Navbar.Text className={styles.theme}>
+                                    {theme === 'dark' ?
+                                        <MoonStars onClick={() => setTheme('light')} /> :
+                                        <Sun onClick={() => setTheme('dark')} />}
+                                </Navbar.Text>
+
+                                <NavDropdown
+                                    title={
+                                        <span className={styles.text}>Khóa học</span>
+                                    }
+                                    id="basic-nav-dropdown"
+                                    className='ms-3'
+                                >
+                                    {courses.map(({ name, slug }) => {
                                         return (
-                                            <Fragment key={index}>
-                                                {groupCourse.gr_courses.map((course, index) => {
-                                                    return (
-                                                        <NavDropdown.Item key={index}>
-                                                            <Link href={`${course.slug}`}><a className={styles.link}>{course.name}</a></Link>
-                                                        </NavDropdown.Item>
-                                                    )
-                                                })}
-                                            </Fragment>
+                                            <NavDropdown.Item key={slug}>
+                                                <Link href={`/${slug}`}><a className={styles.link}>{name}</a></Link>
+                                            </NavDropdown.Item>
                                         )
                                     })}
                                 </NavDropdown>
-                            </Nav>
-                            <Nav className="ms-3">
                                 <InputGroup size="sm" className={styles.input_group}>
-                                    <InputGroup.Text className={styles.input_icon}><Search /></InputGroup.Text>
+                                    <InputGroup.Text className={styles.input_icon}>
+                                        <Link href={`/search/id?terms=${valueSearch}`}><Search /></Link>
+                                    </InputGroup.Text>
                                     <input
                                         type="search"
                                         placeholder="Tìm kiếm ..."
@@ -136,17 +138,19 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
 
                                     />
                                     <datalist id="courseName">
-                                        {courseName.map((name, index) => {
+                                        {courses.map(({ name, slug }) => {
                                             return (
-                                                <option key={index} value={name}></option>
+                                                <option key={slug} value={name}></option>
                                             )
                                         })}
                                     </datalist>
                                 </InputGroup>
-                            </Nav>
-                            <Nav className="ms-3">
                                 {user.is_authenticated ? (
-                                    <NavDropdown title={user.user?.username} id="user">
+                                    <NavDropdown
+                                        title={
+                                            <span className={styles.text}>{user.user?.username}</span>
+                                        }
+                                        id="user">
                                         <NavDropdown.Item onClick={() => handleLogout()}>
                                             Logout
                                         </NavDropdown.Item>
@@ -158,7 +162,7 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                                     </NavDropdown>
 
                                 ) : (
-                                    <Navbar.Text><Link href="/login">Login</Link></Navbar.Text>
+                                    <Link href="/login"><a className={styles.login}> Login </a></Link>
                                 )}
                             </Nav>
                         </Navbar.Collapse>
@@ -166,13 +170,13 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                 </Navbar>
             </motion.div>
             {children}
-            <Container className="mt-5 d-flex flex-column align-items-center pb-5">
+            <Container className={styles.footer}>
                 <hr />
                 <h1>Liên hệ với chúng tôi</h1>
                 <div className="d-flex mb-4">
-                    <a className="fs-1 text-dark"><Facebook /></a>
-                    <a className="fs-1 text-dark ms-3"><Instagram /></a>
-                    <a className="fs-1 text-dark ms-3"><Discord /></a>
+                    <a className={styles.contact}><Facebook /></a>
+                    <a className={styles.contact}><Instagram /></a>
+                    <a className={styles.contact}><Discord /></a>
                 </div>
                 <div className="d-flex">
                     <p>Info</p>

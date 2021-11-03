@@ -1,6 +1,6 @@
 import { FieldProps } from 'formik';
 import React from 'react';
-import { Form, FormGroup } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import styles from '../../../styles/InputField.module.css'
 
 interface userName {
@@ -17,10 +17,9 @@ function InputField(props: FieldProps & userName) {
     } = props
     const { name } = field
     const { errors, touched } = form
-    const showError = errors[name] && touched[name]
     return (
         <div >
-            <Form.Group controlId={name} className='mt-4'>
+            <Form.Group controlId={name} className={styles.text}>
                 {label && <Form.Label >{label}</Form.Label>}
                 <Form.Control
                     type={type}
@@ -31,7 +30,6 @@ function InputField(props: FieldProps & userName) {
                     {...field}
                 ></Form.Control>
                 <Form.Control.Feedback type="invalid">{errors[name]}</Form.Control.Feedback>
-                {/* {showError && <Form.Control.Feedback>{errors[name]}</Form.Control.Feedback>} */}
             </Form.Group>
 
         </div>

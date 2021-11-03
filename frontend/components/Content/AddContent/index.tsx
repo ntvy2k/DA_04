@@ -18,11 +18,12 @@ function AddContent() {
         setData(value)
     }
     const handleCloseComponent = (index: number) => {
-        const newContent = [...content]
-        newContent.splice(index, 1)
-        setContent(newContent)
+        // const newContent = [...content]
+        // newContent.splice(index, 1)
+        // setContent(newContent)
         // setContent(prev => prev.splice(index, 1))
-        submitContent.splice(index, 1)
+        setContent(content.filter(item => item.props.id !== content[index].props.id))
+        setSubmitContent(submitContent.splice(index, 1))
     }
     useEffect(() => {
         if (data != undefined) {
@@ -40,7 +41,6 @@ function AddContent() {
             }
         }
     }, [data])
-
     function handleSubmit() {
         const config = {
             headers: { Authorization: `Token ${localStorage.getItem("key")}` },
@@ -77,6 +77,7 @@ function AddContent() {
         }
         setNumChild(numChild + 1)
     }
+    console.log(content)
 
     return (
         <div className={styles.content}>

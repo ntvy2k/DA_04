@@ -1,8 +1,9 @@
 .barCourse {
-    background: #e0e0e0;
-    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+    background: var(--color-page);
+    box-shadow: var(--shadow-up);
     border-radius: 15px;
     padding: 5px;
+    color: var(--color-text);
 }
 
 .listChapter {
@@ -18,9 +19,10 @@
 }
 
 .link:hover {
-    box-shadow: 5px 5px 10px #8b8b8b, -5px -5px 10px #ffffff;
+    box-shadow: var(--shadow-up);
 }
 
 .link.active {
-    box-shadow: inset 5px 5px 10px #8b8b8b, inset -5px -5px 10px #ffffff;
+    box-shadow: var(--shadow-down);
+    color: var(--color-brand);
 }

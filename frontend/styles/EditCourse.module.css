@@ -1,3 +1,7 @@
+.text {
+    color: var(--color-text);
+}
+
 .chapter {
     display: flex;
     justify-content: space-between;
