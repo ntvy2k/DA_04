@@ -20,6 +20,6 @@ urlpatterns = [
     path("api/", include("api_da4.urls")),
     path("auth/", include("auth_da4.urls")),
     path("manage/", include("manage_da4.urls")),
-    path("exercise/", include("quiz_da4.urls")),
+    path("ex/", include("quiz_da4.urls")),
     path("admin/", admin.site.urls),  # remove after manage done...
 ]
