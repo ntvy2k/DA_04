@@ -1,26 +1,43 @@
-from rest_framework.serializers import ModelSerializer
-from quiz_da4.models import Exercise, Quiz, Question, Option
+from django.contrib.auth.models import User
+from django.db.models import Q
+from rest_framework.relations import PrimaryKeyRelatedField
+from quiz_da4.models import Exercise
+from .base import (
+    BaseExerciseSerializer,
+    BaseQuizSerializer,
+    BaseQuestionSerializer,
+    BaseOptionSerializer,
+)
 
 
-class ExerciseSerializer(ModelSerializer):
-    class Meta:
-        model = Exercise
-        fields = "__all__"
+class UserFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
+    def get_queryset(self):
+        user = self.context["user"]
+        queryset = User.objects.exclude(pk=user.pk)
+        return queryset
 
 
-class QuizSerializer(ModelSerializer):
-    class Meta:
-        model = Quiz
-        fields = "__all__"
+class ExerciseSerializer(BaseExerciseSerializer):
+    co_creator = UserFilteredPrimaryKeyRelatedField(many=True)
 
 
-class QuestionSerializer(ModelSerializer):
-    class Meta:
-        model = Question
-        fields = "__all__"
+class ExerciseFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
+    def get_queryset(self):
+        user = self.context["user"]
+        queryset = Exercise.objects.filter(Q(co_creator=user) | Q(creator=user))
+        return queryset
 
 
-class OptionSerializer(ModelSerializer):
-    class Meta:
-        model = Option
-        fields = "__all__"
+class QuizSerializer(BaseQuizSerializer):
+    exercise = ExerciseFilteredPrimaryKeyRelatedField(allow_null=True)
+
+    class Meta(BaseQuizSerializer.Meta):
+        fields = BaseQuizSerializer.Meta.fields + ["exercise"]
+
+
+class QuestionSerializer(BaseQuestionSerializer):
+    pass
+
+
+class OptionSerializer(BaseOptionSerializer):
+    pass
