@@ -54,6 +54,16 @@ class ExerciseCreatorViewSet(CreatorMixin, ModelViewSet):
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
+    @action(
+        detail=False,
+        methods=["get"],
+        url_path="get-another-exercise",
+    )
+    def get_exercise(self, request):
+        queryset = Exercise.objects.filter(co_creator=request.user)
+        serializer = ExerciseSerializer(queryset, many=True, read_only=True)
+        return Response(serializer.data)
+
     def get_serializer_context(self):
         context = super(ExerciseCreatorViewSet, self).get_serializer_context()
         context.update({"user": self.request.user})
