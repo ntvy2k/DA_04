@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { ContentList } from '../../moduleType';
-import Editor from '@monaco-editor/react';
 import "suneditor/dist/css/suneditor.min.css";
 import dynamic from 'next/dynamic';
 import PHP from '../RunCode/PHP';

@@ -35,6 +35,10 @@ const courseApi = {
     const url = `/api/owner/course/${slug}/`
     return axios.get(url, config)
   },
+  getMyContent(slugCourse: any, chapterId: any, lessonId: any, config: any): Promise<AxiosResponse<any>> {
+    const url = `/api/owner/course/${slugCourse}/chapter/${chapterId}/lesson/${lessonId}/content/`
+    return axios.get(url, config)
+  },
   getPulish(slugCourse: any, config: any) {
     const url = `/api/owner/course/${slugCourse}/make-publish/`
     return axios.get(url, config)

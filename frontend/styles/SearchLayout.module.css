@@ -30,6 +30,7 @@
 }
 
 .login {
+    margin: auto 0px;
     margin-left: 20px;
     color: var(--color-text);
     text-decoration: none;

@@ -6,10 +6,11 @@ interface addPlayGround {
     id: number,
     button: boolean,
     onSubmit: Function,
+    currentValue: any
 }
 
 export function AddPlayGround(props: addPlayGround) {
-    const { id, onSubmit } = props
+    const { id, onSubmit, currentValue } = props
     const editorRef = useRef<any>(null)
     const type = 'playground'
 
@@ -64,7 +65,7 @@ export function AddPlayGround(props: addPlayGround) {
             <Editor
                 height="90vh"
                 defaultLanguage={language}
-                defaultValue="// some comment"
+                defaultValue={currentValue}
                 onMount={handleEditorDidMount}
                 onChange={showValue}
             />

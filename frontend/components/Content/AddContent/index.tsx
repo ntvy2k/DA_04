@@ -77,8 +77,6 @@ function AddContent() {
         }
         setNumChild(numChild + 1)
     }
-    console.log(content)
-
     return (
         <div className={styles.content}>
             {/* <div className='d-flex align-items-center mb-3'>

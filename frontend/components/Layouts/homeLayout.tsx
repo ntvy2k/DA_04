@@ -52,7 +52,6 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
         }
         fetchData()
     }, [])
-    console.log(courses)
     useEffect(() => {
         const local_token = localStorage.getItem("key");
         const token = local_token == null ? "" : local_token;

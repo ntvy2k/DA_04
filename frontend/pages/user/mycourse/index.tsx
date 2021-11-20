@@ -47,7 +47,7 @@ function MyCourse() {
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css" ></link>
             </Head>
             <HomeLayout>
-                <div className='container'>
+                <div className={`container ${styles.wrapper}`}>
                     <h1 className={styles.text}>Các khóa học của tôi</h1>
                     <div className='d-flex flex-wrap'>
                         <motion.div
