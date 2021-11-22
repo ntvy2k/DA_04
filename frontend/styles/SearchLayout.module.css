@@ -1,3 +1,7 @@
+.container {
+    border-bottom: 1px solid var(--color-text);
+}
+
 .image {
     position: absolute;
     right: 0;

@@ -39,6 +39,10 @@ const courseApi = {
     const url = `/api/owner/course/${slugCourse}/chapter/${chapterId}/lesson/${lessonId}/content/`
     return axios.get(url, config)
   },
+  getMyContentById(slugCourse: any, chapterId: any, lessonId: any, contentId: any, config: any): Promise<AxiosResponse<any>> {
+    const url = `/api/owner/course/${slugCourse}/chapter/${chapterId}/lesson/${lessonId}/content/${contentId}/`
+    return axios.get(url, config)
+  },
   getPulish(slugCourse: any, config: any) {
     const url = `/api/owner/course/${slugCourse}/make-publish/`
     return axios.get(url, config)
@@ -63,9 +67,9 @@ const courseApi = {
     const url = `/api/owner/course/${slug}/`
     return axios.put(url, values, config)
   },
-  updateContent(id: number, values: any) {
-    const url = `/api/course/1/chapter/4/lesson/${id}/content/1`
-    return axios.put(url, values)
+  updateContent(values: any, courseID: any, chapterID: any, lessonID: any, contentId: any, config: any) {
+    const url = `/api/owner/course/${courseID}/chapter/${chapterID}/lesson/${lessonID}/content/${contentId}/`
+    return axios.put(url, values, config)
   },
   updateChapter(values: any, slugCourse: any, slugChapter: any, config: any) {
     const url = `/api/owner/course/${slugCourse}/chapter/${slugChapter}/`
@@ -85,6 +89,10 @@ const courseApi = {
   },
   deleteLesson(slugCourse: any, slugChapter: any, slugLesson: any, config: any) {
     const url = `/api/owner/course/${slugCourse}/chapter/${slugChapter}/lesson/${slugLesson}/`
+    return axios.delete(url, config)
+  },
+  deleteContent(courseID: any, chapterID: any, lessonID: any, contentId: any, config: any) {
+    const url = `/api/owner/course/${courseID}/chapter/${chapterID}/lesson/${lessonID}/content/${contentId}/`
     return axios.delete(url, config)
   },
   publishCourse(slugCourse: any, values: any, config: any) {

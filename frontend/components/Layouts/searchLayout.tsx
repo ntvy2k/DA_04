@@ -72,6 +72,7 @@ export default function SearchLayout({ children }: { children: ReactElement }) {
                 dispatch(set_not_authenticated());
             });
         }
+        router.push('/')
     };
     // const checkEnter = (e: any) => {
     //     if (e.key === 'Enter') {
