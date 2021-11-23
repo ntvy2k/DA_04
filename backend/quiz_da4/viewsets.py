@@ -13,7 +13,11 @@ from .serializers.generics import (
     OptionSerializer,
 )
 
-from .serializers.publics import ExercisePublicSerializer, OptionExplainSerializer
+from .serializers.publics import (
+    ExercisePublicSerializer,
+    OptionExplainSerializer,
+    ShortExerciseList,
+)
 from .serializers.actions import ExercisePublisherSerializer, QuestionActionSerializer
 
 from .permissions import IsCreatorOrReadOnly, IsQuizCreator
@@ -167,6 +171,11 @@ class ExerciseViewSet(ReadOnlyBaseViewSet):
     serializer_class = ExercisePublicSerializer
     queryset = Exercise.objects.filter(status="p")
     permission_classes = []
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = ShortExerciseList(queryset, many=True, read_only=True)
+        return Response(serializer.data)
 
     @action(
         detail=True,

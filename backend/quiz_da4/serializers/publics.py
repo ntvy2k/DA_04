@@ -44,3 +44,8 @@ class ExercisePublicSerializer(BaseExerciseSerializer):
 
     class Meta(BaseExerciseSerializer.Meta):
         fields = ["id", "name", "quizzes"]
+
+
+class ShortExerciseList(BaseExerciseSerializer):
+    class Meta(BaseExerciseSerializer.Meta):
+        fields = ["id", "name"]
