@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import dynamic from "next/dynamic";
 import 'suneditor/dist/css/suneditor.min.css';
 
@@ -9,22 +9,22 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 interface addText {
     onSubmit: Function
     id: number
+    value: string
 }
 
-export function AddText(props: addText) {
-    const { id, onSubmit } = props
+function AddText(props: addText) {
+    const { id, onSubmit, value } = props
     const type = 'text'
-    const [value, setValue] = useState<string>('')
+    const [currentValue, setCurrentValue] = useState<string>(value)
     function handleChange(content: string) {
-        setValue(content)
+        setCurrentValue(content)
     }
-
     return (
         <div>
             <SunEditor
-                setContents={value}
+                setContents={currentValue}
                 onChange={handleChange}
-                onBlur={onSubmit({ id, value, type })}
+                onBlur={onSubmit({ id, value: currentValue, type })}
                 setOptions={{
                     buttonList: [
                         ["undo", "redo"],
@@ -61,3 +61,5 @@ export function AddText(props: addText) {
         </div>
     );
 }
+
+export default memo(AddText);

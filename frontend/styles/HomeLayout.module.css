@@ -59,6 +59,7 @@
 .login {
     color: var(--color-text);
     text-decoration: none;
+    margin: auto 0px;
 }
 
 .login:hover {
