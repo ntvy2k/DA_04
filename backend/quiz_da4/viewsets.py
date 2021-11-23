@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
@@ -13,12 +14,13 @@ from .serializers.generics import (
 )
 
 from .serializers.publics import ExercisePublicSerializer, OptionExplainSerializer
-
-from api_da4.viewsets import ReadOnlyBaseViewSet
-
 from .serializers.actions import ExercisePublisherSerializer, QuestionActionSerializer
 
 from .permissions import IsCreatorOrReadOnly, IsQuizCreator
+
+from api_da4.viewsets import ReadOnlyBaseViewSet
+from auth_da4.serializers import UserSerializer
+
 
 # Exercise Creator View
 class CreatorMixin:
@@ -62,6 +64,16 @@ class ExerciseCreatorViewSet(CreatorMixin, ModelViewSet):
     def get_exercise(self, request):
         queryset = Exercise.objects.filter(co_creator=request.user)
         serializer = ExerciseSerializer(queryset, many=True, read_only=True)
+        return Response(serializer.data)
+
+    @action(
+        detail=False,
+        methods=["get"],
+        url_path="get-users",
+    )
+    def get_user(self, request):
+        queryset = User.objects.exclude(pk=self.request.user.pk)
+        serializer = UserSerializer(queryset, many=True, read_only=True)
         return Response(serializer.data)
 
     def get_serializer_context(self):
