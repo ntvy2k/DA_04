@@ -20,7 +20,7 @@ function CheckBoxField(props: FieldProps & checkboxProps) {
     return (
         <Form.Group className={styles.container}>
             <Form.Label>{label}</Form.Label>
-            <div className='row'>
+            <div className='row p-4'>
                 {options.map(option => {
                     return (
                         <Form.Check

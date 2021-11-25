@@ -2,10 +2,9 @@ import React, { Fragment } from 'react';
 import HomeLayout from '../../components/Layouts/homeLayout';
 import UserLayout from '../../components/Layouts/userLayout';
 import UserImages from '../../public/User.json'
-import Lottie from 'react-lottie';
 import { Card } from 'react-bootstrap';
 import styles from '../../styles/User.module.css'
-import { Book, PersonBadge } from 'react-bootstrap-icons';
+import { Book, PatchQuestion, PersonBadge } from 'react-bootstrap-icons';
 import Link from 'next/link'
 
 function User() {
@@ -51,6 +50,24 @@ function User() {
                                 </Card.Text>
                                 <Card.Text className='mt-4'>
                                     <Link href='/user/mycourse'>
+                                        <a className={styles.card_button}>
+                                            Xem
+                                        </a>
+                                    </Link>
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </div>
+                    <div className='col-6 col-md-4 col-lg-3 text-center'>
+                        <Card className={`${styles.card} ${styles.card_question}`}>
+                            <Card.Body>
+                                <Card.Text><PatchQuestion className={`${styles.card_icon} ${styles.card_icon_question}`} /></Card.Text>
+                                <Card.Title>Câu hỏi</Card.Title>
+                                <Card.Text>
+                                    Thêm, sửa, xóa các câu hỏi cho khóa học của bạn.
+                                </Card.Text>
+                                <Card.Text className='mt-4'>
+                                    <Link href='/user/exercise'>
                                         <a className={styles.card_button}>
                                             Xem
                                         </a>

@@ -19,3 +19,7 @@ GET http://localhost/auth/token/
 
 ###
 PUT http://localhost/api/owner/course/course-3/make-publish/
+
+###
+
+GET http://localhost/ex/creator/exercise/get-users/
