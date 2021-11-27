@@ -1,6 +1,7 @@
 .nav {
     display: flex;
     border-bottom: 1px solid var(--color-text);
+    margin-top: 5px;
 }
 
 .navItem {
@@ -10,9 +11,19 @@
 
     padding: 6px 10px;
     min-width: 90px;
+    border: 1px solid rgb(99, 99, 99);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background-color: rgb(141, 141, 141);
+}
+
+.navItem + .navItem {
+    margin-left: 1px;
+}
+
+.navItem.active,
+.navItem:hover {
+    background-color: rgb(41, 155, 126);
 }
 
 .navItem .name {
@@ -27,6 +38,20 @@
 }
 .navItem .button {
     margin-left: 5px;
+}
+
+.navItem .button:hover {
+    color: var(--color-brand);
+}
+
+.navItem .input {
+    background-color: transparent;
+    border: none;
+}
+
+.navItem .navLink {
+    display: flex;
+    cursor: pointer;
 }
 
 .navAdd {
@@ -57,17 +82,29 @@
     background-color: rgb(141, 141, 141);
 }
 
+.options {
+    display: flex;
+}
+
+.options + .options {
+    margin-top: 10px;
+}
+
+.options .checkbox {
+    margin: auto 0;
+}
+
 .option {
     background-color: rgb(165, 51, 51);
     width: 20px;
-    height: 120px;
+    height: auto;
     margin: 0 3px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
 }
 
 .option.active {
@@ -102,4 +139,11 @@
 .addOption:hover {
     color: var(--color-brand);
     box-shadow: var(--shadow-up);
+}
+
+.errorMess {
+    color: #dc3545;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
 }
