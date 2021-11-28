@@ -1,9 +1,7 @@
 import { ErrorMessage, FastField, Field, FieldArray, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { Nav } from 'react-bootstrap';
-import { Pencil, PlusSquare, Question, Trash, X, XLg } from 'react-bootstrap-icons';
+import { Pencil, PlusSquare, Trash, XLg } from 'react-bootstrap-icons';
 import InputFieldQuiz from '../../../components/CustomFields/InputFieldQuiz';
-import InputOption from '../../../components/CustomFields/InputOption';
 import HomeLayout from '../../../components/Layouts/homeLayout';
 import styles from '../../../styles/AddQuizz.module.css'
 import AddQuizImage from '../../../public/AddQuiz.png'
@@ -33,12 +31,15 @@ function AddQuizz() {
     })
     const validateSchema = Yup.object().shape({
         nameQuestion: Yup.string().required('Câu hỏi khum được để trống'),
-        options: Yup.array().min(1, 'Phải có ít nhất 1 đáp án')
+        options: Yup.array().min(2, 'Phải có ít nhất 2 đáp án')
             .of(
                 Yup.object().shape({
                     statement: Yup.string().required('Đáp án khum được để trống'),
                 })
             )
+            .test('test', 'Phải có ít nhất 1 đáp án đúng', (options: any) => {
+                return options?.some((option: any) => option.is_right)
+            })
     })
 
     useEffect(() => {
@@ -141,6 +142,10 @@ function AddQuizz() {
         await exerciseApi.deleteQuestion(currentQuizz, id, config)
         const resQuizDetail = await exerciseApi.getQuestion(currentQuizz, config)
         setQuestions(resQuizDetail.data)
+    }
+    const handlePulish = async () => {
+        await exerciseApi.confirmQuestion(currentQuizz, currentQuestion, config).then(() => console.log('done'))
+        await exerciseApi.pulishQuestion(currentQuizz, currentQuestion, config).then(() => console.log('done'))
     }
     return (
         <HomeLayout>
@@ -279,12 +284,6 @@ function AddQuizz() {
                                                 label="Câu hỏi"
                                                 placeholder="Thêm câu hỏi ở đây"
                                             />
-                                            {typeof errors.options === 'string' ?
-                                                <ErrorMessage
-                                                    name={`options`}
-                                                    component='div'
-                                                    className={styles.errorMess}
-                                                /> : null}
                                             <FieldArray name="options">
                                                 {({ remove, push }) => (
                                                     <div>
@@ -353,7 +352,22 @@ function AddQuizz() {
 
                                                 )}
                                             </FieldArray>
-                                            <button className={`${styles.addOption} mt-3`} type='submit'>Lưu</button>
+                                            {typeof errors.options === 'string' ?
+                                                <ErrorMessage
+                                                    name={`options`}
+                                                    component='div'
+                                                    className={styles.errorMess}
+                                                /> : null}
+                                            <div className={`d-flex justify-content-around mt-3`}>
+                                                <button className={`${styles.addOption}`} type='submit'>Lưu</button>
+                                                {Object.keys(errors).length === 0 &&
+                                                    <button
+                                                        className={`${styles.addOption}`}
+                                                        type='button'
+                                                        onClick={handlePulish}
+                                                    >Pulish</button>
+                                                }
+                                            </div>
                                         </Form>
                                     )
                                 }}

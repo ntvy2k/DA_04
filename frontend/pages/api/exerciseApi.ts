@@ -72,6 +72,14 @@ const exerciseApi = {
         const url = `/ex/creator/quiz/${quizId}/question/${questionId}/option/${optionId}/`
         return axios.delete(url, config)
     },
+    confirmQuestion(quizId: any, questionId: any, config: any): Promise<AxiosResponse<any>> {
+        const url = `/ex/creator/quiz/${quizId}/question/${questionId}/make-confirm/`
+        return axios.put(url, '', config)
+    },
+    pulishQuestion(quizId: any, questionId: any, config: any): Promise<AxiosResponse<any>> {
+        const url = `/ex/creator/quiz/${quizId}/question/${questionId}/make-ready/`
+        return axios.put(url, '', config)
+    }
 }
 
 export default exerciseApi

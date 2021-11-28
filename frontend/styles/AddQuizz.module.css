@@ -124,7 +124,7 @@
 
 .addOption {
     display: block;
-    margin: 0 auto;
+    margin-top: 10px;
     padding: 10px 20px;
     min-width: 100px;
 
@@ -139,6 +139,10 @@
 .addOption:hover {
     color: var(--color-brand);
     box-shadow: var(--shadow-up);
+}
+
+.addOption.center {
+    margin: 0 auto;
 }
 
 .errorMess {
