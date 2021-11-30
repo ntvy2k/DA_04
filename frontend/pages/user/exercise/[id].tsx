@@ -9,6 +9,7 @@ import Image from 'next/image'
 import exerciseApi from '../../api/exerciseApi';
 import { useRouter } from 'next/router';
 import * as Yup from 'yup'
+import { Toast, ToastContainer } from 'react-bootstrap';
 
 
 function AddQuizz() {
@@ -21,6 +22,7 @@ function AddQuizz() {
     const [currentQuestion, setCurrentQuestion] = useState<any>()
     const [questions, setQuestions] = useState<Array<any>>([])
     const [options, setOptions] = useState<Array<any>>([])
+    const [showMess, setShowMess] = useState<boolean>(false)
     const [initialValues, setInitialValues] = useState<any>({
         nameQuestion: '',
         options: [{
@@ -144,12 +146,13 @@ function AddQuizz() {
         setQuestions(resQuizDetail.data)
     }
     const handlePulish = async () => {
-        await exerciseApi.confirmQuestion(currentQuizz, currentQuestion, config).then(() => console.log('done'))
-        await exerciseApi.pulishQuestion(currentQuizz, currentQuestion, config).then(() => console.log('done'))
+        await exerciseApi.confirmQuestion(currentQuizz, currentQuestion, config).then()
+        await exerciseApi.pulishQuestion(currentQuizz, currentQuestion, config).then(() => setShowMess(true))
     }
     return (
         <HomeLayout>
             <div className='container'>
+
                 <div className={styles.nav}>
                     {quizzs.map((quizz) => {
                         return (
@@ -232,7 +235,19 @@ function AddQuizz() {
                         />
                     </div>
                 </div>
-                <div className='row align-items-center'>
+                <div className='row align-items-center position-relative'>
+                    <ToastContainer position="top-end" className="p-3">
+                        <Toast
+                            onClose={() => setShowMess(false)}
+                            bg='success'
+                            show={showMess}
+                            delay={3000} autohide>
+                            <Toast.Header>
+                                <strong className="me-auto">Thông báo</strong>
+                            </Toast.Header>
+                            <Toast.Body>Publish thành công</Toast.Body>
+                        </Toast>
+                    </ToastContainer>
                     <div className='col'>
                         <div className='mt-3'>
                             <Formik

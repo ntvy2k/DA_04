@@ -79,6 +79,10 @@ const exerciseApi = {
     pulishQuestion(quizId: any, questionId: any, config: any): Promise<AxiosResponse<any>> {
         const url = `/ex/creator/quiz/${quizId}/question/${questionId}/make-ready/`
         return axios.put(url, '', config)
+    },
+    pulishExercise(exerciseId: any, config: any): Promise<AxiosResponse<any>> {
+        const url = `/ex/creator/exercise/${exerciseId}/make-publish/`
+        return axios.put(url, '', config)
     }
 }
 

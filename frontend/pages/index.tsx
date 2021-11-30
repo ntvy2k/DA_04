@@ -262,7 +262,7 @@ const Home = () => {
                     initial="hidden"
                     animate={animation1}
                     transition={{ type: 'spring', delay: 0.8 }}
-                  >Ôn Tập</motion.button>
+                  ><Link href='/baitap'><a className={styles.link}>Ôn Tập</a></Link></motion.button>
                 </div>
               </div>
             </Container>

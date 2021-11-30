@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import styles from '../../styles/HomeLayout.module.css'
 import { motion } from "framer-motion"
 import { useTheme } from 'next-themes'
+import exerciseClient from '../../pages/api/exerciseClient';
 
 const navBarVariants = {
     hidden: {
@@ -44,11 +45,14 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
             state.auth
     );
     const [courses, setCourses] = useState<Array<CourseList>>([])
+    const [exercise, setExercise] = useState<Array<any>>([])
     const [valueSearch, setValueSearch] = useState<string>('')
     useEffect(() => {
         const fetchData = async () => {
             const response = await courseApi.getAll()
             setCourses(response.data)
+            const resEx = await exerciseClient.getExercise()
+            setExercise(resEx.data)
         }
         fetchData()
     }, [])
@@ -118,6 +122,21 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                                         return (
                                             <NavDropdown.Item key={slug}>
                                                 <Link href={`/${slug}`}><a className={styles.link}>{name}</a></Link>
+                                            </NavDropdown.Item>
+                                        )
+                                    })}
+                                </NavDropdown>
+                                <NavDropdown
+                                    title={
+                                        <span className={styles.text}>Luyện tập</span>
+                                    }
+                                    id="basic-nav-dropdown"
+                                    className='ms-3'
+                                >
+                                    {exercise.map(({ id, name }) => {
+                                        return (
+                                            <NavDropdown.Item key={id}>
+                                                <Link href={`/baitap/${id}`}><a className={styles.link}>{name}</a></Link>
                                             </NavDropdown.Item>
                                         )
                                     })}

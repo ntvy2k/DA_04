@@ -6,12 +6,13 @@ import { FastField, Form, Formik } from 'formik';
 import InputField from '../../../components/CustomFields/InputField';
 import SelectField from '../../../components/CustomFields/SelectField';
 import CheckBoxField from '../../../components/CustomFields/CheckBoxField';
-import { NodePlus, Pencil, PlusSquare, QuestionSquare } from 'react-bootstrap-icons';
+import { CloudArrowUp, NodePlus, Pencil, PlusSquare, QuestionSquare } from 'react-bootstrap-icons';
 import Link from 'next/link'
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, OverlayTrigger, Tooltip, Toast, ToastContainer } from 'react-bootstrap';
 
 function Question() {
     const [show, setShow] = useState(false);
+    const [showMess, setShowMess] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [config, setConfig] = useState<any>()
@@ -54,9 +55,24 @@ function Question() {
         })
         handleShow()
     }
+    const handlePublishExercise = async (id: any) => {
+        await exerciseApi.pulishExercise(id, config).then(() => setShowMess(true))
+    }
     return (
         <HomeLayout>
             <div className={`container ${styles.wrapper}`}>
+                <ToastContainer position="top-end" className="p-3">
+                    <Toast
+                        onClose={() => setShowMess(false)}
+                        bg='success'
+                        show={showMess}
+                        delay={3000} autohide>
+                        <Toast.Header>
+                            <strong className="me-auto">Thông báo</strong>
+                        </Toast.Header>
+                        <Toast.Body>Publish thành công</Toast.Body>
+                    </Toast>
+                </ToastContainer>
                 <Modal
                     show={show}
                     onHide={handleClose}
@@ -148,7 +164,7 @@ function Question() {
                                         <button
                                             type='submit'
                                             className={styles.button}
-                                        >Thêm câu hỏi</button>
+                                        >Thêm bài tập</button>
                                     </Form>
                                 )
                             }}
@@ -164,14 +180,44 @@ function Question() {
                                     <li key={exercise.id} className={styles.question}>
                                         <p className={styles.questionName}>{exercise.name}</p>
                                         <div className={styles.questionModified}>
+                                            <OverlayTrigger
+                                                placement='top'
+                                                overlay={
+                                                    <Tooltip id={`tooltip-top`}>
+                                                        Publish bài tập
+                                                    </Tooltip>
+                                                }
+                                            >
+                                                <div onClick={() => handlePublishExercise(exercise.id)}>
+                                                    <CloudArrowUp className={styles.questionModifiedIcon} />
+                                                </div>
+                                            </OverlayTrigger>
                                             <Link href={`/user/exercise/${exercise.id}/`}>
                                                 <a>
-                                                    <PlusSquare className={styles.questionModifiedIcon} />
+                                                    <OverlayTrigger
+                                                        placement='top'
+                                                        overlay={
+                                                            <Tooltip id={`tooltip-top`}>
+                                                                Thêm câu hỏi
+                                                            </Tooltip>
+                                                        }
+                                                    >
+                                                        <PlusSquare className={styles.questionModifiedIcon} />
+                                                    </OverlayTrigger>
                                                 </a>
                                             </Link>
-                                            <div onClick={() => handleEditExercise(exercise)}>
-                                                <Pencil className={styles.questionModifiedIcon} />
-                                            </div>
+                                            <OverlayTrigger
+                                                placement='top'
+                                                overlay={
+                                                    <Tooltip id={`tooltip-top`}>
+                                                        Chỉnh sửa bài tập
+                                                    </Tooltip>
+                                                }
+                                            >
+                                                <div onClick={() => handleEditExercise(exercise)}>
+                                                    <Pencil className={styles.questionModifiedIcon} />
+                                                </div>
+                                            </OverlayTrigger>
                                         </div>
                                     </li>
                                 )
