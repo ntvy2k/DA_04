@@ -6,13 +6,13 @@ from string import ascii_lowercase, digits
 from random import choices
 from time import time
 
-CODE_PATH = "php_tmp/code/"
-CODE_EXT = ".php"
-RUN_TIME_OUT = 4
+CODE_PATH = "python_tmp/code/"
+CODE_EXT = ".py"
+RUN_TIME_OUT = 6
 
 
-class VirtualPHP:
-    def __init__(self, filename="index"):
+class VirtualPython:
+    def __init__(self, filename="main"):
         self.filename = filename + CODE_EXT
         self.mid_length = 10
         self.midpath = "".join(choices(ascii_lowercase + digits, k=self.mid_length))
@@ -30,7 +30,7 @@ class VirtualPHP:
         begin = time()
         try:
             result = run(
-                ["php", self.filename],
+                ["python", self.filename],
                 capture_output=True,
                 text=True,
                 timeout=RUN_TIME_OUT,

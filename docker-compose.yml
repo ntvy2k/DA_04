@@ -12,7 +12,6 @@ services:
     volumes:
       - ./docker-nginx/:/etc/nginx/
       - backend_static:/srv/static/
-      # - backend_media:/srv/media/
     ports:
       - "80:80"
     networks:
@@ -42,8 +41,6 @@ services:
     depends_on:
       - db
     volumes:
-      # - ./backend/api_da4/:/code/api_da4/
-      # - ./backend/auth_da4/:/code/auth_da4/
       - backend_static:/code/static/
     networks:
       - backnet
@@ -61,6 +58,7 @@ services:
     networks:
       - dbnet
     restart: on-failure
+  # COMPLIER ZONE
   php_complier:
     build:
       context: ./docker-compliers/php/
@@ -68,13 +66,18 @@ services:
     container_name: php-complier
     networks:
       - complier_net
-    volumes:
-      - ./docker-compliers/php/:/app/
+  python_shell:
+    build:
+      context: ./docker-compliers/python/
+      dockerfile: Dockerfile
+    container_name: python-shell
+    networks:
+      - complier_net
+  # END COMPLIER ZONE
 
 volumes:
   da04_db:
   backend_static:
-  # backend_media:
 
 networks:
   frontnet:
