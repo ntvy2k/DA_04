@@ -3,6 +3,7 @@ import { ContentList } from '../../moduleType';
 import "suneditor/dist/css/suneditor.min.css";
 import dynamic from 'next/dynamic';
 import PHP from '../RunCode/PHP';
+import JavaScipt from '../RunCode/JavaScript';
 
 const SunEditor = dynamic(() => import("suneditor-react"), {
     ssr: false,
@@ -29,14 +30,31 @@ function ContentChapter(props: ContentProps) {
                         />)
                     }
                     case 'playground': {
-                        return (
-                            <div key={content.id}>
-                                <PHP
-                                    value={content.content.value}
-                                    button={content.content.button}
-                                />
-                            </div>
-                        )
+                        switch (content?.content.language) {
+                            case 'css':
+                            case 'javascript':
+                            case 'html': {
+                                return (
+                                    <div key={content.id}>
+                                        <JavaScipt
+                                            value={content.content.value}
+                                            button={content.content.button}
+                                        />
+                                    </div>
+                                )
+                            }
+                            case 'php': {
+                                return (
+                                    <div key={content.id}>
+                                        <PHP
+                                            value={content.content.value}
+                                            button={content.content.button}
+                                        />
+                                    </div>
+                                )
+                            }
+
+                        }
                     }
                 }
             })}

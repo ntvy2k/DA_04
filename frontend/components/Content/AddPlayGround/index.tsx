@@ -15,7 +15,7 @@ export function AddPlayGround(props: addPlayGround) {
     const type = 'playground'
 
     const [language, setLanguage] = useState<string>("javascript")
-    const [addrLanguage, setAddrLanguage] = useState<Array<string>>(["javascript", "java", "python"])
+    const [addrLanguage, setAddrLanguage] = useState<Array<string>>(["javascript", "html", "css", "php"])
 
     const [value, setValue] = useState<string>('')
 
@@ -65,6 +65,7 @@ export function AddPlayGround(props: addPlayGround) {
             <Editor
                 height="90vh"
                 defaultLanguage={language}
+                language={language}
                 defaultValue={currentValue}
                 onMount={handleEditorDidMount}
                 onChange={showValue}
