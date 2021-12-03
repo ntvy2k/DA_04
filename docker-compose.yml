@@ -73,6 +73,13 @@ services:
     container_name: python-shell
     networks:
       - complier_net
+  java_complier:
+    build:
+      context: ./docker-compliers/java/
+      dockerfile: Dockerfile
+    container_name: java-complier
+    networks:
+      - complier_net
   # END COMPLIER ZONE
 
 volumes:
