@@ -110,6 +110,15 @@ function Question() {
     const handleSumary = () => {
         setShowSumary(true)
     }
+    const handleReset = (resetForm: any) => {
+        setProcess([])
+        setYourAwser(undefined)
+        setInitialValue({
+            genus: currentQuestion?.genus == 'one',
+            options: undefined
+        })
+        resetForm()
+    }
     return (
         <HomeLayout>
             <div>
@@ -230,7 +239,11 @@ function Question() {
                                                     {errors && <div className='text-danger'>{errors.options}</div>}
                                                 </div>
                                                 <div className={styles.function}>
-                                                    <button type='reset' className={styles.button}>Làm lại bài tập <ArrowCounterclockwise /></button>
+                                                    <button
+                                                        type='reset'
+                                                        className={styles.button}
+                                                        onClick={() => handleReset(resetForm)}
+                                                    >Làm lại bài tập <ArrowCounterclockwise /></button>
                                                     <div className='d-flex align-items-center'>
                                                         <button
                                                             type='button'
