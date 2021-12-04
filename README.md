@@ -2,9 +2,9 @@
 Thuc tap co so chuyen nganh do an 04
 run:
 
-```git clone https://github.com/ntvy2k/DA-04```
+```git clone https://github.com/ntvy2k/DA_04```
 
-```cd DA-04```
+```cd DA_04```
 
 start:
 
