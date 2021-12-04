@@ -4,6 +4,8 @@ import "suneditor/dist/css/suneditor.min.css";
 import dynamic from 'next/dynamic';
 import PHP from '../RunCode/PHP';
 import JavaScipt from '../RunCode/JavaScript';
+import Java from '../RunCode/Java';
+import Python from '../RunCode/Python';
 
 const SunEditor = dynamic(() => import("suneditor-react"), {
     ssr: false,
@@ -53,7 +55,26 @@ function ContentChapter(props: ContentProps) {
                                     </div>
                                 )
                             }
-
+                            case 'java': {
+                                return (
+                                    <div key={content.id}>
+                                        <Java
+                                            value={content.content.value}
+                                            button={content.content.button}
+                                        />
+                                    </div>
+                                )
+                            }
+                            case 'python': {
+                                return (
+                                    <div key={content.id}>
+                                        <Python
+                                            value={content.content.value}
+                                            button={content.content.button}
+                                        />
+                                    </div>
+                                )
+                            }
                         }
                     }
                 }

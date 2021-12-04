@@ -15,7 +15,7 @@ export function AddPlayGround(props: addPlayGround) {
     const type = 'playground'
 
     const [language, setLanguage] = useState<string>("javascript")
-    const [addrLanguage, setAddrLanguage] = useState<Array<string>>(["javascript", "html", "css", "php"])
+    const [addrLanguage, setAddrLanguage] = useState<Array<string>>(["javascript", "html", "css", "php", "python", "java"])
 
     const [value, setValue] = useState<string>('')
 

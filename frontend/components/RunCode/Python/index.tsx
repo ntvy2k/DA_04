@@ -16,7 +16,7 @@ interface runPhp {
 }
 
 const run_code = async (code: string) => {
-    const url = "/php/run";
+    const url = "/run-code/python/";
     const response: AxiosResponse<CodeResponse> = await axios.post(url, {
         code: code,
     });
@@ -24,11 +24,13 @@ const run_code = async (code: string) => {
     return data;
 };
 
-const JavaScipt = (props: runPhp) => {
+const Python = (props: runPhp) => {
     const { value, button } = props
     const editorRef = useRef(null);
     const [code, set_code] = React.useState<string>(value);
     const [output, set_output] = React.useState<string>("");
+    const [error, set_error] = React.useState<string>("");
+    const [time, set_time] = React.useState<string>("");
     const [close, setClose] = useState<boolean>(true)
 
     const handleChange = (
@@ -40,8 +42,13 @@ const JavaScipt = (props: runPhp) => {
     };
 
     const handleClick = () => {
-        set_output(`
-        ${code}`)
+        run_code(code)
+            .then((data) => {
+                set_output(data.out);
+                set_error(data.err);
+                set_time(data.time);
+            })
+            .catch((err) => console.log(err));
         setClose(false)
     };
 
@@ -58,13 +65,14 @@ const JavaScipt = (props: runPhp) => {
     function closeRunCode() {
         setClose(true)
     }
+
     return (
         <>
             <Editor
                 height="30vh"
                 theme="vs-dark"
-                defaultLanguage="html"
-                language='html'
+                defaultLanguage="python"
+                language='python'
                 defaultValue={code}
                 onChange={(value) => handleChange(value)}
                 onMount={handleEditorDidMount}
@@ -75,27 +83,21 @@ const JavaScipt = (props: runPhp) => {
                         Run
                     </Button>
                     {!close && (
-                        <Toast style={{ width: "100%" }} onClose={closeRunCode}>
+                        <Toast bg={error !== '' ? 'danger' : 'dark'} style={{ width: "100%" }} onClose={closeRunCode}>
                             <Toast.Header>
                                 <strong className="me-auto">Kết quả code</strong>
+                                <small>{time}</small>
                             </Toast.Header>
-                            <Toast.Body>
-                                <iframe
-                                    srcDoc={output}
-                                    title="output"
-                                    sandbox='allow-scripts'
-                                    frameBorder="0"
-                                    width="100%"
-                                    height="100%"
-                                ></iframe>
+                            <Toast.Body className={error !== '' ? '' : 'text-white'}>
+                                {output !== "" && output}
+                                {error !== "" && error}
                             </Toast.Body>
                         </Toast>
                     )}
                 </div>
-            ) : null
-            }
+            ) : null}
         </>
     );
 };
 
-export default JavaScipt;
+export default Python;

@@ -16,7 +16,7 @@ interface runPhp {
 }
 
 const run_code = async (code: string) => {
-    const url = "/php/run";
+    const url = "/run-code/php/";
     const response: AxiosResponse<CodeResponse> = await axios.post(url, {
         code: code,
     });
@@ -72,6 +72,7 @@ const PHP = (props: runPhp) => {
                 height="30vh"
                 theme="vs-dark"
                 defaultLanguage="php"
+                language='php'
                 defaultValue={code}
                 onChange={(value) => handleChange(value)}
                 onMount={handleEditorDidMount}

@@ -13,7 +13,7 @@ function BarCourse({ courseName, current }: { courseName: any, current: any }) {
             const course: Course = response.data
             setData(course)
         }
-        fetch()
+        courseName && fetch()
     }, [courseName])
     return (
         <div className={styles.barCourse}>

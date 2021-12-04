@@ -23,3 +23,12 @@ PUT http://localhost/api/owner/course/course-3/make-publish/
 ###
 
 GET http://localhost/ex/creator/exercise/get-users/
+
+###
+
+POST http://localhost/php/run/
+Content-Type: application/json
+
+{
+    "code":"<?php echo 'My first PHP script!'; ?>"
+}

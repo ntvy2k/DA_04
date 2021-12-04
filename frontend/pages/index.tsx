@@ -179,8 +179,7 @@ const Home = () => {
                       <Card.Text><Book className={`${styles.card_icon} ${styles.book}`} /></Card.Text>
                       <Card.Title>Học</Card.Title>
                       <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
+                        {" Some quick example text to build on the card title and make up the bulk of the card's content. "}
                       </Card.Text>
                     </Card.Body>
                   </Card>
@@ -197,8 +196,7 @@ const Home = () => {
                       <Card.Text><Google className={`${styles.card_icon} ${styles.google}`} /></Card.Text>
                       <Card.Title>Google</Card.Title>
                       <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
+                        {" Some quick example text to build on the card title and make up the bulk of the card's content. "}
                       </Card.Text>
                     </Card.Body>
                   </Card>
@@ -215,8 +213,7 @@ const Home = () => {
                       <Card.Text><Bug className={`${styles.card_icon} ${styles.bug}`} /></Card.Text>
                       <Card.Title>Sửa lỗi</Card.Title>
                       <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
+                        {" Some quick example text to build on the card title and make up the bulk of the card's content. "}
                       </Card.Text>
                     </Card.Body>
                   </Card>

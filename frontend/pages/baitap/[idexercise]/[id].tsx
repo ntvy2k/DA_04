@@ -50,7 +50,7 @@ function Question() {
         quizzs && setCurrentQuizz(quizzs.find(quizz => quizz.id == id))
     }, [quizzs, id])
     useEffect(() => {
-        if (currentQuizz) {
+        const createNewQuizz = () => {
             setQuestions(currentQuizz.questions)
             setProcess([])
             setYourAwser(undefined)
@@ -60,6 +60,7 @@ function Question() {
             })
             setShowSumary(false)
         }
+        currentQuizz && createNewQuizz()
     }, [currentQuizz])
     useEffect(() => {
         questions.length > 0 ? setCurrentQuestion(questions[0]) : setCurrentQuestion(undefined)

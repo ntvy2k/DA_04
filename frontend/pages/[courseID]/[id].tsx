@@ -45,7 +45,7 @@ function ChapterID({ data }: { data: any }) {
 
     return (
         <HomeLayout>
-            <div className="container">
+            <div className="container" style={{ minHeight: "80vh" }}>
                 <HeaderCourse current={courseID} />
                 <div className="row mt-4">
                     <div className="col-4 col-lg-2 col-md-3">
