@@ -1,25 +1,15 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Head from "next/head";
 import courseApi from "../api/courseApi";
-import { Button, ButtonGroup, Container, Dropdown, Form, FormControl, InputGroup, ListGroup } from "react-bootstrap";
-import router, { useRouter } from "next/router";
+import { Button, ButtonGroup, Card, Container, Dropdown, InputGroup, ListGroup } from "react-bootstrap";
+import { useRouter } from "next/router";
 import SearchLayout from "../../components/Layouts/searchLayout";
-import Image from 'next/image'
 import styles from '../../styles/Search.module.css'
 import { MenuButtonWide, Search, X } from 'react-bootstrap-icons';
 import { motion } from "framer-motion"
-import SearchImage from "../../public/Search.json"
-
-type Course = {
-  id: number;
-  name: string;
-  author: string;
-  created_at: string;
-  last_modified: string;
-  slug: string;
-  group: number;
-  topics: number[];
-};
+import { GetServerSideProps } from "next";
+import axios from "axios";
+import Link from 'next/link'
 
 const group_param = (group: number | null) => {
   if (group !== null) {
@@ -97,17 +87,8 @@ const title = {
   }
 }
 
-const SearchOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: SearchImage,
-  rendererSettings: {
-    preserveAspectRatio: "xMidYMid slice",
-  },
-};
 
-
-const SearchPage = () => {
+const SearchPage = ({ courses }: { courses: any }) => {
   const router = useRouter()
   const [search_terms, set_search_terms] = useState<string>("");
   const [courseGroup, setCourseGroup] = useState<Array<any>>([])
@@ -120,6 +101,8 @@ const SearchPage = () => {
   useEffect(() => {
     const fetchGroup = async () => {
       const res = await courseApi.getGroupCourse()
+      const resCourse = await axios.get('http://localhost/api/course/')
+      console.log(resCourse.data)
       const resTopic = await courseApi.getTopicCourse()
       setCourseGroup(res.data.map(({ gr_courses, ...newObject }) =>
         newObject
@@ -195,6 +178,7 @@ const SearchPage = () => {
           <title>Test Docker</title>
           <meta name="description" content="Adudududu" />
           <link rel="icon" href="/favicon.ico" />
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css"></link>
         </Head>
 
         <motion.div
@@ -265,10 +249,35 @@ const SearchPage = () => {
         </motion.div>
         <Container className="mt-5">
           <h1 className={styles.result_title}><MenuButtonWide /> Khóa học tìm thấy</h1>
+          <div className='d-flex flex-wrap justify-content-center'>
+            {courses?.map((course: any) => {
+              return (
+                <Card key={course.id} className={styles.card}>
+                  <Card.Body className={styles.card_body}>
+                    <Card.Text><i className={`${styles.card_icon} ${course.icon} colored`} /></Card.Text>
+                    <Card.Title className="mb-4">{course.name.toUpperCase()}</Card.Title>
+                    <Card.Text>
+                      <Link href={`/${course.slug}`} ><a className={styles.card_button}>Học ngay</a></Link>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              )
+            })}
+          </div>
         </Container>
       </Fragment>
     </SearchLayout>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const res = await axios.get(`http://nginx/api/course/`)
+  const data = await res.data
+  return {
+    props: {
+      courses: data
+    }
+  }
+}
 
 export default SearchPage;

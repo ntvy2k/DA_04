@@ -82,6 +82,7 @@ function ChangeProfile() {
                                             type='text'
                                             label='Tên đăng nhập'
                                             placeholder='Nhập...'
+                                            readonly={true}
                                         />
                                         <button
                                             type='submit'

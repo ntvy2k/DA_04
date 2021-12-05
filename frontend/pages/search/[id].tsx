@@ -243,7 +243,6 @@ const SearchID = ({ data }: { data: any }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const course = context.query
     const { terms, group, topics } = context.query
     const termsParams: string = terms?.toString() || '';
     const groupParams: string | null = group?.toString() || null;
@@ -257,7 +256,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         topicUrl += `&topics=${topicParams[i]}`;
     }
     const url = `http://nginx/api/search/?terms=${termsParams}${groupUrl}${topicUrl}`;
-    const response = await fetch(url);
+    const response = await fetch(encodeURI(url));
     const data = await response.json()
     return {
         props: {

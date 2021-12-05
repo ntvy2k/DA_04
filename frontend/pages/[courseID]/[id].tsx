@@ -34,15 +34,6 @@ function ChapterID({ data }: { data: any }) {
         }
     }, [url])
 
-    function handleClick(idChapter: number, idLesson: number | string) {
-        const indexUrl = {
-            courseID: `${courseID}`,
-            chapterID: idChapter,
-            lessonID: idLesson,
-        }
-        setUrl(indexUrl)
-    }
-
     return (
         <HomeLayout>
             <div className="container" style={{ minHeight: "80vh" }}>
