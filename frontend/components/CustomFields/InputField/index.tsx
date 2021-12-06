@@ -25,9 +25,9 @@ function InputField(props: FieldProps & userName) {
                     type={type}
                     placeholder={placeholder}
                     isInvalid={touched[name] && !!errors[name]}
-                    className={styles.input}
                     readOnly={readonly}
                     {...field}
+                    className={styles.input}
                 ></Form.Control>
                 <Form.Control.Feedback type="invalid">{errors[name]}</Form.Control.Feedback>
             </Form.Group>

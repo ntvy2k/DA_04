@@ -1,6 +1,6 @@
 .input {
     border: none;
-    background: var(--color-page);
+    background-color: var(--color-page) !important;
     box-shadow: var(--shadow-down);
     color: var(--color-text);
 }
