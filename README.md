@@ -6,13 +6,18 @@ run:
 
 ```cd DA_04```
 
-start:
+start dev:
 
 ```docker-compose up```
 
+or
+start build
+
+```docker-compose --file docker-compose.prod.yml up```
+
 =================================
 
-down:
+stop:
 
 ```docker-compose down```
 

@@ -1,0 +1,89 @@
+version: "3.8"
+
+services:
+  nginx:
+    build:
+      context: ./docker-nginx/
+      dockerfile: Dockerfile
+    container_name: nginx
+    depends_on:
+      - frontend
+      - backend_api
+    volumes:
+      - ./docker-nginx/:/etc/nginx/
+      - backend_static:/srv/static/
+    ports:
+      - "80:80"
+    networks:
+      - frontnet
+      - backnet
+      - complier_net
+    restart: on-failure
+  frontend:
+    build:
+      context: frontend/
+      dockerfile: Dockerfile.prod
+    container_name: frontend
+    depends_on:
+      - backend_api
+    networks:
+      - frontnet
+    restart: always
+  backend_api:
+    build:
+      context: backend/
+      dockerfile: Dockerfile
+    container_name: backend-api
+    depends_on:
+      - db
+    volumes:
+      - backend_static:/code/static/
+    networks:
+      - backnet
+      - dbnet
+    command: ["./docker_django/migrate.sh"]
+  db:
+    image: postgres:alpine
+    container_name: dA04_PG
+    environment:
+      - POSTGRES_USER=da04
+      - POSTGRES_PASSWORD=da04PW
+      - POSTGRES_DB=DA04_DB
+    volumes:
+      - da04_db:/var/lib/postgresql/data
+    networks:
+      - dbnet
+    restart: on-failure
+  # COMPLIER ZONE
+  php_complier:
+    build:
+      context: ./docker-compliers/php/
+      dockerfile: Dockerfile
+    container_name: php-complier
+    networks:
+      - complier_net
+  python_shell:
+    build:
+      context: ./docker-compliers/python/
+      dockerfile: Dockerfile
+    container_name: python-shell
+    networks:
+      - complier_net
+  java_complier:
+    build:
+      context: ./docker-compliers/java/
+      dockerfile: Dockerfile
+    container_name: java-complier
+    networks:
+      - complier_net
+  # END COMPLIER ZONE
+
+volumes:
+  da04_db:
+  backend_static:
+
+networks:
+  frontnet:
+  backnet:
+  dbnet:
+  complier_net:
