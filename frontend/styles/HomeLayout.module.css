@@ -76,6 +76,7 @@
     padding: 7px 15px;
     border-radius: 20px;
     margin: 0px 10px;
+    width: 250px;
 }
 
 .input_group:hover {

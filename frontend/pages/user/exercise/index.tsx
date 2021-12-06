@@ -8,6 +8,7 @@ import SelectField from '../../../components/CustomFields/SelectField';
 import CheckBoxField from '../../../components/CustomFields/CheckBoxField';
 import { CloudArrowUp, NodePlus, Pencil, PlusSquare, QuestionSquare } from 'react-bootstrap-icons';
 import Link from 'next/link'
+import * as Yup from 'yup'
 import { Modal, Button, OverlayTrigger, Tooltip, Toast, ToastContainer } from 'react-bootstrap';
 
 function Question() {
@@ -27,6 +28,10 @@ function Question() {
     const [initialValueEdit, setInitialValueEdit] = useState<any>({
         name: '',
         co_creator: [],
+    })
+
+    const validateShema = Yup.object().shape({
+        name: Yup.string().required('Bạn phải nhập tên'),
     })
 
     useEffect(() => {
@@ -85,6 +90,7 @@ function Question() {
                     <Formik
                         enableReinitialize
                         initialValues={initialValueEdit}
+                        validationSchema={validateShema}
                         onSubmit={async (value) => {
                             exerciseApi.updateExercise(value, idEdit, config)
                             const res = await exerciseApi.getExercise(config)
@@ -135,6 +141,7 @@ function Question() {
                             Thêm mới bài tập</h3>
                         <Formik
                             initialValues={initialValues}
+                            validationSchema={validateShema}
                             onSubmit={async (value, { resetForm }) => {
                                 exerciseApi.postExercise(value, config)
                                 const res = await exerciseApi.getExercise(config)

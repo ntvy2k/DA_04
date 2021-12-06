@@ -170,17 +170,17 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                                         }
                                         id="user">
                                         <NavDropdown.Item onClick={() => handleLogout()}>
-                                            Logout
+                                            Đăng xuất
                                         </NavDropdown.Item>
                                         <NavDropdown.Item>
                                             <Link href='/user'>
-                                                <a className='text-reset text-decoration-none'>Thông tin</a>
+                                                <a className='text-reset text-decoration-none'>Bảng điều khiển</a>
                                             </Link>
                                         </NavDropdown.Item>
                                     </NavDropdown>
 
                                 ) : (
-                                    <Link href="/login"><a className={styles.login}> Login </a></Link>
+                                    <Link href="/login"><a className={styles.login}> Đăng nhập </a></Link>
                                 )}
                             </Nav>
                         </Navbar.Collapse>

@@ -27,13 +27,13 @@ function AddContent() {
         const config = {
             headers: { Authorization: `Token ${localStorage.getItem("key")}` },
         };
-        const { id, ...newObject } = dataChange
-        const newData = {
-            lesson: lessonid,
-            title: 'test',
-            content: newObject
-        }
         if (dataChange) {
+            const { id, ...newObject } = dataChange
+            const newData = {
+                lesson: lessonid,
+                title: 'test',
+                content: newObject
+            }
             courseApi.updateContent(newData, editcourse, chapterid, lessonid, contentid, config)
             router.push(`/user/mycourse/${editcourse}/addcontent?chapterid=${chapterid}&lessonid=${lessonid}`)
         }
@@ -64,7 +64,7 @@ function AddContent() {
                         />
                     ))
                 }
-                <button className={`${styles.button} mt-3`} onClick={() => handleSubmit()} >Submit</button>
+                {dataChange && <button className={`${styles.button} mt-3`} onClick={() => handleSubmit()} >Submit</button>}
                 <button className={`${styles.button} mt-3`} onClick={() => handleDelete()} >Delete</button>
             </div>
         </SearchLayout>
