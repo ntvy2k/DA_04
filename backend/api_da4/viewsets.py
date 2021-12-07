@@ -37,7 +37,7 @@ from .serializers.details import (
     LessonsDetailSerializer,
 )
 
-from .serializers.actions import CoursePublisherSerializer
+from .serializers.actions import CoursePublisherSerializer, LessonRearrangeSerializer
 
 # Read-Only ViewSets
 
@@ -197,12 +197,18 @@ class OwnerChapterViewSet(ModelViewSet):
 class OwnerLessonViewSet(ModelViewSet):
     serializer_class = LessonSerializer
     permission_classes = [IsCourseOwner]
+    serializer_actions_class = LessonRearrangeSerializer
 
     def get_queryset(self):
         return Lesson.objects.filter(
             chapter__course__slug=self.kwargs["course_slug"],
             chapter=self.kwargs["chapter_pk"],
         )
+
+    def get_serializer_class(self):
+        if self.action == "re_arrange":
+            return self.serializer_actions_class
+        return super(OwnerLessonViewSet, self).get_serializer_class()
 
     def retrieve(self, request, *args, **kwargs):
         lesson = get_object_or_404(self.get_queryset().filter(), pk=kwargs["pk"])
@@ -225,6 +231,19 @@ class OwnerLessonViewSet(ModelViewSet):
         context = super(OwnerLessonViewSet, self).get_serializer_context()
         context.update({"chapter": self.kwargs["chapter_pk"]})
         return context
+
+    @action(
+        detail=True,
+        methods=["get", "put"],
+        url_path="re-arrange",
+    )
+    def re_arrange(self, request, *args, **kwargs):
+        lesson = self.get_object()
+        if request.method == "PUT":
+            order = request.data["order"]
+            lesson.set_content_order(order)
+        serializer = self.get_serializer(lesson)
+        return Response(serializer.data)
 
 
 class OwnerContentViewSet(ModelViewSet):
