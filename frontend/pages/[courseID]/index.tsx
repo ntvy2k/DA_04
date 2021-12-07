@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import courseApi from "../api/courseApi";
 import ContentChapter from "../../components/ContentChapter";
@@ -6,6 +6,7 @@ import { ContentList } from "../../moduleType";
 import HomeLayout from "../../components/Layouts/homeLayout";
 import BarCourse from "../../components/BarCourse";
 import HeaderCourse from "../../components/HeaderCourse";
+import Head from 'next/head'
 
 interface url {
   courseID: number | string,
@@ -43,19 +44,24 @@ function CourseID() {
 
   return (
     <HomeLayout>
-      <div className="container" style={{ minHeight: "80vh" }}>
-        <HeaderCourse current={courseID} />
-        <div className="row mt-4">
-          <div className="col-4 col-lg-2 col-md-3">
-            <BarCourse courseName={courseID} current={null} />
-          </div>
-          <div className="col-8 col-lg-10 col-md-9">
-            {dataContent != null ? (
-              <ContentChapter data={dataContent}></ContentChapter>
-            ) : null}
+      <Fragment>
+        <Head>
+          <title>{`${courseID}`} | NháiW3school</title>
+        </Head>
+        <div className="container" style={{ minHeight: "80vh" }}>
+          <HeaderCourse current={courseID} />
+          <div className="row mt-4">
+            <div className="col-4 col-lg-2 col-md-3">
+              <BarCourse courseName={courseID} current={null} />
+            </div>
+            <div className="col-8 col-lg-10 col-md-9">
+              {dataContent != null ? (
+                <ContentChapter data={dataContent}></ContentChapter>
+              ) : null}
+            </div>
           </div>
         </div>
-      </div>
+      </Fragment>
     </HomeLayout>
   );
 }

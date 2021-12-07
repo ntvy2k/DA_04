@@ -41,6 +41,7 @@ function ContentChapter(props: ContentProps) {
                                         <JavaScipt
                                             value={content.content.value}
                                             button={content.content.button}
+                                            theme={content.content.themeVS}
                                         />
                                     </div>
                                 )
@@ -51,6 +52,7 @@ function ContentChapter(props: ContentProps) {
                                         <PHP
                                             value={content.content.value}
                                             button={content.content.button}
+                                            theme={content.content.themeVS}
                                         />
                                     </div>
                                 )
@@ -61,6 +63,7 @@ function ContentChapter(props: ContentProps) {
                                         <Java
                                             value={content.content.value}
                                             button={content.content.button}
+                                            theme={content.content.themeVS}
                                         />
                                     </div>
                                 )
@@ -71,6 +74,7 @@ function ContentChapter(props: ContentProps) {
                                         <Python
                                             value={content.content.value}
                                             button={content.content.button}
+                                            theme={content.content.themeVS}
                                         />
                                     </div>
                                 )

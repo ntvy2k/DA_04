@@ -1,27 +1,20 @@
 import React, { Fragment } from 'react';
 import HomeLayout from '../../components/Layouts/homeLayout';
 import UserLayout from '../../components/Layouts/userLayout';
-import UserImages from '../../public/User.json'
 import { Card } from 'react-bootstrap';
 import styles from '../../styles/User.module.css'
 import { Book, PatchQuestion, PersonBadge } from 'react-bootstrap-icons';
 import Link from 'next/link'
+import Head from 'next/head'
 
 function User() {
-    const UserOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: UserImages,
-        rendererSettings: {
-            preserveAspectRatio: "xMidYMid slice",
-        },
-    };
     return (
         <HomeLayout>
             <UserLayout>
                 <Fragment>
-                    {/* <h1 className='text-center'>Chọn cái gì đó ở bên trái đê bro</h1>
-                    <Lottie options={UserOptions} height={400} width={400}></Lottie> */}
+                    <Head>
+                        <title>Bảng điều khiển | NháiW3school</title>
+                    </Head>
                     <div className='col-6 col-md-4 col-lg-3 text-center'>
                         <Card className={`${styles.card} ${styles.card_profile}`}>
                             <Card.Body>

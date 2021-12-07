@@ -10,6 +10,8 @@ import courseApi from '../../../api/courseApi';
 import InputField from '../../../../components/CustomFields/InputField';
 import styles from '../../../../styles/AddCourse.module.css'
 import { useRouter } from 'next/router';
+import Link from 'next/link'
+import { ChevronDoubleRight } from 'react-bootstrap-icons';
 
 function AddCourse() {
     const router = useRouter()
@@ -60,6 +62,25 @@ function AddCourse() {
     return (
         <HomeLayout>
             <div className='container'>
+                <div className='d-flex align-items-center'>
+                    <Link href='/user'>
+                        <a className='text-reset text-decoration-none'>
+                            <h4 className={styles.text}>Bảng điều khiển</h4>
+                        </a>
+                    </Link>
+                    <ChevronDoubleRight className={styles.text_icon} />
+                    <Link href='/user/mycourse'>
+                        <a className='text-reset text-decoration-none'>
+                            <h4 className={styles.text}>Các khóa học của tôi</h4>
+                        </a>
+                    </Link>
+                    <ChevronDoubleRight className={styles.text_icon} />
+                    <Link href='/user/mycourse/addcourse'>
+                        <a className='text-reset text-decoration-none'>
+                            <h4 className={styles.text}>Thêm khóa học</h4>
+                        </a>
+                    </Link>
+                </div>
                 <div className='row align-items-center'>
                     <div className='col-6'>
                         <Image

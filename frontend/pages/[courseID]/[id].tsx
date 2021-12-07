@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import courseApi from "../api/courseApi";
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import ContentChapter from "../../components/ContentChapter";
-import { ContentList, Course, CourseList } from "../../moduleType";
+import { ContentList } from "../../moduleType";
 import HomeLayout from "../../components/Layouts/homeLayout";
 import BarCourse from "../../components/BarCourse";
 import HeaderCourse from "../../components/HeaderCourse";
-import axios from "axios";
+import Head from 'next/head'
 
 interface url {
     courseID: number | string,
@@ -36,19 +36,24 @@ function ChapterID({ data }: { data: any }) {
 
     return (
         <HomeLayout>
-            <div className="container" style={{ minHeight: "80vh" }}>
-                <HeaderCourse current={courseID} />
-                <div className="row mt-4">
-                    <div className="col-4 col-lg-2 col-md-3">
-                        <BarCourse courseName={courseID} current={lesson} />
-                    </div>
-                    <div className="col-8 col-lg-10 col-md-9">
-                        {data != [] ? (
-                            <ContentChapter data={data}></ContentChapter>
-                        ) : null}
+            <Fragment>
+                <Head>
+                    <title>{`${courseID}`} | NháiW3school</title>
+                </Head>
+                <div className="container" style={{ minHeight: "80vh" }}>
+                    <HeaderCourse current={courseID} />
+                    <div className="row mt-4">
+                        <div className="col-4 col-lg-2 col-md-3">
+                            <BarCourse courseName={courseID} current={lesson} />
+                        </div>
+                        <div className="col-8 col-lg-10 col-md-9">
+                            {data != [] ? (
+                                <ContentChapter data={data}></ContentChapter>
+                            ) : null}
+                        </div>
                     </div>
                 </div>
-            </div>
+            </Fragment>
         </HomeLayout>
     );
 }

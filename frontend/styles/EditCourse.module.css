@@ -2,6 +2,21 @@
     color: var(--color-text);
 }
 
+.textLink {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.textLink:hover {
+    color: var(--color-brand);
+}
+
+.text_icon {
+    margin: 0 10px;
+    font-size: medium;
+    color: var(--color-text);
+}
+
 .chapter {
     display: flex;
     justify-content: space-between;

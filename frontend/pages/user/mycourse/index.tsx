@@ -7,7 +7,7 @@ import courseApi from '../../api/courseApi';
 import styles from '../../../styles/MyCourse.module.css'
 import Link from 'next/link'
 import Head from 'next/head'
-import { PlusCircle } from 'react-bootstrap-icons';
+import { ChevronDoubleRight, PlusCircle } from 'react-bootstrap-icons';
 import { motion } from 'framer-motion'
 
 const faceUp = {
@@ -44,11 +44,24 @@ function MyCourse() {
     return (
         <>
             <Head>
+                <title>Khóa học của tôi | NháiW3school</title>
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css" ></link>
             </Head>
             <HomeLayout>
                 <div className={`container ${styles.wrapper}`}>
-                    <h1 className={styles.text}>Các khóa học của tôi</h1>
+                    <div className='d-flex align-items-center'>
+                        <Link href='/user'>
+                            <a className='text-reset text-decoration-none'>
+                                <h4 className={styles.text}>Bảng điều khiển</h4>
+                            </a>
+                        </Link>
+                        <ChevronDoubleRight className={styles.text_icon} />
+                        <Link href='/user/mycourse'>
+                            <a className='text-reset text-decoration-none'>
+                                <h4 className={styles.text}>Các khóa học của tôi</h4>
+                            </a>
+                        </Link>
+                    </div>
                     <div className='d-flex flex-wrap'>
                         <motion.div
                             variants={faceUp}

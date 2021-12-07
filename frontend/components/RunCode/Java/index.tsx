@@ -1,7 +1,7 @@
 import Editor from "@monaco-editor/react";
 import React, { useRef, useState } from "react";
 import axios, { AxiosResponse } from "axios";
-import code_styles from '../../../styles/code.module.css'
+import styles from '../../../styles/code.module.css'
 import { Button, Toast } from 'react-bootstrap'
 
 type CodeResponse = {
@@ -13,6 +13,7 @@ type CodeResponse = {
 interface runPhp {
     value: string,
     button: boolean,
+    theme: boolean,
 }
 
 const run_code = async (code: string) => {
@@ -25,7 +26,7 @@ const run_code = async (code: string) => {
 };
 
 const Java = (props: runPhp) => {
-    const { value, button } = props
+    const { value, button, theme } = props
     const editorRef = useRef(null);
     const [code, set_code] = React.useState<string>(value);
     const [output, set_output] = React.useState<string>("");
@@ -70,7 +71,7 @@ const Java = (props: runPhp) => {
         <>
             <Editor
                 height="30vh"
-                theme="vs-dark"
+                theme={theme ? "vs-dark" : 'light'}
                 defaultLanguage="java"
                 language='java'
                 defaultValue={code}
@@ -88,7 +89,7 @@ const Java = (props: runPhp) => {
                                 <strong className="me-auto">Kết quả code</strong>
                                 <small>{time}</small>
                             </Toast.Header>
-                            <Toast.Body className={error !== '' ? '' : 'text-white'}>
+                            <Toast.Body className={`${styles.code_container} ${error !== '' ? '' : 'text-white'}`}>
                                 {output !== "" && output}
                                 {error !== "" && error}
                             </Toast.Body>

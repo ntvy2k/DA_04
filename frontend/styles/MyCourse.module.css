@@ -4,6 +4,17 @@
 
 .text {
     color: var(--color-text);
+    text-decoration: none;
+}
+
+.text:hover {
+    color: var(--color-brand);
+}
+
+.text_icon {
+    margin: 0 10px;
+    font-size: medium;
+    color: var(--color-text);
 }
 
 .card {

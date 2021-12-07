@@ -111,80 +111,11 @@ export default function SearchLayout({ children }: { children: ReactElement }) {
               id="responsive-navbar-nav"
               className="justify-content-end align-self-center"
             >
-<<<<<<< HEAD
-                <Navbar className={styles.text} expand="lg">
-                    <Container>
-                        <Navbar.Brand ><Link href="/">
-                            <div className={styles.brand}>
-                                <h3 className={styles.brand_first}>Nhái</h3>
-                                <h3 className={styles.brand_last}>W3school</h3>
-                            </div>
-                        </Link></Navbar.Brand>
-                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                        <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end align-self-center">
-                            <Nav>
-                                <Navbar.Text className={styles.theme}>
-                                    {theme === 'dark' ?
-                                        <MoonStars onClick={() => setTheme('light')} /> :
-                                        <Sun onClick={() => setTheme('dark')} />}
-                                </Navbar.Text>
-                                {user.is_authenticated ? (
-                                    <NavDropdown
-                                        title={
-                                            <span className={styles.text}>{user.user?.username}</span>
-                                        }
-                                        id="user"
-                                        className='ms-3'
-                                    >
-                                        <NavDropdown.Item onClick={() => handleLogout()}>
-                                            Đăng xuất
-                                        </NavDropdown.Item>
-                                        <NavDropdown.Item>
-                                            <Link href='/user'>
-                                                <a className='text-reset text-decoration-none'>Bảng điều khiển</a>
-                                            </Link>
-                                        </NavDropdown.Item>
-                                    </NavDropdown>
-
-                                ) : (
-                                    <Link href="/login"><a className={styles.login}> Đăng nhập </a></Link>
-                                )}
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Container>
-                </Navbar>
-            </motion.div>
-            {children}
-            <Container className={styles.footer}>
-                <hr />
-                <h1>Liên hệ với chúng tôi</h1>
-                <div className="d-flex mb-4">
-                    <a className={styles.contact}><Facebook /></a>
-                    <a className={styles.contact}><Instagram /></a>
-                    <a className={styles.contact}><Discord /></a>
-                </div>
-                <div className="d-flex">
-                    <p>Info</p>
-                    <p className="ms-3">Support</p>
-                    <p className="ms-3">Marketing</p>
-                </div>
-                <div className="d-flex">
-                    <p>Điều khoản sử dụng</p>
-                    <p className="ms-3">Chính sách bảo mật</p>
-                </div>
-                <p className="text-secondary">@ copyright đề án tốt nghiệp 4</p>
-            </Container>
-        </motion.main>
-    );
-}
-=======
               <Nav>
                 <Navbar.Text className={styles.theme}>
-                  {theme === "dark" ? (
-                    <MoonStars onClick={() => setTheme("light")} />
-                  ) : (
-                    <Sun onClick={() => setTheme("dark")} />
-                  )}
+                  {theme === 'dark' ?
+                    <MoonStars onClick={() => setTheme('light')} /> :
+                    <Sun onClick={() => setTheme('dark')} />}
                 </Navbar.Text>
                 {user.is_authenticated ? (
                   <NavDropdown
@@ -192,23 +123,20 @@ export default function SearchLayout({ children }: { children: ReactElement }) {
                       <span className={styles.text}>{user.user?.username}</span>
                     }
                     id="user"
-                    className="ms-3"
+                    className='ms-3'
                   >
                     <NavDropdown.Item onClick={() => handleLogout()}>
-                      Logout
+                      Đăng xuất
                     </NavDropdown.Item>
                     <NavDropdown.Item>
-                      <Link href="/user">
-                        <a className="text-reset text-decoration-none">
-                          Thông tin
-                        </a>
+                      <Link href='/user'>
+                        <a className='text-reset text-decoration-none'>Bảng điều khiển</a>
                       </Link>
                     </NavDropdown.Item>
                   </NavDropdown>
+
                 ) : (
-                  <Link href="/login">
-                    <a className={styles.login}> Login </a>
-                  </Link>
+                  <Link href="/login"><a className={styles.login}> Đăng nhập </a></Link>
                 )}
               </Nav>
             </Navbar.Collapse>
@@ -220,15 +148,9 @@ export default function SearchLayout({ children }: { children: ReactElement }) {
         <hr />
         <h1>Liên hệ với chúng tôi</h1>
         <div className="d-flex mb-4">
-          <a className={styles.contact}>
-            <Facebook />
-          </a>
-          <a className={styles.contact}>
-            <Instagram />
-          </a>
-          <a className={styles.contact}>
-            <Discord />
-          </a>
+          <a className={styles.contact}><Facebook /></a>
+          <a className={styles.contact}><Instagram /></a>
+          <a className={styles.contact}><Discord /></a>
         </div>
         <div className="d-flex">
           <p>Info</p>
@@ -244,4 +166,3 @@ export default function SearchLayout({ children }: { children: ReactElement }) {
     </motion.main>
   );
 }
->>>>>>> 939c22a7e0714dfbe11f936bfcbfe8a88aa76431

@@ -13,6 +13,7 @@ type CodeResponse = {
 interface runPhp {
     value: string,
     button: boolean,
+    theme: boolean,
 }
 
 const run_code = async (code: string) => {
@@ -25,7 +26,7 @@ const run_code = async (code: string) => {
 };
 
 const JavaScipt = (props: runPhp) => {
-    const { value, button } = props
+    const { value, button, theme } = props
     const editorRef = useRef(null);
     const [code, set_code] = React.useState<string>(value);
     const [output, set_output] = React.useState<string>("");
@@ -62,7 +63,7 @@ const JavaScipt = (props: runPhp) => {
         <>
             <Editor
                 height="30vh"
-                theme="vs-dark"
+                theme={theme ? "vs-dark" : 'light'}
                 defaultLanguage="html"
                 language='html'
                 defaultValue={code}

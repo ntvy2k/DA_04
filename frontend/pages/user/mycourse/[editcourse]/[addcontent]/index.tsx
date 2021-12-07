@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import HomeLayout from '../../../../../components/Layouts/homeLayout';
 import PHP from '../../../../../components/RunCode/PHP';
 import courseApi from '../../../../api/courseApi';
@@ -8,8 +8,12 @@ import "suneditor/dist/css/suneditor.min.css";
 import { dataContent } from '../../../../../moduleType';
 import AddText, { AddPlayGround } from '../../../../../components/Content';
 import styles from '../../../../../styles/AddContent.module.css'
-import { PencilSquare, XSquareFill } from 'react-bootstrap-icons';
+import { ChevronDoubleRight, PencilSquare, XSquareFill } from 'react-bootstrap-icons';
 import Link from 'next/link'
+import Head from 'next/head'
+import Python from '../../../../../components/RunCode/Python';
+import Java from '../../../../../components/RunCode/Java';
+import JavaScipt from '../../../../../components/RunCode/JavaScript';
 
 const SunEditor = dynamic(() => import("suneditor-react"), {
     ssr: false,
@@ -33,7 +37,6 @@ function AddContentPage() {
         }
         fetch()
     }, [])
-    console.log(oldData)
     useEffect(() => {
         if (valueChange) {
             const newData = [...data]
@@ -88,113 +91,231 @@ function AddContentPage() {
         })
         redirecRouter.push(`/user/mycourse/${router.editcourse}`)
     }
-    console.log(oldData)
     return (
         <HomeLayout>
-            <div className={`container ${styles.wrapper}`}>
-                {/* <AddContent></AddContent> */}
-                <div className={`mb-3 ${styles.sticky}`} >
-                    <button
-                        className={`${styles.button}`}
-                        onClick={() => handleAdd('text')}>Add text</button>
-                    <button
-                        className={`${styles.button}`}
-                        onClick={() => handleAdd('playGroundWithRunCode')}> Add PlayGround</button>
-                </div>
-                {oldData.map((content, index) => {
-                    switch (content?.type) {
-                        case 'text': {
-                            return (
-                                <div key={index}>
-                                    <Link
-                                        href={{
-                                            pathname: '/user/mycourse/[editcourse]/[addcontent]/[contentid]',
-                                            query: {
-                                                editcourse: router.editcourse,
-                                                addcontent: `addcontent`,
-                                                contentid: content.id,
-                                                lessonid: `${router.lessonid}`,
-                                                chapterid: `${router.chapterid}`
-                                            }
-                                        }}
-                                    >
-                                        <a className={styles.button_close}>
-                                            <PencilSquare className='text-warning fs-5' />
-                                        </a>
-                                    </Link>
-                                    {/* <button className={styles.button_close} onClick={() => handleEdit(index)}>
+            <Fragment>
+                <Head>
+                    <title>Thêm nội dung {`${router?.editcourse}`} | NháiW3school</title>
+                </Head>
+                <div className={`container ${styles.wrapper}`}>
+                    {/* <AddContent></AddContent> */}
+                    <div className='d-flex align-items-center mb-3'>
+                        <Link href='/user'>
+                            <a className='text-reset text-decoration-none'>
+                                <h4 className={styles.text}>Bảng điều khiển</h4>
+                            </a>
+                        </Link>
+                        <ChevronDoubleRight className={styles.text_icon} />
+                        <Link href='/user/mycourse'>
+                            <a className='text-reset text-decoration-none'>
+                                <h4 className={styles.text}>Các khóa học của tôi</h4>
+                            </a>
+                        </Link>
+                        <ChevronDoubleRight className={styles.text_icon} />
+                        <Link href='/user/mycourse'>
+                            <a className='text-reset text-decoration-none' onClick={() => redirecRouter.back()}>
+                                <h4 className={styles.text}>Thêm chương</h4>
+                            </a>
+                        </Link>
+                        <ChevronDoubleRight className={styles.text_icon} />
+                        <Link href={redirecRouter.asPath}>
+                            <a className='text-reset text-decoration-none'>
+                                <h4 className={styles.text}>Thêm nội dung</h4>
+                            </a>
+                        </Link>
+                    </div>
+                    <div className={`mb-3 ${styles.sticky}`} >
+                        <button
+                            className={`${styles.button}`}
+                            onClick={() => handleAdd('text')}>Add text</button>
+                        <button
+                            className={`${styles.button}`}
+                            onClick={() => handleAdd('playGroundWithRunCode')}> Add PlayGround</button>
+                    </div>
+                    {oldData.map((content, index) => {
+                        switch (content?.type) {
+                            case 'text': {
+                                return (
+                                    <div key={index}>
+                                        <Link
+                                            href={{
+                                                pathname: '/user/mycourse/[editcourse]/[addcontent]/[contentid]',
+                                                query: {
+                                                    editcourse: router.editcourse,
+                                                    addcontent: `addcontent`,
+                                                    contentid: content.id,
+                                                    lessonid: `${router.lessonid}`,
+                                                    chapterid: `${router.chapterid}`
+                                                }
+                                            }}
+                                        >
+                                            <a className={styles.button_close}>
+                                                <PencilSquare className='text-warning fs-5' />
+                                            </a>
+                                        </Link>
+                                        {/* <button className={styles.button_close} onClick={() => handleEdit(index)}>
                                         <PencilSquare className='text-warning fs-5' />
                                     </button> */}
-                                    <SunEditor
-
-                                        setContents={content.value}
-                                        hideToolbar={true}
-                                        disable={true}
-                                        height="100%"
-                                    />
-                                </div>)
+                                        <SunEditor
+                                            setContents={content.value}
+                                            hideToolbar={true}
+                                            disable={true}
+                                            height="100%"
+                                        />
+                                    </div>)
+                            }
+                            case 'playground': {
+                                switch (content.language) {
+                                    case 'css':
+                                    case 'javascript':
+                                    case 'html': {
+                                        return (
+                                            <div key={content.id}>
+                                                <Link
+                                                    href={{
+                                                        pathname: '/user/mycourse/[editcourse]/[addcontent]/[contentid]',
+                                                        query: {
+                                                            editcourse: router.editcourse,
+                                                            addcontent: `addcontent`,
+                                                            contentid: content.id,
+                                                            lessonid: `${router.lessonid}`,
+                                                            chapterid: `${router.chapterid}`
+                                                        }
+                                                    }}
+                                                >
+                                                    <a className={styles.button_close}>
+                                                        <PencilSquare className='text-warning fs-5' />
+                                                    </a>
+                                                </Link>
+                                                <JavaScipt
+                                                    value={content.value}
+                                                    button={content.button}
+                                                    theme={content.themeVS}
+                                                />
+                                            </div>
+                                        )
+                                    }
+                                    case 'php': {
+                                        return (
+                                            <div key={content.id}>
+                                                <Link
+                                                    href={{
+                                                        pathname: '/user/mycourse/[editcourse]/[addcontent]/[contentid]',
+                                                        query: {
+                                                            editcourse: router.editcourse,
+                                                            addcontent: `addcontent`,
+                                                            contentid: content.id,
+                                                            lessonid: `${router.lessonid}`,
+                                                            chapterid: `${router.chapterid}`
+                                                        }
+                                                    }}
+                                                >
+                                                    <a className={styles.button_close}>
+                                                        <PencilSquare className='text-warning fs-5' />
+                                                    </a>
+                                                </Link>
+                                                <PHP
+                                                    value={content.value}
+                                                    button={content.button}
+                                                    theme={content.themeVS}
+                                                />
+                                            </div>
+                                        )
+                                    }
+                                    case 'java': {
+                                        return (
+                                            <div key={content.id}>
+                                                <Link
+                                                    href={{
+                                                        pathname: '/user/mycourse/[editcourse]/[addcontent]/[contentid]',
+                                                        query: {
+                                                            editcourse: router.editcourse,
+                                                            addcontent: `addcontent`,
+                                                            contentid: content.id,
+                                                            lessonid: `${router.lessonid}`,
+                                                            chapterid: `${router.chapterid}`
+                                                        }
+                                                    }}
+                                                >
+                                                    <a className={styles.button_close}>
+                                                        <PencilSquare className='text-warning fs-5' />
+                                                    </a>
+                                                </Link>
+                                                <Java
+                                                    value={content.value}
+                                                    button={content.button}
+                                                    theme={content.themeVS}
+                                                />
+                                            </div>
+                                        )
+                                    }
+                                    case 'python': {
+                                        return (
+                                            <div key={content.id}>
+                                                <Link
+                                                    href={{
+                                                        pathname: '/user/mycourse/[editcourse]/[addcontent]/[contentid]',
+                                                        query: {
+                                                            editcourse: router.editcourse,
+                                                            addcontent: `addcontent`,
+                                                            contentid: content.id,
+                                                            lessonid: `${router.lessonid}`,
+                                                            chapterid: `${router.chapterid}`
+                                                        }
+                                                    }}
+                                                >
+                                                    <a className={styles.button_close}>
+                                                        <PencilSquare className='text-warning fs-5' />
+                                                    </a>
+                                                </Link>
+                                                <Python
+                                                    value={content.value}
+                                                    button={content.button}
+                                                    theme={content.themeVS}
+                                                />
+                                            </div>
+                                        )
+                                    }
+                                }
+                            }
                         }
-                        case 'playground': {
-                            return (
-                                <div key={index}>
-                                    <Link
-                                        href={{
-                                            pathname: '/user/mycourse/[editcourse]/[addcontent]/[contentid]',
-                                            query: {
-                                                editcourse: router.editcourse,
-                                                addcontent: `addcontent`,
-                                                contentid: content.id,
-                                                lessonid: `${router.lessonid}`,
-                                                chapterid: `${router.chapterid}`
-                                            }
-                                        }}
-                                    >
-                                        <a className={styles.button_close}>
-                                            <PencilSquare className='text-warning fs-5' />
-                                        </a>
-                                    </Link>
-                                    <PHP
-                                        value={content.value}
-                                        button={content.button}
-                                    />
-                                </div>
-                            )
+                    })}
+                    {data.map((content, index) => {
+                        switch (content?.type) {
+                            case 'text': {
+                                return (
+                                    <div className='mb-3' key={index} >
+                                        <button className={styles.button_close} onClick={() => handleClose(index)} ><XSquareFill className='text-danger fs-5' /></button>
+                                        <AddText
+                                            key={index}
+                                            id={index}
+                                            value={content.value}
+                                            onSubmit={handleChange}
+                                        />
+                                    </div>
+                                )
+                            }
+                            case 'playground': {
+                                return (
+                                    <div className='mb-3' key={index} >
+                                        <button className={styles.button_close} onClick={() => handleClose(index)} ><XSquareFill className='text-danger fs-5' /></button>
+                                        <AddPlayGround
+                                            key={index}
+                                            id={index}
+                                            currentButton={content.button}
+                                            currentLanguage={content.language}
+                                            currentThemeVS={content.themeVS}
+                                            onSubmit={handleChange}
+                                            currentValue={content.value}
+                                        />
+                                    </div>
+                                )
+                            }
                         }
-                    }
-                })}
-                {data.map((content, index) => {
-                    switch (content?.type) {
-                        case 'text': {
-                            return (
-                                <div className='mb-3' key={index} >
-                                    <button className={styles.button_close} onClick={() => handleClose(index)} ><XSquareFill className='text-danger fs-5' /></button>
-                                    <AddText
-                                        key={index}
-                                        id={index}
-                                        value={content.value}
-                                        onSubmit={handleChange}
-                                    />
-                                </div>
-                            )
-                        }
-                        case 'playground': {
-                            return (
-                                <div className='mb-3' key={index} >
-                                    <button className={styles.button_close} onClick={() => handleClose(index)} ><XSquareFill className='text-danger fs-5' /></button>
-                                    <AddPlayGround
-                                        key={index}
-                                        id={index}
-                                        button={content.button}
-                                        onSubmit={handleChange}
-                                        currentValue={content.value}
-                                    />
-                                </div>
-                            )
-                        }
-                    }
-                })}
-                <button className={styles.button} onClick={() => handleSubmit()} >Submit</button>
-            </div>
+                    })}
+                    <button className={styles.button} onClick={() => handleSubmit()} >Submit</button>
+                </div>
+            </Fragment>
         </HomeLayout>
     );
 }

@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import {
   Container,
   InputGroup,
@@ -8,18 +8,14 @@ import {
   NavItem,
 } from "react-bootstrap";
 import {
-  BrightnessAltLow,
-  BrightnessLow,
-  CloudMoonFill,
   Discord,
   Facebook,
   Instagram,
   MoonStars,
-  MoonStarsFill,
   Search,
   Sun,
 } from "react-bootstrap-icons";
-import { CourseList, GroupCourse } from "../../moduleType";
+import { CourseList } from "../../moduleType";
 import courseApi from "../../pages/api/courseApi";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -132,142 +128,39 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                   )}
                 </Navbar.Text>
 
-<<<<<<< HEAD
-                                <NavDropdown
-                                    title={
-                                        <span className={styles.text}>Khóa học</span>
-                                    }
-                                    id="basic-nav-dropdown"
-                                    className='ms-3'
-                                >
-                                    {courses.map(({ name, slug }) => {
-                                        return (
-                                            <NavDropdown.Item key={slug}>
-                                                <Link href={`/${slug}`}><a className={styles.link}>{name}</a></Link>
-                                            </NavDropdown.Item>
-                                        )
-                                    })}
-                                </NavDropdown>
-                                <NavDropdown
-                                    title={
-                                        <span className={styles.text}>Luyện tập</span>
-                                    }
-                                    id="basic-nav-dropdown"
-                                    className='ms-3'
-                                >
-                                    {exercise.map(({ id, name }) => {
-                                        return (
-                                            <NavDropdown.Item key={id}>
-                                                <Link href={`/baitap/${id}`}><a className={styles.link}>{name}</a></Link>
-                                            </NavDropdown.Item>
-                                        )
-                                    })}
-                                </NavDropdown>
-                                <InputGroup size="sm" className={styles.input_group}>
-                                    <InputGroup.Text className={styles.input_icon}>
-                                        <Link href={`/search/id?terms=${valueSearch}`}><Search /></Link>
-                                    </InputGroup.Text>
-                                    <input
-                                        type="search"
-                                        placeholder="Tìm kiếm ..."
-                                        className={styles.input_text}
-                                        aria-label="Search"
-                                        list="courseName"
-                                        onChange={(e) => setValueSearch(e.currentTarget.value)}
-                                        onKeyPress={checkEnter}
-
-                                    />
-                                    <datalist id="courseName">
-                                        {courses.map(({ name, slug }) => {
-                                            return (
-                                                <option key={slug} value={name}></option>
-                                            )
-                                        })}
-                                    </datalist>
-                                </InputGroup>
-                                {user.is_authenticated ? (
-                                    <NavDropdown
-                                        title={
-                                            <span className={styles.text}>{user.user?.username}</span>
-                                        }
-                                        id="user">
-                                        <NavDropdown.Item onClick={() => handleLogout()}>
-                                            Đăng xuất
-                                        </NavDropdown.Item>
-                                        <NavDropdown.Item>
-                                            <Link href='/user'>
-                                                <a className='text-reset text-decoration-none'>Bảng điều khiển</a>
-                                            </Link>
-                                        </NavDropdown.Item>
-                                    </NavDropdown>
-
-                                ) : (
-                                    <Link href="/login"><a className={styles.login}> Đăng nhập </a></Link>
-                                )}
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Container>
-                </Navbar>
-            </motion.div>
-            {children}
-            <Container className={styles.footer}>
-                <hr />
-                <h1>Liên hệ với chúng tôi</h1>
-                <div className="d-flex mb-4">
-                    <a className={styles.contact}><Facebook /></a>
-                    <a className={styles.contact}><Instagram /></a>
-                    <a className={styles.contact}><Discord /></a>
-                </div>
-                <div className="d-flex">
-                    <p>Info</p>
-                    <p className="ms-3">Support</p>
-                    <p className="ms-3">Marketing</p>
-                </div>
-                <div className="d-flex">
-                    <p>Điều khoản sử dụng</p>
-                    <p className="ms-3">Chính sách bảo mật</p>
-                </div>
-                <p className="text-secondary">@ copyright đề án tốt nghiệp 4</p>
-            </Container>
-        </motion.main>
-    );
-}
-=======
                 <NavDropdown
-                  title={<span className={styles.text}>Khóa học</span>}
+                  title={
+                    <span className={styles.text}>Khóa học</span>
+                  }
                   id="basic-nav-dropdown"
-                  className="ms-3"
+                  className='ms-3'
                 >
                   {courses.map(({ name, slug }) => {
                     return (
                       <NavDropdown.Item key={slug}>
-                        <Link href={`/${slug}`}>
-                          <a className={styles.link}>{name}</a>
-                        </Link>
+                        <Link href={`/${slug}`}><a className={styles.link}>{name}</a></Link>
                       </NavDropdown.Item>
-                    );
+                    )
                   })}
                 </NavDropdown>
                 <NavDropdown
-                  title={<span className={styles.text}>Luyện tập</span>}
+                  title={
+                    <span className={styles.text}>Luyện tập</span>
+                  }
                   id="basic-nav-dropdown"
-                  className="ms-3"
+                  className='ms-3'
                 >
                   {exercise.map(({ id, name }) => {
                     return (
                       <NavDropdown.Item key={id}>
-                        <Link href={`/baitap/${id}`}>
-                          <a className={styles.link}>{name}</a>
-                        </Link>
+                        <Link href={`/baitap/${id}`}><a className={styles.link}>{name}</a></Link>
                       </NavDropdown.Item>
-                    );
+                    )
                   })}
                 </NavDropdown>
                 <InputGroup size="sm" className={styles.input_group}>
                   <InputGroup.Text className={styles.input_icon}>
-                    <Link href={`/search/id?terms=${valueSearch}`} passHref>
-                      <Search />
-                    </Link>
+                    <Link href={`/search/id?terms=${valueSearch}`}><Search /></Link>
                   </InputGroup.Text>
                   <input
                     type="search"
@@ -277,10 +170,13 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                     list="courseName"
                     onChange={(e) => setValueSearch(e.currentTarget.value)}
                     onKeyPress={checkEnter}
+
                   />
                   <datalist id="courseName">
                     {courses.map(({ name, slug }) => {
-                      return <option key={slug} value={name}></option>;
+                      return (
+                        <option key={slug} value={name}></option>
+                      )
                     })}
                   </datalist>
                 </InputGroup>
@@ -289,23 +185,19 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                     title={
                       <span className={styles.text}>{user.user?.username}</span>
                     }
-                    id="user"
-                  >
+                    id="user">
                     <NavDropdown.Item onClick={() => handleLogout()}>
-                      Logout
+                      Đăng xuất
                     </NavDropdown.Item>
                     <NavDropdown.Item>
-                      <Link href="/user">
-                        <a className="text-reset text-decoration-none">
-                          Thông tin
-                        </a>
+                      <Link href='/user'>
+                        <a className='text-reset text-decoration-none'>Bảng điều khiển</a>
                       </Link>
                     </NavDropdown.Item>
                   </NavDropdown>
+
                 ) : (
-                  <Link href="/login">
-                    <a className={styles.login}> Login </a>
-                  </Link>
+                  <Link href="/login"><a className={styles.login}> Đăng nhập </a></Link>
                 )}
               </Nav>
             </Navbar.Collapse>
@@ -317,15 +209,9 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
         <hr />
         <h1>Liên hệ với chúng tôi</h1>
         <div className="d-flex mb-4">
-          <a className={styles.contact}>
-            <Facebook />
-          </a>
-          <a className={styles.contact}>
-            <Instagram />
-          </a>
-          <a className={styles.contact}>
-            <Discord />
-          </a>
+          <a className={styles.contact}><Facebook /></a>
+          <a className={styles.contact}><Instagram /></a>
+          <a className={styles.contact}><Discord /></a>
         </div>
         <div className="d-flex">
           <p>Info</p>
@@ -341,4 +227,3 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
     </motion.main>
   );
 }
->>>>>>> 939c22a7e0714dfbe11f936bfcbfe8a88aa76431
