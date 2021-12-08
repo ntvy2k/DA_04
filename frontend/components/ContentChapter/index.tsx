@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ContentList } from '../../moduleType';
 import "suneditor/dist/css/suneditor.min.css";
 import dynamic from 'next/dynamic';
@@ -6,6 +6,7 @@ import PHP from '../RunCode/PHP';
 import JavaScipt from '../RunCode/JavaScript';
 import Java from '../RunCode/Java';
 import Python from '../RunCode/Python';
+import { Form } from 'react-bootstrap';
 
 const SunEditor = dynamic(() => import("suneditor-react"), {
     ssr: false,
@@ -18,8 +19,19 @@ export interface ContentProps {
 
 function ContentChapter(props: ContentProps) {
     const { data } = props
+    const [theme, setTheme] = useState<boolean>(false)
     return (
         <div>
+            {
+                data.length > 0 && <Form.Check
+                    type="switch"
+                    id="custom-switch"
+                    label="Dark mode code"
+                    className='ms-auto'
+                    onChange={() => setTheme(!theme)}
+                    checked={theme}
+                />
+            }
             {data.map((content) => {
                 switch (content?.content.type) {
                     case 'text': {
@@ -41,7 +53,7 @@ function ContentChapter(props: ContentProps) {
                                         <JavaScipt
                                             value={content.content.value}
                                             button={content.content.button}
-                                            theme={content.content.themeVS}
+                                            theme={theme}
                                         />
                                     </div>
                                 )
@@ -52,7 +64,7 @@ function ContentChapter(props: ContentProps) {
                                         <PHP
                                             value={content.content.value}
                                             button={content.content.button}
-                                            theme={content.content.themeVS}
+                                            theme={theme}
                                         />
                                     </div>
                                 )
@@ -63,7 +75,7 @@ function ContentChapter(props: ContentProps) {
                                         <Java
                                             value={content.content.value}
                                             button={content.content.button}
-                                            theme={content.content.themeVS}
+                                            theme={theme}
                                         />
                                     </div>
                                 )
@@ -74,7 +86,7 @@ function ContentChapter(props: ContentProps) {
                                         <Python
                                             value={content.content.value}
                                             button={content.content.button}
-                                            theme={content.content.themeVS}
+                                            theme={theme}
                                         />
                                     </div>
                                 )

@@ -22,12 +22,13 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 function AddContentPage() {
     const redirecRouter = useRouter()
     const router = useRouter().query
+    const { editcourse, chapterid, lessonid } = router
     const [data, setData] = useState<Array<any>>([])
     const [oldData, setOldData] = useState<Array<any>>([])
     // const [showButtonAdd, setShowButtonAdd] = useState<string>('')
     const [valueChange, setValueChange] = useState<any>()
     useEffect(() => {
-        const { editcourse, chapterid, lessonid } = router
+
         const fetch = async () => {
             const res = await courseApi.getMyContent(editcourse, chapterid, lessonid, { headers: { Authorization: `Token ${localStorage.getItem("key")}` } })
             const contentData = res.data.map(({ id, content }: { id: any, content: any }) => {
@@ -35,8 +36,8 @@ function AddContentPage() {
             })
             setOldData(contentData)
         }
-        fetch()
-    }, [])
+        editcourse && chapterid && lessonid && fetch()
+    }, [editcourse, chapterid, lessonid])
     useEffect(() => {
         if (valueChange) {
             const newData = [...data]
@@ -77,7 +78,7 @@ function AddContentPage() {
         const url = `/user/mycourse/${router.editcourse}/addcontent?lessonid=${router.lessonid}&chapterid=${router.chapterid}/${index}`
         redirecRouter.push(url)
     }
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const config = {
             headers: { Authorization: `Token ${localStorage.getItem("key")}` },
         };
@@ -87,7 +88,7 @@ function AddContentPage() {
                 title: "test",
                 content: newObject
             }
-            courseApi.postContent(value, router.editcourse, router.chapterid, router.lessonid, config)
+            await courseApi.postContent(value, router.editcourse, router.chapterid, router.lessonid, config)
         })
         redirecRouter.push(`/user/mycourse/${router.editcourse}`)
     }
@@ -99,7 +100,7 @@ function AddContentPage() {
                 </Head>
                 <div className={`container ${styles.wrapper}`}>
                     {/* <AddContent></AddContent> */}
-                    <div className='d-flex align-items-center mb-3'>
+                    <div className='d-flex align-items-center mb-3 flex-wrap'>
                         <Link href='/user'>
                             <a className='text-reset text-decoration-none'>
                                 <h4 className={styles.text}>Bảng điều khiển</h4>
@@ -304,7 +305,6 @@ function AddContentPage() {
                                             id={index}
                                             currentButton={content.button}
                                             currentLanguage={content.language}
-                                            currentThemeVS={content.themeVS}
                                             onSubmit={handleChange}
                                             currentValue={content.value}
                                         />

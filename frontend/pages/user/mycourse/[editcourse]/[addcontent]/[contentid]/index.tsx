@@ -21,8 +21,8 @@ function AddContent() {
             const res = await courseApi.getMyContentById(editcourse, chapterid, lessonid, contentid, config)
             setData(res.data)
         }
-        fetch()
-    }, [])
+        editcourse && chapterid && lessonid && contentid && fetch()
+    }, [editcourse, chapterid, lessonid, contentid])
     const handleChange = useCallback((valueChange: any) => {
         setDataChange(valueChange)
     }, [])
@@ -55,7 +55,7 @@ function AddContent() {
                     <title>Sửa nội dung | NháiW3school</title>
                 </Head>
                 <div className={`container ${styles.wrapper} mt-5`}>
-                    <div className='d-flex align-items-center mb-3'>
+                    <div className='d-flex align-items-center mb-3 flex-wrap'>
                         <Link href='/user'>
                             <a className='text-reset text-decoration-none'>
                                 <h4 className={styles.text}>Bảng điều khiển</h4>
@@ -87,7 +87,6 @@ function AddContent() {
                                 currentValue={data.content.value}
                                 currentButton={data.content.button}
                                 currentLanguage={data.content.language}
-                                currentThemeVS={data.content.themeVS}
                                 onSubmit={handleChange}
                             />
                         ))

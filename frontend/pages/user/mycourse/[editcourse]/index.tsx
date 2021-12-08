@@ -171,7 +171,7 @@ function EditCourse() {
                             <Toast.Body>Khóa học của bạn đã cập nhật</Toast.Body>
                         </Toast>
                     </ToastContainer>
-                    <div className='d-flex align-items-center'>
+                    <div className='d-flex align-items-center flex-wrap'>
                         <Link href='/user'>
                             <a className='text-reset text-decoration-none'>
                                 <h4 className={styles.textLink}>Bảng điều khiển</h4>

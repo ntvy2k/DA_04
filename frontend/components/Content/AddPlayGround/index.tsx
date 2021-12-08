@@ -9,16 +9,12 @@ interface addPlayGround {
     onSubmit: Function,
     currentValue: any,
     currentLanguage: any,
-    currentThemeVS: boolean
 }
 
 export function AddPlayGround(props: addPlayGround) {
-    const { id, onSubmit, currentValue, currentButton, currentLanguage, currentThemeVS } = props
-    console.log(currentValue)
+    const { id, onSubmit, currentValue, currentButton, currentLanguage } = props
     const editorRef = useRef<any>(null)
     const type = 'playground'
-
-    const [themeVS, setThemeVS] = useState<boolean>(currentThemeVS)
     const [language, setLanguage] = useState<string>(currentLanguage)
     const [addrLanguage, setAddrLanguage] = useState<Array<string>>(["javascript", "html", "css", "php", "python", "java"])
 
@@ -42,17 +38,14 @@ export function AddPlayGround(props: addPlayGround) {
 
     function handleBlur() {
         editorRef.current.onDidBlurEditorWidget(() => {
-            onSubmit({ id, value, language, button, type, themeVS })
+            onSubmit({ id, value, language, button, type })
         })
+        console.log('blur')
     }
 
 
     function showValue() {
         setValue(editorRef.current?.getValue())
-    }
-
-    function handleThemeVS() {
-        setThemeVS(!themeVS)
     }
 
     return (
@@ -71,14 +64,6 @@ export function AddPlayGround(props: addPlayGround) {
                     <label htmlFor="buttonRun">Add button run code ?</label>
                     <input className='ms-2' type="checkbox" checked={button} id="buttonRun" onChange={() => setButton(!button)} />
                 </div>
-                <Form.Check
-                    type="switch"
-                    id="custom-switch"
-                    label="Dark mode code"
-                    className='ms-auto'
-                    onChange={() => handleThemeVS()}
-                    checked={themeVS}
-                />
             </div>
             <Editor
                 height="90vh"
@@ -87,7 +72,6 @@ export function AddPlayGround(props: addPlayGround) {
                 defaultValue={currentValue}
                 onMount={handleEditorDidMount}
                 onChange={showValue}
-                theme={themeVS ? 'vs-dark' : ''}
             />
         </div>
     );
