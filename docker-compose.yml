@@ -41,7 +41,10 @@ services:
     depends_on:
       - db
     volumes:
+      # - ./backend/api_da4/:/code/api_da4/
       - backend_static:/code/static/
+    env_file:
+      - backend/.dev.env
     networks:
       - backnet
       - dbnet
@@ -49,10 +52,8 @@ services:
   db:
     image: postgres:alpine
     container_name: dA04_PG
-    environment:
-      - POSTGRES_USER=da04
-      - POSTGRES_PASSWORD=da04PW
-      - POSTGRES_DB=DA04_DB
+    env_file:
+      - postgresql/.env
     volumes:
       - da04_db:/var/lib/postgresql/data
     networks:
