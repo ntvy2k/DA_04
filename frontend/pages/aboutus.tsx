@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function AboutUs() {
-    const output = `
+  const output = `
     <!DOCTYPE html>
     <html>
     <title>HTML Tutorial</title>
@@ -960,7 +960,7 @@ fireexit i:nth-of-type(2):after {
       <ceiling></ceiling>
       <wall1>
         <painting>
-          <img src="https://tinydesign.co.uk/gallery/gallery-img/portrait.jpg" />
+          <img src="https://raw.githubusercontent.com/ntvy2k/DA_04/master/frontend/public/TheVy.jpg" />
           <p>
             Nguyễn Thế Vỹ<br />
             BackEnd Developer<br />
@@ -1008,19 +1008,19 @@ fireexit i:nth-of-type(2):after {
     
     </body>
     </html>
-    `
-    return (
-        <div style={{ height: '100vh' }}>
-            <iframe
-                srcDoc={output}
-                title="output"
-                sandbox='allow-scripts allow-popups allow-popups-to-escape-sandbox'
-                frameBorder="0"
-                width="100%"
-                height="100%"
-            ></iframe>
-        </div>
-    );
+    `;
+  return (
+    <div style={{ height: "100vh" }}>
+      <iframe
+        srcDoc={output}
+        title="output"
+        sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
+        frameBorder="0"
+        width="100%"
+        height="100%"
+      ></iframe>
+    </div>
+  );
 }
 
 export default AboutUs;
