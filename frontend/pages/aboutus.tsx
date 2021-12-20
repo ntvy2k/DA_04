@@ -980,7 +980,7 @@ fireexit i:nth-of-type(2):after {
       </wall2>
       <wall3>
         <painting>
-          <img src="https://github.com/ntvy2k/DA_04/blob/master/frontend/public/TanSang.jpg" />
+          <img src="https://raw.githubusercontent.com/ntvy2k/DA_04/master/frontend/public/TanSang.jpg" />
           <p>
             Võ Tấn Sang<br />
             Vua dịch thuật<br />
