@@ -1,7 +1,7 @@
 import React from "react";
 
 function AboutUs() {
-  const output = `
+	const output = `
     <!DOCTYPE html>
     <html>
     <title>HTML Tutorial</title>
@@ -10,6 +10,7 @@ function AboutUs() {
 img {
 	width: 100%;
 	position: static;
+	height:100%;
 }
 
 .pointer {
@@ -1009,18 +1010,18 @@ fireexit i:nth-of-type(2):after {
     </body>
     </html>
     `;
-  return (
-    <div style={{ height: "100vh" }}>
-      <iframe
-        srcDoc={output}
-        title="output"
-        sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
-        frameBorder="0"
-        width="100%"
-        height="100%"
-      ></iframe>
-    </div>
-  );
+	return (
+		<div style={{ height: "100vh" }}>
+			<iframe
+				srcDoc={output}
+				title="output"
+				sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
+				frameBorder="0"
+				width="100%"
+				height="100%"
+			></iframe>
+		</div>
+	);
 }
 
 export default AboutUs;

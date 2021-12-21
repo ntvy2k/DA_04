@@ -4,19 +4,39 @@
     justify-content: center;
     flex-direction: column;
     scroll-snap-align: start;
+    color: white;
+    font-family: "DM Sans", sans-serif;
+}
+
+.headBackground {
+    background-image: url("../public/MainThuyetTrinh.jpg");
+    background-size: cover;
+    width: 100%;
 }
 
 .headerTitle {
-    margin-top: 30px;
+    margin: 0 200px;
     font-weight: bolder;
-    font-size: 60px;
+    font-size: 100px;
+    text-align: center;
 }
 
 .ourTeamTitle {
-    font-size: large;
+    font-size: 35px;
     text-align: center;
     font-weight: bold;
+}
+
+.ourTeamInfo {
+    font-size: 25px;
+    text-align: center;
     margin-bottom: 100px;
+    text-decoration: none;
+    color: rgb(0, 109, 182);
+}
+
+.ourTeamInfo:hover {
+    color: rgb(0, 95, 158);
 }
 
 .ourTeam {
@@ -48,6 +68,12 @@
     padding: 5px;
 }
 
+.card .subtitle {
+    text-align: center;
+    color: rgb(180, 180, 180);
+    font-size: 15px;
+}
+
 .pros {
     display: inline-flex;
     justify-content: center;
@@ -71,6 +97,7 @@
     padding: 5px;
     margin-right: 10px;
     border-radius: 50%;
+    color: black;
 }
 
 .prosContent {
@@ -90,6 +117,7 @@
     box-sizing: content-box;
 
     background-color: white;
+    color: black;
 
     border-radius: 50%;
     padding: 10px;
