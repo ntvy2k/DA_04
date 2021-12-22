@@ -76,13 +76,13 @@ export const data = {
         {
             label: 'Cần',
             data: [350000, 400000, 500000, 530000],
-            borderColor: 'rgb(255, 99, 132)',
+            borderColor: '#FC766AFF',
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
         },
         {
             label: 'Đang có',
             data: [270000, 300000, 310000, 380000],
-            borderColor: 'rgb(53, 162, 235)',
+            borderColor: '#5B84B1FF',
             backgroundColor: 'rgba(53, 162, 235, 0.5)',
             color: '#ffffff',
         },
@@ -107,12 +107,12 @@ export const rateLanguage = {
             label: 'Duwx lieu',
             data: [71, 19.7, 8.8, 0.3, 0.1, 0.1],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)',
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
@@ -343,13 +343,25 @@ function ThuyetTrinh() {
                                     <Row>
                                         <Col>
                                             <div className={`${styles.pros} ${styles.sucess}`}><HandThumbsUp className={styles.prosIcon} /> Ưu điểm</div>
-                                            <div className={styles.prosContent}><BookmarkHeart className={`${styles.icon} ${styles.sucess}`} /> Ngôn ngữ tiếng việt =&gt; dễ tiếp cận và học tập​</div>
-                                            <div className={styles.prosContent}><Cast className={`${styles.icon} ${styles.sucess}`} /> Giao diện người dùng đẹp và sinh động​</div>
-                                            <div className={styles.prosContent}><Award className={`${styles.icon} ${styles.sucess}`} /> Chính sách quảng bá khóa học tốt, nhiều giảng viên giàu kinh nghiệm</div>
+                                            <div className={styles.prosContent}>
+                                                <div className={`${styles.icon} ${styles.sucess}`}><BookmarkHeart /></div>
+                                                Ngôn ngữ tiếng việt =&gt; dễ tiếp cận và học tập
+                                            </div>
+                                            <div className={styles.prosContent}>
+                                                <div className={`${styles.icon} ${styles.sucess}`}><Cast /></div>
+                                                Giao diện người dùng đẹp và sinh động
+                                            </div>
+                                            <div className={styles.prosContent}>
+                                                <div className={`${styles.icon} ${styles.sucess}`}><Award /></div>
+                                                Chính sách quảng bá khóa học tốt, nhiều giảng viên giàu kinh nghiệm
+                                            </div>
                                         </Col>
                                         <Col className='ms-4'>
                                             <div className={`${styles.pros} ${styles.fail}`}><HandThumbsDown className={styles.prosIcon} /> Nhược điểm</div>
-                                            <div className={styles.prosContent}><Wallet className={`${styles.icon} ${styles.fail}`} /> Tốn phí</div>
+                                            <div className={styles.prosContent}>
+                                                <div className={`${styles.icon} ${styles.fail}`}><Wallet /></div>
+                                                Tốn phí
+                                            </div>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -390,13 +402,31 @@ function ThuyetTrinh() {
                                     <Row>
                                         <Col>
                                             <div className={`${styles.pros} ${styles.sucess}`}><HandThumbsUp className={styles.prosIcon} /> Ưu điểm</div>
-                                            <div className={styles.prosContent}><BookmarkHeart className={`${styles.icon} ${styles.sucess}`} /> Giao diện đơn giản, dễ sử dụng​</div>
-                                            <div className={styles.prosContent}><Cast className={`${styles.icon} ${styles.sucess}`} /> Có đầy đủ khóa học của các ngôn ngữ lập trình phổ biến nhất hiện nay</div>
-                                            <div className={styles.prosContent}><Award className={`${styles.icon} ${styles.sucess}`} /> Nhiều tài nguyên học lập trình từ lý thuyết đến thực hành​</div>
+                                            <div className={styles.prosContent}>
+                                                <div className={`${styles.icon} ${styles.sucess}`}>
+                                                    <BookmarkHeart />
+                                                </div>
+                                                Giao diện đơn giản, dễ sử dụng
+                                            </div>
+                                            <div className={styles.prosContent}>
+                                                <div className={`${styles.icon} ${styles.sucess}`}>
+                                                    <Cast />
+                                                </div>
+                                                Có đầy đủ khóa học của các ngôn ngữ lập trình phổ biến nhất hiện nay
+                                            </div>
+                                            <div className={styles.prosContent}>
+                                                <div className={`${styles.icon} ${styles.sucess}`}><Award /></div>
+                                                Nhiều tài nguyên học lập trình từ lý thuyết đến thực hành
+                                            </div>
                                         </Col>
                                         <Col className='ms-4'>
                                             <div className={`${styles.pros} ${styles.fail}`}><HandThumbsDown className={styles.prosIcon} /> Nhược điểm</div>
-                                            <div className={styles.prosContent}><Wallet className={`${styles.icon} ${styles.fail}`} /> Không hỗ trợ tiếng việt ​</div>
+                                            <div className={styles.prosContent}>
+                                                <div className={`${styles.icon} ${styles.fail}`}>
+                                                    <Wallet />
+                                                </div>
+                                                Không hỗ trợ tiếng việt
+                                            </div>
                                         </Col>
                                     </Row>
                                 </Col>
