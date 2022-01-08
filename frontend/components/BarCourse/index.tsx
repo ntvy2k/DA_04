@@ -30,7 +30,7 @@ function BarCourse({ courseName, current }: { courseName: any, current: any }) {
                                         key={id}
                                         className={`${styles.link} ${active ? styles.active : ''}`}
                                     >
-                                        <Link href={`/${courseName}/id?chapter=${chapterID}&lesson=${id}`}>
+                                        <Link href={`/khoahoc/${courseName}/id?chapter=${chapterID}&lesson=${id}`}>
                                             <a className='text-decoration-none text-reset'>{name}</a>
                                         </Link>
                                     </li>

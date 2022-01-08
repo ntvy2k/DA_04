@@ -12,6 +12,7 @@ import {
   Pencil,
   PlusSquare,
   QuestionSquare,
+  Trash,
 } from "react-bootstrap-icons";
 import Link from "next/link";
 import * as Yup from "yup";
@@ -80,6 +81,11 @@ function Question() {
     });
     handleShow();
   };
+  const handledeleteExercise = async (exercise: any) => {
+    await exerciseApi.deleteExercise(exercise.id, config)
+    const res = await exerciseApi.getExercise(config)
+    setExercises(res.data)
+  }
   const handlePublishExercise = async (id: any) => {
     await exerciseApi.pulishExercise(id, config).then(() => setShowMess(true));
   };
@@ -257,6 +263,18 @@ function Question() {
                           >
                             <div onClick={() => handleEditExercise(exercise)}>
                               <Pencil className={styles.questionModifiedIcon} />
+                            </div>
+                          </OverlayTrigger>
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={
+                              <Tooltip id={`tooltip-top`}>
+                                Xóa bài tập
+                              </Tooltip>
+                            }
+                          >
+                            <div onClick={() => handledeleteExercise(exercise)}>
+                              <Trash className={styles.questionModifiedIcon} />
                             </div>
                           </OverlayTrigger>
                         </div>

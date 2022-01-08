@@ -7,6 +7,8 @@ import HomeLayout from '../../../components/Layouts/homeLayout';
 import { Field, Form, Formik } from 'formik';
 import { ArrowCounterclockwise, Check2Circle, ChevronLeft, ChevronRight, XCircle } from 'react-bootstrap-icons';
 import * as Yup from 'yup'
+import Head from 'next/head'
+import TD4_SETTINGS from '../../../app/config';
 
 function Question() {
     const router = useRouter()
@@ -123,6 +125,9 @@ function Question() {
     return (
         <HomeLayout>
             <div>
+                <Head>
+                    <title>{currentQuizz?.title} | {TD4_SETTINGS.title}</title>
+                </Head>
                 <div className={`container ${styles.wrapper}`}>
                     <div className={`${styles.navHead}`}>
                         {exercises.map(exercise => {

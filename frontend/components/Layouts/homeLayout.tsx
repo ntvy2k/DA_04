@@ -136,7 +136,7 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                   {courses.map(({ name, slug }) => {
                     return (
                       <NavDropdown.Item key={slug}>
-                        <Link href={`/${slug}`}>
+                        <Link href={`/khoahoc/${slug}`}>
                           <a className={styles.link}>{name}</a>
                         </Link>
                       </NavDropdown.Item>

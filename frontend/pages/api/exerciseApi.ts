@@ -64,6 +64,10 @@ const exerciseApi = {
         const url = `/ex/creator/quiz/${quizId}/`
         return axios.delete(url, config)
     },
+    deleteExercise(idExercise: any, config: any): Promise<AxiosResponse<any>> {
+        const url = `/ex/creator/exercise/${idExercise}/`
+        return axios.delete(url, config)
+    },
     deleteQuestion(quizId: any, questionId: any, config: any): Promise<AxiosResponse<any>> {
         const url = `/ex/creator/quiz/${quizId}/question/${questionId}/`
         return axios.delete(url, config)

@@ -283,7 +283,7 @@ const SearchID = ({ data }: { data: any }) => {
                       {course.name.toUpperCase()}
                     </Card.Title>
                     <Card.Text>
-                      <Link href={`/${course.slug}`}>
+                      <Link href={`/khoahoc/${course.slug}`}>
                         <a className={styles.card_button}>Học ngay</a>
                       </Link>
                     </Card.Text>

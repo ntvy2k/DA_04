@@ -25,7 +25,7 @@ function HeaderCourse({ current }: { current: any }) {
         const active = (slug === current) ? true : false
         return (
           <li key={id} className={`${styles.header_course} ${active ? styles.active : ''}`}>
-            <Link href={`/${slug}`} key={id}>
+            <Link href={`/khoahoc/${slug}`} key={id}>
               <a className={styles.header_link}>{name}</a>
             </Link>
           </li>

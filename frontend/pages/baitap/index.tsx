@@ -3,6 +3,8 @@ import HomeLayout from '../../components/Layouts/homeLayout';
 import exerciseClient from '../api/exerciseClient';
 import styles from '../../styles/ClientExercise.module.css'
 import Link from 'next/link'
+import Head from 'next/head'
+import TD4_SETTINGS from '../../app/config';
 
 function ExerCises() {
     const [exercises, setExercises] = useState<Array<any>>([])
@@ -16,6 +18,9 @@ function ExerCises() {
     return (
         <HomeLayout>
             <div className={`container ${styles.wrapper}`}>
+                <Head>
+                    <title>Luyện tập | {TD4_SETTINGS.title}</title>
+                </Head>
                 <div className={`${styles.navHead}`}>
                     {exercises.map(exercise => {
                         return (

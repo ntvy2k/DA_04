@@ -4,9 +4,12 @@ import exerciseClient from '../../api/exerciseClient';
 import styles from '../../../styles/ClientExercise.module.css'
 import Link from 'next/link'
 import HomeLayout from '../../../components/Layouts/homeLayout';
+import Head from 'next/head'
+import TD4_SETTINGS from '../../../app/config';
 
 function ExerciseId() {
     const router = useRouter()
+    const [titleExercise, setTitleExercise] = useState<string>('')
     const { idexercise } = router.query
     const [exercises, setExercises] = useState<Array<any>>([])
     const [quizzs, setQuizzs] = useState<Array<any>>([])
@@ -21,12 +24,16 @@ function ExerciseId() {
         const fetch = async () => {
             const resQuizz = await exerciseClient.getQuiz(idexercise)
             setQuizzs(resQuizz.data.quizzes)
+            setTitleExercise(resQuizz.data.name)
         }
         idexercise && fetch()
     }, [idexercise])
     return (
         <HomeLayout>
             <div>
+                <Head>
+                    <title>{titleExercise} | {TD4_SETTINGS.title}</title>
+                </Head>
                 <div className={`container ${styles.wrapper}`}>
                     <div className={`${styles.navHead}`}>
                         {exercises.map(exercise => {
