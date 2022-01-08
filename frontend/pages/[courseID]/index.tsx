@@ -6,47 +6,56 @@ import { ContentList } from "../../moduleType";
 import HomeLayout from "../../components/Layouts/homeLayout";
 import BarCourse from "../../components/BarCourse";
 import HeaderCourse from "../../components/HeaderCourse";
-import Head from 'next/head'
+import Head from "next/head";
+import TD4_SETTINGS from "../../app/config";
 
 interface url {
-  courseID: number | string,
-  chapterID: number,
-  lessonID: number | string,
+  courseID: number | string;
+  chapterID: number;
+  lessonID: number | string;
 }
 
 function CourseID() {
   const router = useRouter();
   const { courseID } = router.query;
-  const [dataContent, setDataContent] = useState<Array<ContentList | null>>([null])
-  const [url, setUrl] = useState<url | null>(null)
+  const [dataContent, setDataContent] = useState<Array<ContentList | null>>([
+    null,
+  ]);
+  const [url, setUrl] = useState<url | null>(null);
   useEffect(() => {
-    setDataContent([null])
-  }, [courseID])
+    setDataContent([null]);
+  }, [courseID]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await courseApi.getContentList(url?.courseID, url?.chapterID, url?.lessonID)
-      setDataContent(response.data)
-    }
+      const response = await courseApi.getContentList(
+        url?.courseID,
+        url?.chapterID,
+        url?.lessonID
+      );
+      setDataContent(response.data);
+    };
     if (url != null) {
-      fetchData()
+      fetchData();
     }
-  }, [url])
+  }, [url]);
 
   function handleClick(idChapter: number, idLesson: number | string) {
     const indexUrl = {
       courseID: `${courseID}`,
       chapterID: idChapter,
       lessonID: idLesson,
-    }
-    setUrl(indexUrl)
+    };
+    setUrl(indexUrl);
   }
 
   return (
     <HomeLayout>
       <Fragment>
         <Head>
-          <title>{`${courseID}`} | NháiW3school</title>
+          <title>
+            {`${courseID}`} | {TD4_SETTINGS.title}
+          </title>
         </Head>
         <div className="container" style={{ minHeight: "80vh" }}>
           <HeaderCourse current={courseID} />
@@ -75,7 +84,5 @@ function CourseID() {
 //     }
 //   }
 // }
-
-
 
 export default CourseID;

@@ -10,6 +10,7 @@ import Lottie from "react-lottie";
 import { Book, Bug, Google } from "react-bootstrap-icons";
 import { motion, useAnimation } from "framer-motion";
 import { InView } from "react-intersection-observer";
+import TD4_SETTINGS from "../app/config";
 
 const titleVariants = {
   hidden: {
@@ -105,7 +106,7 @@ const Home = () => {
     <HomeLayout>
       <Fragment>
         <Head>
-          <title>TD4School</title>
+          <title>{TD4_SETTINGS.title}</title>
           <meta name="description" content="Web học lập trình online TD4" />
           <link rel="icon" href="/favicon.ico" />
           <link
