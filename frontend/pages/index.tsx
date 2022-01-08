@@ -2,66 +2,66 @@ import React, { Fragment } from "react";
 import Head from "next/head";
 import HomeLayout from "../components/Layouts/homeLayout";
 import { Card, Container } from "react-bootstrap";
-import styles from "../styles/Home.module.css"
-import Link from 'next/link'
-import Quizz from "../public/Quizz.json"
-import LoginAnimation from "../public/Blogging.json"
-import Lottie from "react-lottie"
+import styles from "../styles/Home.module.css";
+import Link from "next/link";
+import Quizz from "../public/Quizz.json";
+import LoginAnimation from "../public/Blogging.json";
+import Lottie from "react-lottie";
 import { Book, Bug, Google } from "react-bootstrap-icons";
-import { motion, useAnimation } from "framer-motion"
-import { InView } from "react-intersection-observer"
+import { motion, useAnimation } from "framer-motion";
+import { InView } from "react-intersection-observer";
 
 const titleVariants = {
   hidden: {
     opacity: 0,
-    y: 30
+    y: 30,
   },
   visible: {
     opacity: 1,
     y: 0,
-  }
-}
+  },
+};
 
 const scaleToBigger = {
   hidden: {
     opacity: 0,
-    scale: 0
+    scale: 0,
   },
   visible: {
     opacity: 1,
     scale: 1,
     transition: {
-      type: 'spring',
+      type: "spring",
       delay: 0.6,
-      duration: 2
-    }
-  }
-}
+      duration: 2,
+    },
+  },
+};
 
 const toTheRight = {
   hidden: {
     opacity: 0,
-    x: 100
+    x: 100,
   },
   visible: {
     opacity: 1,
-    x: 0
-  }
-}
+    x: 0,
+  },
+};
 
 const Home = () => {
-  const animation = useAnimation()
-  const animation1 = useAnimation()
+  const animation = useAnimation();
+  const animation1 = useAnimation();
   const handInView = (inView: boolean) => {
     if (inView) {
-      animation.start("visible")
+      animation.start("visible");
     }
-  }
+  };
   const handInView1 = (inView: boolean) => {
     if (inView) {
-      animation1.start("visible")
+      animation1.start("visible");
     }
-  }
+  };
   // const dispatch = useAppDispatch();
   // const user_is_authenticated = useAppSelector(
   //   (state) => state.auth.is_authenticated
@@ -105,10 +105,13 @@ const Home = () => {
     <HomeLayout>
       <Fragment>
         <Head>
-          <title>NháiW3school</title>
-          <meta name="description" content="Adudududu" />
+          <title>TD4School</title>
+          <meta name="description" content="Web học lập trình online TD4" />
           <link rel="icon" href="/favicon.ico" />
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css"></link>
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css"
+          ></link>
         </Head>
         <Container>
           <Container className={styles.section}>
@@ -119,22 +122,30 @@ const Home = () => {
                   variants={titleVariants}
                   initial="hidden"
                   animate="visible"
-                  transition={{ type: 'spring' }}
-                >Nơi học những điều mới gì cũng có trừ porn</motion.h1>
+                  transition={{ type: "spring" }}
+                >
+                  Nơi học những điều mới mẻ
+                </motion.h1>
                 <motion.p
                   className={styles.text}
                   variants={titleVariants}
                   initial="hidden"
                   animate="visible"
-                  transition={{ type: 'spring', delay: 0.2 }}
-                >Web nhái lửa chùa đm nextjs như lìn</motion.p>
+                  transition={{ type: "spring", delay: 0.2 }}
+                >
+                  Nơi học lập trình
+                </motion.p>
                 <motion.button
                   className={styles.button}
                   variants={titleVariants}
                   initial="hidden"
                   animate="visible"
-                  transition={{ type: 'spring', delay: 0.4 }}
-                ><Link href='/search'><a className={styles.link}>Khám Phá</a></Link></motion.button>
+                  transition={{ type: "spring", delay: 0.4 }}
+                >
+                  <Link href="/search">
+                    <a className={styles.link}>Khám Phá</a>
+                  </Link>
+                </motion.button>
               </div>
               <motion.div
                 className="col-12 col-md-6"
@@ -149,7 +160,7 @@ const Home = () => {
           <InView
             as="div"
             onChange={(inView) => {
-              handInView(inView)
+              handInView(inView);
             }}
             threshold={0.4}
           >
@@ -158,28 +169,36 @@ const Home = () => {
                 variants={titleVariants}
                 initial="hidden"
                 animate={animation}
-                transition={{ type: 'spring' }}
-              >Các bước học code hiệu quả</motion.h1>
+                transition={{ type: "spring" }}
+              >
+                Các bước học code hiệu quả
+              </motion.h1>
               <motion.p
                 variants={titleVariants}
                 initial="hidden"
                 animate={animation}
-                transition={{ type: 'spring', delay: 0.2 }}
-              >Theo khuyến khích của nhóm chúng tôi</motion.p>
+                transition={{ type: "spring", delay: 0.2 }}
+              >
+                Theo khuyến khích của nhóm chúng tôi
+              </motion.p>
               <div className={`row justify-content-around`}>
                 <motion.div
                   className="col d-flex justify-content-center"
                   variants={toTheRight}
                   initial="hidden"
                   animate={animation}
-                  transition={{ type: 'spring' }}
+                  transition={{ type: "spring" }}
                 >
                   <Card className={styles.card}>
                     <Card.Body className={styles.card_body}>
-                      <Card.Text><Book className={`${styles.card_icon} ${styles.book}`} /></Card.Text>
+                      <Card.Text>
+                        <Book
+                          className={`${styles.card_icon} ${styles.book}`}
+                        />
+                      </Card.Text>
                       <Card.Title>Học</Card.Title>
                       <Card.Text>
-                        {" Some quick example text to build on the card title and make up the bulk of the card's content. "}
+                        {"Học để nắm vững những kiến thức cần thiết"}
                       </Card.Text>
                     </Card.Body>
                   </Card>
@@ -189,14 +208,20 @@ const Home = () => {
                   variants={toTheRight}
                   initial="hidden"
                   animate={animation}
-                  transition={{ type: 'spring', delay: 0.2 }}
+                  transition={{ type: "spring", delay: 0.2 }}
                 >
                   <Card className={styles.card}>
                     <Card.Body className={styles.card_body}>
-                      <Card.Text><Google className={`${styles.card_icon} ${styles.google}`} /></Card.Text>
+                      <Card.Text>
+                        <Google
+                          className={`${styles.card_icon} ${styles.google}`}
+                        />
+                      </Card.Text>
                       <Card.Title>Google</Card.Title>
                       <Card.Text>
-                        {" Some quick example text to build on the card title and make up the bulk of the card's content. "}
+                        {
+                          "Tự giải quyết những vấn đề bằng cách google, biết cách google là kỹ năng mạnh mẽ"
+                        }
                       </Card.Text>
                     </Card.Body>
                   </Card>
@@ -206,14 +231,18 @@ const Home = () => {
                   variants={toTheRight}
                   initial="hidden"
                   animate={animation}
-                  transition={{ type: 'spring', delay: 0.4 }}
+                  transition={{ type: "spring", delay: 0.4 }}
                 >
                   <Card className={styles.card}>
                     <Card.Body className={styles.card_body}>
-                      <Card.Text><Bug className={`${styles.card_icon} ${styles.bug}`} /></Card.Text>
+                      <Card.Text>
+                        <Bug className={`${styles.card_icon} ${styles.bug}`} />
+                      </Card.Text>
                       <Card.Title>Sửa lỗi</Card.Title>
                       <Card.Text>
-                        {" Some quick example text to build on the card title and make up the bulk of the card's content. "}
+                        {
+                          "Tự giải quyết, xử lý bugs, giúp trở thành lập trình viên giỏi"
+                        }
                       </Card.Text>
                     </Card.Body>
                   </Card>
@@ -224,7 +253,7 @@ const Home = () => {
           <InView
             as="div"
             onChange={(inView) => {
-              handInView1(inView)
+              handInView1(inView);
             }}
             threshold={0.2}
           >
@@ -236,7 +265,11 @@ const Home = () => {
                   initial="hidden"
                   animate={animation1}
                 >
-                  <Lottie options={quizzOptions} height={400} width={400}></Lottie>
+                  <Lottie
+                    options={quizzOptions}
+                    height={400}
+                    width={400}
+                  ></Lottie>
                 </motion.div>
                 <div className={`col ${styles.content}`}>
                   <motion.h1
@@ -244,29 +277,37 @@ const Home = () => {
                     variants={titleVariants}
                     initial="hidden"
                     animate={animation1}
-                    transition={{ type: 'spring', delay: 0.4 }}
-                  >Ôn lại kiến thức cùng những câu hỏi thú vị</motion.h1>
+                    transition={{ type: "spring", delay: 0.4 }}
+                  >
+                    Ôn lại kiến thức cùng những câu hỏi thú vị
+                  </motion.h1>
                   <motion.p
                     className={styles.text}
                     variants={titleVariants}
                     initial="hidden"
                     animate={animation1}
-                    transition={{ type: 'spring', delay: 0.6 }}
-                  >Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quia fugiat quas est omnis, sint earum, et modi dolor repudiandae praesentium delectus, id quod porro accusamus ipsa aliquam eius libero!</motion.p>
+                    transition={{ type: "spring", delay: 0.6 }}
+                  >
+                    Tự kiểm tra kiến thức của mình để củng cố kỹ năng
+                  </motion.p>
                   <motion.button
                     className={styles.button}
                     variants={titleVariants}
                     initial="hidden"
                     animate={animation1}
-                    transition={{ type: 'spring', delay: 0.8 }}
-                  ><Link href='/baitap'><a className={styles.link}>Ôn Tập</a></Link></motion.button>
+                    transition={{ type: "spring", delay: 0.8 }}
+                  >
+                    <Link href="/baitap">
+                      <a className={styles.link}>Ôn Tập</a>
+                    </Link>
+                  </motion.button>
                 </div>
               </div>
             </Container>
           </InView>
         </Container>
       </Fragment>
-    </HomeLayout >
+    </HomeLayout>
   );
 };
 

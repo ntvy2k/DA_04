@@ -109,8 +109,8 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
             <Navbar.Brand>
               <Link href="/" passHref>
                 <div className={styles.brand}>
-                  <h3 className={styles.brand_first}>Nhái</h3>
-                  <h3 className={styles.brand_last}>W3school</h3>
+                  <h3 className={styles.brand_first}>TD4</h3>
+                  <h3 className={styles.brand_last}>School</h3>
                 </div>
               </Link>
             </Navbar.Brand>
@@ -129,38 +129,40 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                 </Navbar.Text>
 
                 <NavDropdown
-                  title={
-                    <span className={styles.text}>Khóa học</span>
-                  }
+                  title={<span className={styles.text}>Khóa học</span>}
                   id="basic-nav-dropdown"
-                  className='ms-3'
+                  className="ms-3"
                 >
                   {courses.map(({ name, slug }) => {
                     return (
                       <NavDropdown.Item key={slug}>
-                        <Link href={`/${slug}`}><a className={styles.link}>{name}</a></Link>
+                        <Link href={`/${slug}`}>
+                          <a className={styles.link}>{name}</a>
+                        </Link>
                       </NavDropdown.Item>
-                    )
+                    );
                   })}
                 </NavDropdown>
                 <NavDropdown
-                  title={
-                    <span className={styles.text}>Luyện tập</span>
-                  }
+                  title={<span className={styles.text}>Luyện tập</span>}
                   id="basic-nav-dropdown"
-                  className='ms-3'
+                  className="ms-3"
                 >
                   {exercise.map(({ id, name }) => {
                     return (
                       <NavDropdown.Item key={id}>
-                        <Link href={`/baitap/${id}`}><a className={styles.link}>{name}</a></Link>
+                        <Link href={`/baitap/${id}`}>
+                          <a className={styles.link}>{name}</a>
+                        </Link>
                       </NavDropdown.Item>
-                    )
+                    );
                   })}
                 </NavDropdown>
                 <InputGroup size="sm" className={styles.input_group}>
                   <InputGroup.Text className={styles.input_icon}>
-                    <Link href={`/search/id?terms=${valueSearch}`}><Search /></Link>
+                    <Link href={`/search/id?terms=${valueSearch}`}>
+                      <Search />
+                    </Link>
                   </InputGroup.Text>
                   <input
                     type="search"
@@ -170,13 +172,10 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                     list="courseName"
                     onChange={(e) => setValueSearch(e.currentTarget.value)}
                     onKeyPress={checkEnter}
-
                   />
                   <datalist id="courseName">
                     {courses.map(({ name, slug }) => {
-                      return (
-                        <option key={slug} value={name}></option>
-                      )
+                      return <option key={slug} value={name}></option>;
                     })}
                   </datalist>
                 </InputGroup>
@@ -185,19 +184,23 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
                     title={
                       <span className={styles.text}>{user.user?.username}</span>
                     }
-                    id="user">
+                    id="user"
+                  >
                     <NavDropdown.Item onClick={() => handleLogout()}>
                       Đăng xuất
                     </NavDropdown.Item>
                     <NavDropdown.Item>
-                      <Link href='/user'>
-                        <a className='text-reset text-decoration-none'>Bảng điều khiển</a>
+                      <Link href="/user">
+                        <a className="text-reset text-decoration-none">
+                          Bảng điều khiển
+                        </a>
                       </Link>
                     </NavDropdown.Item>
                   </NavDropdown>
-
                 ) : (
-                  <Link href="/login"><a className={styles.login}> Đăng nhập </a></Link>
+                  <Link href="/login">
+                    <a className={styles.login}> Đăng nhập </a>
+                  </Link>
                 )}
               </Nav>
             </Navbar.Collapse>
@@ -209,9 +212,15 @@ export default function HomeLayout({ children }: { children: ReactElement }) {
         <hr />
         <h1>Liên hệ với chúng tôi</h1>
         <div className="d-flex mb-4">
-          <a className={styles.contact}><Facebook /></a>
-          <a className={styles.contact}><Instagram /></a>
-          <a className={styles.contact}><Discord /></a>
+          <a className={styles.contact}>
+            <Facebook />
+          </a>
+          <a className={styles.contact}>
+            <Instagram />
+          </a>
+          <a className={styles.contact}>
+            <Discord />
+          </a>
         </div>
         <div className="d-flex">
           <p>Info</p>
