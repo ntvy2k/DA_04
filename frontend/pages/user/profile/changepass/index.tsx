@@ -68,7 +68,7 @@ function ChangePass() {
                     })
                     .then((res) => {
                       // router.push('/user/profile')
-                      console.log(res);
+                      // console.log(res);
                     })
                     .catch(() => setShow(true));
                 }}

@@ -1,4 +1,5 @@
 import React from "react";
+import { WEB_URL } from "../app/config";
 
 function AboutUs() {
   const output = `
@@ -991,7 +992,7 @@ fireexit i:nth-of-type(2):after {
       </wall3>
       <wall4>
         <door>
-          <a target="_blank" title="Exit" href="http://localhost/thuyettrinh">
+          <a target="_blank" title="Exit" href="${WEB_URL}/thuyettrinh">
           </a>
         </door>
 

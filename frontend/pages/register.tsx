@@ -105,7 +105,7 @@ const RegForm = () => {
             <Toast.Header>
               <strong className="me-auto">Error</strong>
             </Toast.Header>
-            <Toast.Body>Username already exists</Toast.Body>
+            <Toast.Body>Tên đăng nhập đã tồn tại.</Toast.Body>
           </Toast>
           <Toast
             show={show2}
@@ -117,7 +117,7 @@ const RegForm = () => {
             <Toast.Header>
               <strong className="me-auto">Error</strong>
             </Toast.Header>
-            <Toast.Body>Email already exists</Toast.Body>
+            <Toast.Body>Địa chỉ email đã tồn tại.</Toast.Body>
           </Toast>
         </ToastContainer>
         <div className="row align-items-center">
@@ -138,7 +138,7 @@ const RegForm = () => {
                   .then((res) => {
                     const r = res.data;
                     if (r.status === 0) {
-                      console.log("Register Successful");
+                      // console.log("Register Successful");
                       router.push("/login");
                     } else if (r.status === 1) {
                       setShow1(true);
@@ -146,7 +146,9 @@ const RegForm = () => {
                       setShow2(true);
                     }
                   })
-                  .catch((err) => console.log("Error: Unknown...", err));
+                  .catch((err) => {
+                    //console.log("Error: Unknown...", err)
+                  });
               }}
             >
               {(formikProps) => {
@@ -162,22 +164,22 @@ const RegForm = () => {
                         name="first_name"
                         component={InputField}
                         type="text"
-                        label="FirstName"
-                        placeholder="FirstName"
+                        label="Tên"
+                        placeholder="Tên"
                       ></FastField>
                       <FastField
                         name="last_name"
                         component={InputField}
                         type="text"
-                        label="LastName"
-                        placeholder="LastName"
+                        label="Họ"
+                        placeholder="Họ"
                       ></FastField>
                       <FastField
                         name="username"
                         component={InputField}
                         type="text"
-                        label="UserName"
-                        placeholder="UserName"
+                        label="Tên đăng nhập"
+                        placeholder="Tên đăng nhập"
                       ></FastField>
                       <FastField
                         name="email"
@@ -190,15 +192,15 @@ const RegForm = () => {
                         name="password"
                         component={InputField}
                         type="password"
-                        label="Password"
-                        placeholder="Password"
+                        label="Mật khẩu"
+                        placeholder="Mật khẩu"
                       ></FastField>
                       <FastField
                         name="confirmPassword"
                         component={InputField}
                         type="password"
-                        label="ConFirmPassword"
-                        placeholder="ConFirmPassword"
+                        label="Xác nhận mật khẩu"
+                        placeholder="Xác nhận mật khẩu"
                       ></FastField>
                       <button type="submit" className={styles.button}>
                         Register

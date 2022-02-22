@@ -17,7 +17,7 @@ interface url {
 
 function CourseID() {
   const router = useRouter();
-  console.log(router.query)
+  // console.log(router.query)
   const { courseID } = router.query;
   const [dataContent, setDataContent] = useState<Array<ContentList | null>>([
     null,

@@ -142,7 +142,7 @@ const SearchID = ({ data }: { data: any }) => {
     const topicUrl = topics_param(topics);
     const groupUrl = group_param(group);
     const url = `/search/id?terms=${search_terms}${groupUrl}${topicUrl}`;
-    console.log(url);
+    // console.log(url);
     router.push(url);
   };
 

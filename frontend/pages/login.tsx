@@ -78,8 +78,7 @@ function LoginForm() {
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("This field is required"),
-    password: Yup.string()
-      .required("This field is required")
+    password: Yup.string().required("This field is required"),
   });
 
   return (
@@ -120,7 +119,7 @@ function LoginForm() {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={({ username, password }) => {
-                  console.log(username, password);
+                  // console.log(username, password);
                   login(username, password)
                     .then((response) => {
                       localStorage.setItem("key", response.data.access);
@@ -143,7 +142,7 @@ function LoginForm() {
                           component={InputField}
                           type="text"
                           label="Tên đăng nhập"
-                          placeholder="Username..."
+                          placeholder="username..."
                         />
                       </motion.div>
                       <motion.div
@@ -157,7 +156,7 @@ function LoginForm() {
                           component={InputField}
                           type="password"
                           label="Mật khẩu"
-                          placeholder="Passwd..."
+                          placeholder="password..."
                         />
                         <p className={styles.text}>
                           Chưa có tài khoản?{" "}

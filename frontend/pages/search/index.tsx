@@ -19,7 +19,7 @@ import { GetServerSideProps } from "next";
 import axios from "axios";
 import Link from "next/link";
 
-import TD4_SETTINGS from "../../app/config";
+import TD4_SETTINGS, { WEB_URL } from "../../app/config";
 
 const group_param = (group: number | null) => {
   if (group !== null) {
@@ -110,8 +110,8 @@ const SearchPage = ({ courses }: { courses: any }) => {
   useEffect(() => {
     const fetchGroup = async () => {
       const res = await courseApi.getGroupCourse();
-      const resCourse = await axios.get("http://localhost/api/course/");
-      console.log(resCourse.data);
+      const resCourse = await axios.get(WEB_URL + "/api/course/");
+      //console.log(resCourse.data);
       const resTopic = await courseApi.getTopicCourse();
       setCourseGroup(res.data.map(({ gr_courses, ...newObject }) => newObject));
       setCourseTopic(

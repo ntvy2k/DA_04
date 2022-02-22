@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { AxiosResponse } from "axios";
+import { WEB_URL } from "../../app/config";
 
 interface BaseInfo {
   first_name: string;
@@ -24,11 +25,11 @@ export interface AuthState {
   userName: string | null;
 }
 
-type Enpoint = "token" | "token-destroy" | "profile" | "register";
+type Endpoint = "token" | "token-destroy" | "profile" | "register";
 
-const make_url = (enpoint: Enpoint): string => {
-  const relative_url = "http://localhost/auth/";
-  return relative_url + enpoint + "/";
+const make_url = (endpoint: Endpoint): string => {
+  const base_url = `${WEB_URL}/auth/`;
+  return base_url + endpoint + "/";
 };
 
 export const login = (
@@ -108,13 +109,13 @@ export const AuthSlice = createSlice({
       state.is_loading = false;
       state.is_authenticated = true;
       state.user = action.payload;
-      state.userName = `${action.payload.last_name} ${action.payload.first_name}`
+      state.userName = `${action.payload.last_name} ${action.payload.first_name}`;
     });
     auth.addCase(fetch_user.rejected, (state, action) => {
       state.is_loading = false;
       state.is_authenticated = false;
       state.user = null;
-      state.userName = null
+      state.userName = null;
     });
   },
 });
