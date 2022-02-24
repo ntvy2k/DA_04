@@ -262,7 +262,7 @@ const SearchPage = ({ courses }: { courses: any }) => {
                 Chủ đề
               </Dropdown.Toggle>
 
-              <Dropdown.Menu>
+              <Dropdown.Menu style={{ maxHeight: '200px', overflowY: 'scroll' }}>
                 {courseTopic.map((topic, index) => {
                   return (
                     <Dropdown.Item

@@ -19,12 +19,18 @@ function CourseID() {
   const router = useRouter();
   // console.log(router.query)
   const { courseID } = router.query;
+  const [title, setTitle] = useState<string>()
   const [dataContent, setDataContent] = useState<Array<ContentList | null>>([
     null,
   ]);
   const [url, setUrl] = useState<url | null>(null);
   useEffect(() => {
     setDataContent([null]);
+    const fetch = async () => {
+      const resTopic = await courseApi.getCourse(courseID)
+      setTitle(resTopic.data.name)
+    }
+    courseID && fetch()
   }, [courseID]);
 
   useEffect(() => {
@@ -55,7 +61,7 @@ function CourseID() {
       <Fragment>
         <Head>
           <title>
-            {`${courseID}`} | {TD4_SETTINGS.title}
+            {`${title}`} | {TD4_SETTINGS.title}
           </title>
         </Head>
         <div className="container" style={{ minHeight: "80vh" }}>

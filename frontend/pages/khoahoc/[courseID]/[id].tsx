@@ -16,7 +16,7 @@ interface url {
   lessonID: number | string;
 }
 
-function ChapterID({ data }: { data: any }) {
+function ChapterID({ data, title }: { data: any, title: any }) {
   const router = useRouter();
   const { courseID, lesson } = router.query;
   const [dataContent, setDataContent] = useState<Array<ContentList | null>>([
@@ -40,13 +40,12 @@ function ChapterID({ data }: { data: any }) {
       fetchData();
     }
   }, [url]);
-
   return (
     <HomeLayout>
       <Fragment>
         <Head>
           <title>
-            {`${courseID}`} | {TD4_SETTINGS.title}
+            {`${title.name}`} | {TD4_SETTINGS.title}
           </title>
         </Head>
         <div className="container" style={{ minHeight: "80vh" }}>
@@ -96,10 +95,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = await fetch(
     `http://nginx/api/course/${courseID}/chapter/${chapter}/lesson/${lesson}/content/`
   );
+  const resTitle = await fetch(`http://nginx/api/course/${courseID}/`)
   const data = await res.json();
+  const title = await resTitle.json();
   return {
     props: {
       data: data,
+      title: title,
     },
   };
 };

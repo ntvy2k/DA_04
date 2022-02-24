@@ -7,6 +7,10 @@ const courseApi = {
     const url = `/api/course`
     return axios.get(url)
   },
+  getCourse(courseID: any): Promise<AxiosResponse<any>> {
+    const url = `/api/course/${courseID}/`
+    return axios.get(url)
+  },
   getListChapter(id: number | string | string[] | undefined): Promise<AxiosResponse<Array<any>>> {
     const url = `/api/course/${id}/chapter`
     return axios.get(url)
