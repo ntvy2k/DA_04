@@ -23,75 +23,97 @@ function AddContentPage() {
     const redirecRouter = useRouter()
     const router = useRouter().query
     const { editcourse, chapterid, lessonid } = router
-    const [data, setData] = useState<Array<any>>([])
+    // const [data, setData] = useState<Array<any>>([])
     const [oldData, setOldData] = useState<Array<any>>([])
+    const [config, setConfig] = useState<any>();
     // const [showButtonAdd, setShowButtonAdd] = useState<string>('')
-    const [valueChange, setValueChange] = useState<any>()
+    // const [valueChange, setValueChange] = useState<any>()
     useEffect(() => {
-
-        const fetch = async () => {
-            const res = await courseApi.getMyContent(editcourse, chapterid, lessonid, { headers: { Authorization: `Token ${localStorage.getItem("key")}` } })
-            const contentData = res.data.map(({ id, content }: { id: any, content: any }) => {
-                return { id, ...content }
-            })
-            setOldData(contentData)
-        }
+        setConfig({
+            headers: { Authorization: `Token ${localStorage.getItem("key")}` },
+        });
+    }, []);
+    useEffect(() => {
         editcourse && chapterid && lessonid && fetch()
     }, [editcourse, chapterid, lessonid])
-    useEffect(() => {
-        if (valueChange) {
-            const newData = [...data]
-            newData[valueChange.id] = valueChange
-            setData(newData)
-        }
-    }, [valueChange])
+    // useEffect(() => {
+    //     if (valueChange) {
+    //         const newData = [...data]
+    //         newData[valueChange.id] = valueChange
+    //         setData(newData)
+    //     }
+    // }, [valueChange])
     // console.log(valueSubmit)
-    const handleChange = useCallback((valueContent: dataContent) => {
-        // const newValue = [...value]
-        // newValue[valueContent.id] = valueContent
-        // setValue(newValue)
-        setValueChange(valueContent)
-    }, [])
-    const handleAdd = (type: 'text' | 'playGroundWithRunCode') => {
+    const fetch = async () => {
+        const res = await courseApi.getMyContent(editcourse, chapterid, lessonid, { headers: { Authorization: `Token ${localStorage.getItem("key")}` } })
+        const contentData = res.data.map(({ id, content }: { id: any, content: any }) => {
+            return { id, ...content }
+        })
+        setOldData(contentData)
+    }
+
+    // const handleChange = useCallback((valueContent: dataContent) => {
+    //     // const newValue = [...value]
+    //     // newValue[valueContent.id] = valueContent
+    //     // setValue(newValue)
+    //     setValueChange(valueContent)
+    // }, [])
+    const handleAdd = async (type: 'text' | 'playGroundWithRunCode') => {
         switch (type) {
             case 'text': {
-                setData([...data, { type: 'text', value: '' }])
+                // setData([...data, { type: 'text', value: '' }])
                 // setShowButtonAdd('text')
+                const content = {
+                    lesson: router.lessonid,
+                    title: "test",
+                    content: { type: 'text', value: '' }
+                }
+                await courseApi.postContent(content, editcourse, chapterid, lessonid, config)
                 break
             }
             case 'playGroundWithRunCode': {
-                setData([...data, { type: 'playground', value: '', button: true, language: 'javascript' }])
+                // setData([...data, { type: 'playground', value: '', button: true, language: 'javascript' }])
+                const content = {
+                    lesson: router.lessonid,
+                    title: "test",
+                    content: { type: 'playground', value: '', button: false, language: 'javascript' }
+                }
+                courseApi.postContent(content, editcourse, chapterid, lessonid, config)
+                // courseApi.postContent({ type: 'playground', value: '', button: true, language: 'javascript' }, editcourse, chapterid, lessonid, config)
                 // setShowButtonAdd('playGround')
                 break
             }
         }
+        fetch()
     }
-    const handleClose = (index: any) => {
+    const handleClose = async (index: any) => {
         // setData(data.splice(index, 1))
         // setValueSubmit(valueSubmit.splice(index, 1))
         // setData(prev => prev.splice(index, 1))
-        const newData = [...data]
-        newData.splice(index, 1)
-        setData(newData)
+        // const newData = [...data]
+        // newData.splice(index, 1)
+        // setData(newData)
+        await courseApi.deleteContent(editcourse, chapterid, lessonid, index, config)
+        fetch()
     }
-    const handleEdit = (index: any) => {
-        const url = `/user/mycourse/${router.editcourse}/addcontent?lessonid=${router.lessonid}&chapterid=${router.chapterid}/${index}`
-        redirecRouter.push(url)
-    }
-    const handleSubmit = async () => {
-        const config = {
-            headers: { Authorization: `Token ${localStorage.getItem("key")}` },
-        };
-        data.map(async ({ id, ...newObject }) => {
-            const value = {
-                lesson: router.lessonid,
-                title: "test",
-                content: newObject
-            }
-            await courseApi.postContent(value, router.editcourse, router.chapterid, router.lessonid, config)
-        })
-        redirecRouter.push(`/user/mycourse/${router.editcourse}`)
-    }
+    // const handleEdit = (index: any) => {
+    //     const url = `/user/mycourse/${router.editcourse}/addcontent?lessonid=${router.lessonid}&chapterid=${router.chapterid}/${index}`
+    //     redirecRouter.push(url)
+    // }
+    // const handleSubmit = async () => {
+    //     const config = {
+    //         headers: { Authorization: `Token ${localStorage.getItem("key")}` },
+    //     };
+    //     data.map(async ({ id, ...newObject }) => {
+    //         const value = {
+    //             lesson: router.lessonid,
+    //             title: "test",
+    //             content: newObject
+    //         }
+    //         await courseApi.postContent(value, router.editcourse, router.chapterid, router.lessonid, config)
+    //     })
+    //     redirecRouter.push(`/user/mycourse/${router.editcourse}`)
+    // }
     return (
         <HomeLayout>
             <Fragment>
@@ -138,6 +160,7 @@ function AddContentPage() {
                             case 'text': {
                                 return (
                                     <div key={index}>
+                                        <button className={styles.button_close} onClick={() => handleClose(content.id)} ><XSquareFill className='text-danger fs-5' /></button>
                                         <Link
                                             href={{
                                                 pathname: '/user/mycourse/[editcourse]/[addcontent]/[contentid]',
@@ -172,6 +195,7 @@ function AddContentPage() {
                                     case 'html': {
                                         return (
                                             <div key={content.id}>
+                                                <button className={styles.button_close} onClick={() => handleClose(content.id)} ><XSquareFill className='text-danger fs-5' /></button>
                                                 <Link
                                                     href={{
                                                         pathname: '/user/mycourse/[editcourse]/[addcontent]/[contentid]',
@@ -199,6 +223,7 @@ function AddContentPage() {
                                     case 'php': {
                                         return (
                                             <div key={content.id}>
+                                                <button className={styles.button_close} onClick={() => handleClose(content.id)} ><XSquareFill className='text-danger fs-5' /></button>
                                                 <Link
                                                     href={{
                                                         pathname: '/user/mycourse/[editcourse]/[addcontent]/[contentid]',
@@ -226,6 +251,7 @@ function AddContentPage() {
                                     case 'java': {
                                         return (
                                             <div key={content.id}>
+                                                <button className={styles.button_close} onClick={() => handleClose(content.id)} ><XSquareFill className='text-danger fs-5' /></button>
                                                 <Link
                                                     href={{
                                                         pathname: '/user/mycourse/[editcourse]/[addcontent]/[contentid]',
@@ -253,6 +279,7 @@ function AddContentPage() {
                                     case 'python': {
                                         return (
                                             <div key={content.id}>
+                                                <button className={styles.button_close} onClick={() => handleClose(content.id)} ><XSquareFill className='text-danger fs-5' /></button>
                                                 <Link
                                                     href={{
                                                         pathname: '/user/mycourse/[editcourse]/[addcontent]/[contentid]',
@@ -281,7 +308,7 @@ function AddContentPage() {
                             }
                         }
                     })}
-                    {data.map((content, index) => {
+                    {/* {data.map((content, index) => {
                         switch (content?.type) {
                             case 'text': {
                                 return (
@@ -312,8 +339,8 @@ function AddContentPage() {
                                 )
                             }
                         }
-                    })}
-                    <button className={styles.button} onClick={() => handleSubmit()} >Submit</button>
+                    })} */}
+                    {/* <button className={styles.button} onClick={() => handleSubmit()} >Submit</button> */}
                 </div>
             </Fragment>
         </HomeLayout>

@@ -52,7 +52,6 @@ export function AddPlayGround(props: addPlayGround) {
   function showValue() {
     setValue(editorRef.current?.getValue());
   }
-
   return (
     <div onBlur={handleBlur}>
       <div className="d-flex align-items-center">
